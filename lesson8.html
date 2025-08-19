@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Массивия" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+            radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 66.66%; /* 8/12 для восьмого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .list-diagram {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #5d3fd3;
+            overflow-x: auto;
+        }
+
+        .list-container {
+            display: inline-flex;
+            margin: 20px 0;
+        }
+
+        .list-item {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(93, 63, 211, 0.2);
+            border: 2px solid var(--highlight-color);
+            border-radius: 5px;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+        }
+
+        .list-index {
+            position: absolute;
+            top: -25px;
+            font-size: 0.8em;
+            color: var(--text-color);
+        }
+
+        .list-negative-index {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8em;
+            color: var(--warning-color);
+        }
+
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .method-table th {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+
+        .method-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .method-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .method-table tr:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+        }
+
+        .method-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .method-example {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Массивия"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 8/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Добро пожаловать на планету "Массивия", космический программист! Эта планета является хранилищем
+            упорядоченных данных Галактической Сети.</p>
+        <p>Здесь мы изучим списки (массивы) - одну из самых важных структур данных в Python. Списки позволяют хранить и
+            обрабатывать наборы данных, что критически важно для работы с большими объемами информации.</p>
+        <p>Наша задача - освоить создание и манипуляцию списками, чтобы эффективно управлять данными в нашей миссии по
+            восстановлению Галактической Сети.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Массивия -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#7b68ee;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#5d3fd3;stop-opacity:1"/>
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)"/>
+
+        <!-- Структуры данных на поверхности -->
+        <rect x="70" y="70" width="60" height="10" rx="2" fill="#4a3b9f" stroke="#e1e6fa" stroke-width="1"/>
+        <rect x="70" y="85" width="60" height="10" rx="2" fill="#4a3b9f" stroke="#e1e6fa" stroke-width="1"/>
+        <rect x="70" y="100" width="60" height="10" rx="2" fill="#4a3b9f" stroke="#e1e6fa" stroke-width="1"/>
+        <rect x="70" y="115" width="60" height="10" rx="2" fill="#4a3b9f" stroke="#e1e6fa" stroke-width="1"/>
+
+        <!-- Индексы -->
+        <text x="60" y="78" font-family="'JetBrains Mono', monospace" font-size="8" fill="white">[0]</text>
+        <text x="60" y="93" font-family="'JetBrains Mono', monospace" font-size="8" fill="white">[1]</text>
+        <text x="60" y="108" font-family="'JetBrains Mono', monospace" font-size="8" fill="white">[2]</text>
+        <text x="60" y="123" font-family="'JetBrains Mono', monospace" font-size="8" fill="white">[3]</text>
+
+        <!-- Элементы в ячейках -->
+        <text x="100" y="78" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">
+            Данные 1
+        </text>
+        <text x="100" y="93" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">
+            Данные 2
+        </text>
+        <text x="100" y="108" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">
+            Данные 3
+        </text>
+        <text x="100" y="123" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">
+            Данные 4
+        </text>
+
+        <!-- Кратеры -->
+        <circle cx="40" cy="50" r="10" fill="#4a3b9f"/>
+        <circle cx="160" cy="60" r="15" fill="#4a3b9f"/>
+        <circle cx="50" cy="150" r="12" fill="#4a3b9f"/>
+        <circle cx="150" cy="140" r="8" fill="#4a3b9f"/>
+
+        <!-- Светящиеся точки в структурах данных -->
+        <circle cx="75" y="75" r="2" fill="#4ecca3" filter="url(#glow)"/>
+        <circle cx="75" y="90" r="2" fill="#4ecca3" filter="url(#glow)"/>
+        <circle cx="75" y="105" r="2" fill="#4ecca3" filter="url(#glow)"/>
+        <circle cx="75" y="120" r="2" fill="#4ecca3" filter="url(#glow)"/>
+    </svg>
+
+    <h2>Что такое списки?</h2>
+
+    <p>Список (list) в Python - это упорядоченная коллекция элементов, которые могут быть разных типов. Списки являются
+        изменяемыми (mutable), то есть их содержимое можно изменять после создания.</p>
+
+    <div class="note-block">
+        <p><strong>Аналогия:</strong> Представьте список как контейнер с пронумерованными ячейками. В каждую ячейку
+            можно положить любой объект - число, текст, другой список и т.д. Вы можете добавлять новые ячейки, удалять
+            существующие или изменять их содержимое.</p>
+    </div>
+
+    <h2>Создание списков</h2>
+
+    <p>Списки в Python создаются с помощью квадратных скобок <code>[]</code> или функции <code>list()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Пустой список</span><br>
+        <span class="code-keyword">empty_list</span> = []<br>
+        <span class="code-keyword">also_empty</span> = <span class="code-function">list</span>()<br>
+        <br>
+        <span class="code-comment"># Список с элементами</span><br>
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>]<br>
+        <br>
+        <span class="code-comment"># Список с элементами разных типов</span><br>
+        <span class="code-keyword">mixed_data</span> = [<span class="code-string">"Земля"</span>, <span
+            class="code-number">1</span>, <span class="code-number">9.8</span>, <span
+            class="code-keyword">True</span>]<br>
+        <br>
+        <span class="code-comment"># Вложенные списки</span><br>
+        <span class="code-keyword">nested_list</span> = [[<span class="code-number">1</span>, <span class="code-number">2</span>],
+        [<span class="code-number">3</span>, <span class="code-number">4</span>], [<span class="code-number">5</span>,
+        <span class="code-number">6</span>]]<br>
+        <br>
+        <span class="code-comment"># Создание списка с помощью функции list()</span><br>
+        <span class="code-keyword">chars</span> = <span class="code-function">list</span>(<span class="code-string">"Привет"</span>)
+        <span class="code-comment"># ['П', 'р', 'и', 'в', 'е', 'т']</span><br>
+        <br>
+        <span class="code-comment"># Вывод списков</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Планеты:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Смешанные данные:"</span>, <span
+            class="code-keyword">mixed_data</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Вложенный список:"</span>, <span
+            class="code-keyword">nested_list</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Список символов:"</span>, <span
+            class="code-keyword">chars</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Планеты: ['Меркурий', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">Смешанные данные: ['Земля', 1, 9.8, True]</span><br>
+        <span class="system-output">Вложенный список: [[1, 2], [3, 4], [5, 6]]</span><br>
+        <span class="system-output">Список символов: ['П', 'р', 'и', 'в', 'е', 'т']</span>
+    </div>
+
+    <h2>Доступ к элементам списка</h2>
+
+    <p>Элементы списка индексируются, начиная с 0. Для доступа к элементу используются квадратные скобки с указанием
+        индекса:</p>
+
+    <div class="list-diagram">
+        <div class="list-container">
+            <div class="list-item">
+                <span class="list-index">0</span>
+                <span class="list-negative-index">-4</span>
+                Меркурий
+            </div>
+            <div class="list-item">
+                <span class="list-index">1</span>
+                <span class="list-negative-index">-3</span>
+                Венера
+            </div>
+            <div class="list-item">
+                <span class="list-index">2</span>
+                <span class="list-negative-index">-2</span>
+                Земля
+            </div>
+            <div class="list-item">
+                <span class="list-index">3</span>
+                <span class="list-negative-index">-1</span>
+                Марс
+            </div>
+        </div>
+    </div>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>]<br>
+        <br>
+        <span class="code-comment"># Доступ по положительному индексу (от начала списка)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Первая планета:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">0</span>])<br>
+        <span class="code-function">print</span>(<span class="code-string">"Третья планета:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">2</span>])<br>
+        <br>
+        <span class="code-comment"># Доступ по отрицательному индексу (от конца списка)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Последняя планета:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">-1</span>])<br>
+        <span class="code-function">print</span>(<span class="code-string">"Предпоследняя планета:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">-2</span>])
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Первая планета: Меркурий</span><br>
+        <span class="system-output">Третья планета: Земля</span><br>
+        <span class="system-output">Последняя планета: Марс</span><br>
+        <span class="system-output">Предпоследняя планета: Земля</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> Если индекс выходит за пределы списка, Python выдаст ошибку
+            <code>IndexError</code>. Например, если в списке 4 элемента, попытка доступа к <code>planets[4]</code> или
+            <code>planets[-5]</code> вызовет ошибку.</p>
+    </div>
+
+    <h2>Срезы списков</h2>
+
+    <p>Срезы (slices) позволяют извлекать подсписки из списка:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>, <span class="code-string">"Сатурн"</span>]<br>
+        <br>
+        <span class="code-comment"># Синтаксис среза: список[начало:конец:шаг]</span><br>
+        <span class="code-comment"># Конец не включается в результат!</span><br>
+        <br>
+        <span class="code-comment"># Первые три планеты</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Первые три планеты:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">0</span>:<span
+            class="code-number">3</span>])<br>
+        <br>
+        <span class="code-comment"># Со второй по четвертую</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Со второй по четвертую:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">1</span>:<span
+            class="code-number">4</span>])<br>
+        <br>
+        <span class="code-comment"># От начала до третьей (не включая)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"От начала до третьей:"</span>, <span
+            class="code-keyword">planets</span>[:<span class="code-number">3</span>])<br>
+        <br>
+        <span class="code-comment"># От третьей до конца</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"От третьей до конца:"</span>, <span
+            class="code-keyword">planets</span>[<span class="code-number">2</span>:])<br>
+        <br>
+        <span class="code-comment"># Копия всего списка</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Копия списка:"</span>, <span
+            class="code-keyword">planets</span>[:])<br>
+        <br>
+        <span class="code-comment"># Каждая вторая планета</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Каждая вторая планета:"</span>, <span
+            class="code-keyword">planets</span>[:<span class="code-number">6</span>:<span class="code-number">2</span>])<br>
+        <br>
+        <span class="code-comment"># Список в обратном порядке</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Список в обратном порядке:"</span>, <span
+            class="code-keyword">planets</span>[::<span class="code-number">-1</span>])
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Первые три планеты: ['Меркурий', 'Венера', 'Земля']</span><br>
+        <span class="system-output">Со второй по четвертую: ['Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">От начала до третьей: ['Меркурий', 'Венера', 'Земля']</span><br>
+        <span class="system-output">От третьей до конца: ['Земля', 'Марс', 'Юпитер', 'Сатурн']</span><br>
+        <span class="system-output">Копия списка: ['Меркурий', 'Венера', 'Земля', 'Марс', 'Юпитер', 'Сатурн']</span><br>
+        <span class="system-output">Каждая вторая планета: ['Меркурий', 'Земля', 'Юпитер']</span><br>
+        <span class="system-output">Список в обратном порядке: ['Сатурн', 'Юпитер', 'Марс', 'Земля', 'Венера', 'Меркурий']</span>
+    </div>
+
+    <h2>Изменение элементов списка</h2>
+
+    <p>Списки в Python являются изменяемыми, поэтому мы можем изменять их элементы:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный список:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Изменение одного элемента</span><br>
+        <span class="code-keyword">planets</span>[<span class="code-number">0</span>] = <span class="code-string">"МЕРКУРИЙ"</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"После изменения первого элемента:"</span>,
+        <span class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Изменение нескольких элементов с помощью среза</span><br>
+        <span class="code-keyword">planets</span>[<span class="code-number">1</span>:<span class="code-number">3</span>]
+        = [<span class="code-string">"ВЕНЕРА"</span>, <span class="code-string">"ЗЕМЛЯ"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"После изменения среза:"</span>, <span
+            class="code-keyword">planets</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный список: ['Меркурий', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">После изменения первого элемента: ['МЕРКУРИЙ', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">После изменения среза: ['МЕРКУРИЙ', 'ВЕНЕРА', 'ЗЕМЛЯ', 'Марс']</span>
+    </div>
+
+    <h2>Основные методы списков</h2>
+
+    <p>Python предоставляет множество встроенных методов для работы со списками:</p>
+
+    <h3>Добавление элементов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный список:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Добавление элемента в конец списка</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">append</span>(<span class="code-string">"Марс"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После append():"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Вставка элемента по индексу</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">insert</span>(<span
+            class="code-number">1</span>, <span class="code-string">"Меркурий-B"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После insert():"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Расширение списка другим списком</span><br>
+        <span class="code-keyword">outer_planets</span> = [<span class="code-string">"Юпитер"</span>, <span
+            class="code-string">"Сатурн"</span>]<br>
+        <span class="code-keyword">planets</span>.<span class="code-function">extend</span>(<span class="code-keyword">outer_planets</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После extend():"</span>, <span
+            class="code-keyword">planets</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный список: ['Меркурий', 'Венера', 'Земля']</span><br>
+        <span class="system-output">После append(): ['Меркурий', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">После insert(): ['Меркурий', 'Меркурий-B', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">После extend(): ['Меркурий', 'Меркурий-B', 'Венера', 'Земля', 'Марс', 'Юпитер', 'Сатурн']</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Разница между append() и extend():</strong> Метод <code>append()</code> добавляет один элемент в
+            конец списка, а <code>extend()</code> добавляет все элементы из другой последовательности. Если вы
+            используете <code>append()</code> для добавления списка, то список будет добавлен как один элемент (список
+            внутри списка).</p>
+    </div>
+
+    <h3>Удаление элементов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>, <span class="code-string">"Сатурн"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный список:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление элемента по индексу</span><br>
+        <span class="code-keyword">del</span> <span class="code-keyword">planets</span>[<span
+            class="code-number">1</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"После del planets[1]:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление элемента по значению</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">remove</span>(<span class="code-string">"Марс"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После remove('Марс'):"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление и возврат элемента по индексу</span><br>
+        <span class="code-keyword">last_planet</span> = <span class="code-keyword">planets</span>.<span
+            class="code-function">pop</span>()<br>
+        <span class="code-function">print</span>(<span
+            class="code-string">f"Удаленный элемент: {last_planet}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После pop():"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление и возврат элемента по указанному индексу</span><br>
+        <span class="code-keyword">first_planet</span> = <span class="code-keyword">planets</span>.<span
+            class="code-function">pop</span>(<span class="code-number">0</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Удаленный элемент с индексом 0: {first_planet}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После pop(0):"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Очистка списка</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">clear</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">"После clear():"</span>, <span
+            class="code-keyword">planets</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный список: ['Меркурий', 'Венера', 'Земля', 'Марс', 'Юпитер', 'Сатурн']</span><br>
+        <span class="system-output">После del planets[1]: ['Меркурий', 'Земля', 'Марс', 'Юпитер', 'Сатурн']</span><br>
+        <span class="system-output">После remove('Марс'): ['Меркурий', 'Земля', 'Юпитер', 'Сатурн']</span><br>
+        <span class="system-output">Удаленный элемент: Сатурн</span><br>
+        <span class="system-output">После pop(): ['Меркурий', 'Земля', 'Юпитер']</span><br>
+        <span class="system-output">Удаленный элемент с индексом 0: Меркурий</span><br>
+        <span class="system-output">После pop(0): ['Земля', 'Юпитер']</span><br>
+        <span class="system-output">После clear(): []</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> Метод <code>remove()</code> удаляет только первое вхождение указанного значения.
+            Если в списке несколько одинаковых элементов, остальные останутся на месте.</p>
+    </div>
+
+    <h3>Поиск и подсчет элементов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>, <span class="code-string">"Венера"</span>]<br>
+        <br>
+        <span class="code-comment"># Поиск индекса элемента</span><br>
+        <span class="code-keyword">index</span> = <span class="code-keyword">planets</span>.<span class="code-function">index</span>(<span
+            class="code-string">"Земля"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Индекс Земли: {index}"</span>)<br>
+        <br>
+        <span class="code-comment"># Подсчет количества вхождений элемента</span><br>
+        <span class="code-keyword">count</span> = <span class="code-keyword">planets</span>.<span class="code-function">count</span>(<span
+            class="code-string">"Венера"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Количество планет 'Венера': {count}"</span>)<br>
+        <br>
+        <span class="code-comment"># Проверка наличия элемента в списке</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Есть ли Земля в списке?"</span>, <span
+            class="code-string">"Земля"</span> <span class="code-keyword">in</span> <span
+            class="code-keyword">planets</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Есть ли Плутон в списке?"</span>, <span
+            class="code-string">"Плутон"</span> <span class="code-keyword">in</span> <span
+            class="code-keyword">planets</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Индекс Земли: 2</span><br>
+        <span class="system-output">Количество планет 'Венера': 2</span><br>
+        <span class="system-output">Есть ли Земля в списке? True</span><br>
+        <span class="system-output">Есть ли Плутон в списке? False</span>
+    </div>
+
+    <h3>Сортировка и изменение порядка элементов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный список:"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Сортировка списка по алфавиту</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">sort</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">"После sort():"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Сортировка в обратном порядке</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">sort</span>(<span class="code-function">reverse</span>=<span
+            class="code-keyword">True</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После sort(reverse=True):"</span>, <span
+            class="code-keyword">planets</span>)<br>
+        <br>
+        <span class="code-comment"># Изменение порядка элементов на обратный</span><br>
+        <span class="code-keyword">planets</span>.<span class="code-function">reverse</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">"После reverse():"</span>, <span
+            class="code-keyword">planets</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный список: ['Меркурий', 'Венера', 'Земля', 'Марс', 'Юпитер']</span><br>
+        <span class="system-output">После sort(): ['Венера', 'Земля', 'Марс', 'Меркурий', 'Юпитер']</span><br>
+        <span class="system-output">После sort(reverse=True): ['Юпитер', 'Меркурий', 'Марс', 'Земля', 'Венера']</span><br>
+        <span class="system-output">После reverse(): ['Венера', 'Земля', 'Марс', 'Меркурий', 'Юпитер']</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Важно:</strong> Методы <code>sort()</code> и <code>reverse()</code> изменяют исходный список. Если вы
+            хотите получить новый отсортированный список, не изменяя исходный, используйте функцию <code>sorted()</code>.
+        </p>
+    </div>
+
+    <h3>Копирование списков</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">original</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>]<br>
+        <br>
+        <span class="code-comment"># Неправильный способ копирования (создает ссылку на тот же список)</span><br>
+        <span class="code-keyword">wrong_copy</span> = <span class="code-keyword">original</span><br>
+        <span class="code-keyword">wrong_copy</span>.<span class="code-function">append</span>(<span
+            class="code-string">"Марс"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Оригинал после изменения wrong_copy:"</span>,
+        <span class="code-keyword">original</span>)<br>
+        <br>
+        <span class="code-comment"># Правильные способы копирования</span><br>
+        <span class="code-comment"># 1. Метод copy()</span><br>
+        <span class="code-keyword">copy1</span> = <span class="code-keyword">original</span>.<span
+            class="code-function">copy</span>()<br>
+        <br>
+        <span class="code-comment"># 2. Функция list()</span><br>
+        <span class="code-keyword">copy2</span> = <span class="code-function">list</span>(<span class="code-keyword">original</span>)<br>
+        <br>
+        <span class="code-comment"># 3. Срез [:]</span><br>
+        <span class="code-keyword">copy3</span> = <span class="code-keyword">original</span>[:]<br>
+        <br>
+        <span class="code-comment"># Проверка, что копии независимы</span><br>
+        <span class="code-keyword">copy1</span>.<span class="code-function">append</span>(<span class="code-string">"Юпитер"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Оригинал после изменения copy1:"</span>,
+        <span class="code-keyword">original</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"copy1:"</span>, <span class="code-keyword">copy1</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Оригинал после изменения wrong_copy: ['Меркурий', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">Оригинал после изменения copy1: ['Меркурий', 'Венера', 'Земля', 'Марс']</span><br>
+        <span class="system-output">copy1: ['Меркурий', 'Венера', 'Земля', 'Марс', 'Юпитер']</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> Все три метода копирования (<code>copy()</code>, <code>list()</code>, срез <code>[:]</code>)
+            создают поверхностную копию. Это означает, что если список содержит вложенные списки или другие изменяемые
+            объекты, они будут ссылаться на те же объекты. Для создания полной копии (включая вложенные объекты)
+            используйте модуль <code>copy</code> и функцию <code>deepcopy()</code>.</p>
+    </div>
+
+    <h2>Сводная таблица методов списков</h2>
+
+    <table class="method-table">
+        <tr>
+            <th>Метод</th>
+            <th>Описание</th>
+            <th>Пример</th>
+        </tr>
+        <tr>
+            <td class="method-name">append(x)</td>
+            <td>Добавляет элемент в конец списка</td>
+            <td class="method-example">planets.append("Марс")</td>
+        </tr>
+        <tr>
+            <td class="method-name">extend(iterable)</td>
+            <td>Добавляет все элементы из другой последовательности</td>
+            <td class="method-example">planets.extend(["Юпитер", "Сатурн"])</td>
+        </tr>
+        <tr>
+            <td class="method-name">insert(i, x)</td>
+            <td>Вставляет элемент x на позицию i</td>
+            <td class="method-example">planets.insert(1, "Венера-2")</td>
+        </tr>
+        <tr>
+            <td class="method-name">remove(x)</td>
+            <td>Удаляет первое вхождение элемента x</td>
+            <td class="method-example">planets.remove("Марс")</td>
+        </tr>
+        <tr>
+            <td class="method-name">pop([i])</td>
+            <td>Удаляет и возвращает элемент с индексом i (по умолчанию последний)</td>
+            <td class="method-example">last = planets.pop()</td>
+        </tr>
+        <tr>
+            <td class="method-name">clear()</td>
+            <td>Удаляет все элементы из списка</td>
+            <td class="method-example">planets.clear()</td>
+        </tr>
+        <tr>
+            <td class="method-name">index(x)</td>
+            <td>Возвращает индекс первого вхождения элемента x</td>
+            <td class="method-example">idx = planets.index("Земля")</td>
+        </tr>
+        <tr>
+            <td class="method-name">count(x)</td>
+            <td>Возвращает количество вхождений элемента x</td>
+            <td class="method-example">n = planets.count("Венера")</td>
+        </tr>
+        <tr>
+            <td class="method-name">sort()</td>
+            <td>Сортирует список на месте</td>
+            <td class="method-example">planets.sort()</td>
+        </tr>
+        <tr>
+            <td class="method-name">reverse()</td>
+            <td>Изменяет порядок элементов на обратный</td>
+            <td class="method-example">planets.reverse()</td>
+        </tr>
+        <tr>
+            <td class="method-name">copy()</td>
+            <td>Возвращает поверхностную копию списка</td>
+            <td class="method-example">new_list = planets.copy()</td>
+        </tr>
+    </table>
+
+    <h2>Списочные включения (List Comprehensions)</h2>
+
+    <p>Списочные включения - это компактный способ создания списков на основе существующих последовательностей:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Создание списка квадратов чисел от 1 до 10</span><br>
+        <br>
+        <span class="code-comment"># Обычный способ с циклом for</span><br>
+        <span class="code-keyword">squares</span> = []<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span>
+        <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">11</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">squares</span>.<span
+            class="code-function">append</span>(<span class="code-keyword">i</span> ** <span
+            class="code-number">2</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Квадраты (обычный способ):"</span>, <span
+            class="code-keyword">squares</span>)<br>
+        <br>
+        <span class="code-comment"># Тот же результат с использованием списочного включения</span><br>
+        <span class="code-keyword">squares_comp</span> = [<span class="code-keyword">i</span> ** <span
+            class="code-number">2</span> <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span
+            class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>,
+        <span class="code-number">11</span>)]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Квадраты (списочное включение):"</span>,
+        <span class="code-keyword">squares_comp</span>)<br>
+        <br>
+        <span class="code-comment"># Списочное включение с условием</span><br>
+        <span class="code-comment"># Только четные квадраты</span><br>
+        <span class="code-keyword">even_squares</span> = [<span class="code-keyword">i</span> ** <span
+            class="code-number">2</span> <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span
+            class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>,
+        <span class="code-number">11</span>) <span class="code-keyword">if</span> <span class="code-keyword">i</span> %
+        <span class="code-number">2</span> == <span class="code-number">0</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Четные квадраты:"</span>, <span
+            class="code-keyword">even_squares</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Квадраты (обычный способ): [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</span><br>
+        <span class="system-output">Квадраты (списочное включение): [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</span><br>
+        <span class="system-output">Четные квадраты: [4, 16, 36, 64, 100]</span>
+    </div>
+
+    <p>Списочные включения могут быть очень полезны для преобразования данных:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Преобразование строк в верхний регистр</span><br>
+        <span class="code-keyword">planets</span> = [<span class="code-string">"меркурий"</span>, <span
+            class="code-string">"венера"</span>, <span class="code-string">"земля"</span>, <span class="code-string">"марс"</span>]<br>
+        <span class="code-keyword">upper_planets</span> = [<span class="code-keyword">planet</span>.<span
+            class="code-function">upper</span>() <span class="code-keyword">for</span> <span
+            class="code-keyword">planet</span> <span class="code-keyword">in</span> <span
+            class="code-keyword">planets</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Планеты в верхнем регистре:"</span>, <span
+            class="code-keyword">upper_planets</span>)<br>
+        <br>
+        <span class="code-comment"># Извлечение длин строк</span><br>
+        <span class="code-keyword">planet_lengths</span> = [<span class="code-function">len</span>(<span
+            class="code-keyword">planet</span>) <span class="code-keyword">for</span> <span
+            class="code-keyword">planet</span> <span class="code-keyword">in</span> <span
+            class="code-keyword">planets</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Длины названий планет:"</span>, <span
+            class="code-keyword">planet_lengths</span>)<br>
+        <br>
+        <span class="code-comment"># Создание списка кортежей</span><br>
+        <span class="code-keyword">planet_info</span> = [(<span class="code-keyword">planet</span>, <span
+            class="code-function">len</span>(<span class="code-keyword">planet</span>)) <span
+            class="code-keyword">for</span> <span class="code-keyword">planet</span> <span
+            class="code-keyword">in</span> <span class="code-keyword">planets</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"Информация о планетах:"</span>, <span
+            class="code-keyword">planet_info</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Планеты в верхнем регистре: ['МЕРКУРИЙ', 'ВЕНЕРА', 'ЗЕМЛЯ', 'МАРС']</span><br>
+        <span class="system-output">Длины названий планет: [8, 6, 5, 4]</span><br>
+        <span class="system-output">Информация о планетах: [('меркурий', 8), ('венера', 6), ('земля', 5), ('марс', 4)]</span>
+    </div>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Пример 1: Фильтрация данных</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Список планет с их радиусами (км)</span><br>
+        <span class="code-keyword">planet_data</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Меркурий"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">2439</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Венера"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">6051</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">6371</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Марс"</span>, <span
+            class="code-string">"radius"</span>: <span class="code-number">3389</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Юпитер"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">69911</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Сатурн"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">58232</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Уран"</span>, <span
+            class="code-string">"radius"</span>: <span class="code-number">25362</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Нептун"</span>,
+        <span class="code-string">"radius"</span>: <span class="code-number">24622</span>}<br>
+        ]<br>
+        <br>
+        <span class="code-comment"># Фильтрация: планеты с радиусом больше 5000 км</span><br>
+        <span class="code-keyword">large_planets</span> = []<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span
+            class="code-keyword">in</span> <span class="code-keyword">planet_data</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">planet</span>[<span
+            class="code-string">"radius"</span>] > <span class="code-number">5000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">large_planets</span>.<span
+            class="code-function">append</span>(<span class="code-keyword">planet</span>[<span class="code-string">"name"</span>])<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"Крупные планеты (радиус > 5000 км):"</span>,
+        <span class="code-keyword">large_planets</span>)<br>
+        <br>
+        <span class="code-comment"># То же самое с использованием списочного включения</span><br>
+        <span class="code-keyword">large_planets_comp</span> = [<span class="code-keyword">planet</span>[<span
+            class="code-string">"name"</span>] <span class="code-keyword">for</span> <span
+            class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planet_data</span>
+        <span class="code-keyword">if</span> <span class="code-keyword">planet</span>[<span
+            class="code-string">"radius"</span>] > <span class="code-number">5000</span>]<br>
+        <span class="code-function">print</span>(<span
+            class="code-string">"Крупные планеты (списочное включение):"</span>, <span class="code-keyword">large_planets_comp</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Крупные планеты (радиус > 5000 км): ['Венера', 'Земля', 'Юпитер', 'Сатурн', 'Уран', 'Нептун']</span><br>
+        <span class="system-output">Крупные планеты (списочное включение): ['Венера', 'Земля', 'Юпитер', 'Сатурн', 'Уран', 'Нептун']</span>
+    </div>
+
+    <h3>Пример 2: Обработка данных</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Список температур на разных планетах (в градусах Цельсия)</span><br>
+        <span class="code-keyword">temperatures</span> = [<span class="code-number">167</span>, <span
+            class="code-number">464</span>, <span class="code-number">15</span>, <span class="code-number">-65</span>,
+        <span class="code-number">-110</span>, <span class="code-number">-140</span>, <span
+            class="code-number">-195</span>, <span class="code-number">-200</span>]<br>
+        <span class="code-keyword">planet_names</span> = [<span class="code-string">"Меркурий"</span>, <span
+            class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>, <span class="code-string">"Сатурн"</span>, <span class="code-string">"Уран"</span>,
+        <span class="code-string">"Нептун"</span>]<br>
+        <br>
+        <span class="code-comment"># Создание списка кортежей (планета, температура)</span><br>
+        <span class="code-keyword">planet_temps</span> = <span class="code-function">list</span>(<span
+            class="code-function">zip</span>(<span class="code-keyword">planet_names</span>, <span class="code-keyword">temperatures</span>))<br>
+        <span class="code-function">print</span>(<span class="code-string">"Температуры на планетах:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span>, <span
+            class="code-keyword">temp</span> <span class="code-keyword">in</span> <span class="code-keyword">planet_temps</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">f"{planet}: {temp}°C"</span>)<br>
+        <br>
+        <span class="code-comment"># Нахождение самой горячей и самой холодной планеты</span><br>
+        <span class="code-keyword">max_temp_idx</span> = <span class="code-keyword">temperatures</span>.<span
+            class="code-function">index</span>(<span class="code-function">max</span>(<span class="code-keyword">temperatures</span>))<br>
+        <span class="code-keyword">min_temp_idx</span> = <span class="code-keyword">temperatures</span>.<span
+            class="code-function">index</span>(<span class="code-function">min</span>(<span class="code-keyword">temperatures</span>))<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"\nСамая горячая планета: {planet_names[max_temp_idx]} ({temperatures[max_temp_idx]}°C)"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Самая холодная планета: {planet_names[min_temp_idx]} ({temperatures[min_temp_idx]}°C)"</span>)<br>
+        <br>
+        <span class="code-comment"># Преобразование температур в градусы Фаренгейта</span><br>
+        <span class="code-keyword">fahrenheit_temps</span> = [(<span class="code-keyword">temp</span> * <span
+            class="code-number">9</span>/<span class="code-number">5</span>) + <span class="code-number">32</span> <span
+            class="code-keyword">for</span> <span class="code-keyword">temp</span> <span class="code-keyword">in</span>
+        <span class="code-keyword">temperatures</span>]<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"\nТемпературы в градусах Фаренгейта:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span>
+        <span class="code-function">range</span>(<span class="code-function">len</span>(<span class="code-keyword">planet_names</span>)):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{planet_names[i]}: {fahrenheit_temps[i]:.1f}°F"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Температуры на планетах:</span><br>
+        <span class="system-output">Меркурий: 167°C</span><br>
+        <span class="system-output">Венера: 464°C</span><br>
+        <span class="system-output">Земля: 15°C</span><br>
+        <span class="system-output">Марс: -65°C</span><br>
+        <span class="system-output">Юпитер: -110°C</span><br>
+        <span class="system-output">Сатурн: -140°C</span><br>
+        <span class="system-output">Уран: -195°C</span><br>
+        <span class="system-output">Нептун: -200°C</span><br>
+        <span class="system-output">
+Самая горячая планета: Венера (464°C)
+Самая холодная планета: Нептун (-200°C)
+
+Температуры в градусах Фаренгейта:
+Меркурий: 332.6°F
+Венера: 867.2°F
+Земля: 59.0°F
+Марс: -85.0°F
+Юпитер: -166.0°F
+Сатурн: -220.0°F
+Уран: -319.0°F
+Нептун: -328.0°F</span>
+    </div>
+
+    <h3>Пример 3: Простая игра с использованием списков</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">random</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">space_quiz</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Список вопросов и ответов</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">questions</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"question"</span>: <span class="code-string">"Какая планета ближайшая к Солнцу?"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"options"</span>: [<span class="code-string">"Венера"</span>, <span class="code-string">"Меркурий"</span>,
+        <span class="code-string">"Марс"</span>, <span class="code-string">"Земля"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"answer"</span>: <span class="code-number">1</span> <span class="code-comment"># Индекс правильного ответа</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"question"</span>: <span
+            class="code-string">"Какая планета известна своими кольцами?"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"options"</span>: [<span class="code-string">"Юпитер"</span>, <span class="code-string">"Уран"</span>,
+        <span class="code-string">"Нептун"</span>, <span class="code-string">"Сатурн"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"answer"</span>: <span class="code-number">3</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"question"</span>: <span class="code-string">"Какая планета называется 'красной планетой'?"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"options"</span>: [<span class="code-string">"Венера"</span>, <span class="code-string">"Марс"</span>,
+        <span class="code-string">"Юпитер"</span>, <span class="code-string">"Меркурий"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-string">"answer"</span>: <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Перемешиваем вопросы</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">random</span>.<span
+            class="code-function">shuffle</span>(<span class="code-keyword">questions</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">score</span> = <span class="code-number">0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"=== Космическая викторина ==="</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Ответьте на следующие вопросы о планетах Солнечной системы:\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span
+            class="code-keyword">q</span> <span class="code-keyword">in</span> <span
+            class="code-function">enumerate</span>(<span class="code-keyword">questions</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">f"Вопрос {i+1}: {q['question']}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span
+            class="code-keyword">j</span>, <span class="code-keyword">option</span> <span class="code-keyword">in</span>
+        <span class="code-function">enumerate</span>(<span class="code-keyword">q</span>[<span class="code-string">"options"</span>]):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">f"  {j+1}. {option}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">try</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-keyword">user_answer</span> = <span class="code-function">int</span>(<span
+            class="code-function">input</span>(<span class="code-string">"\nВаш ответ (введите номер): "</span>)) -
+        <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span>
+        <span class="code-keyword">user_answer</span> == <span class="code-keyword">q</span>[<span class="code-string">"answer"</span>]:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-function">print</span>(<span class="code-string">"Правильно! +1 балл\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-keyword">score</span> += <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="code-function">print</span>(<span class="code-string">f"Неправильно. Правильный ответ: {q['options'][q['answer']]}\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">except</span> (<span
+            class="code-function">ValueError</span>, <span class="code-function">IndexError</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">"Неверный ввод. Пропускаем вопрос.\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Викторина завершена! Ваш результат: {score}/{len(questions)}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">score</span> == <span
+            class="code-function">len</span>(<span class="code-keyword">questions</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">"Отлично! Вы настоящий знаток космоса!"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">score</span> >= <span
+            class="code-function">len</span>(<span class="code-keyword">questions</span>) / <span
+            class="code-number">2</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+            class="code-string">"Хороший результат! Вы много знаете о планетах."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span
+                class="code-string">"Стоит подучить астрономию! Удачи в следующий раз."</span>)<br>
+            <br>
+            <span class="code-comment"># Запуск викторины</span><br>
+            <span class="code-function">space_quiz</span>()
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">=== Космическая викторина ===</span><br>
+        <span class="system-output">Ответьте на следующие вопросы о планетах Солнечной системы:</span><br>
+        <span class="system-output">
+Вопрос 1: Какая планета известна своими кольцами?
+  1. Юпитер
+  2. Уран
+  3. Нептун
+  4. Сатурн</span><br>
+        <span class="system-output">
+Ваш ответ (введите номер): </span><span class="user-input">4</span><br>
+        <span class="system-output">Правильно! +1 балл</span><br>
+        <span class="system-output">
+Вопрос 2: Какая планета называется 'красной планетой'?
+  1. Венера
+  2. Марс
+  3. Юпитер
+  4. Меркурий</span><br>
+        <span class="system-output">
+Ваш ответ (введите номер): </span><span class="user-input">2</span><br>
+        <span class="system-output">Правильно! +1 балл</span><br>
+        <span class="system-output">
+Вопрос 3: Какая планета ближайшая к Солнцу?
+  1. Венера
+  2. Меркурий
+  3. Марс
+  4. Земля</span><br>
+        <span class="system-output">
+Ваш ответ (введите номер): </span><span class="user-input">2</span><br>
+        <span class="system-output">Правильно! +1 балл</span><br>
+        <span class="system-output">
+Викторина завершена! Ваш результат: 3/3
+Отлично! Вы настоящий знаток космоса!</span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Космический журнал", которая будет
+            использовать списки для хранения и обработки данных о космических объектах.</p>
+        <p>Программа должна:</p>
+        <ol>
+            <li>Позволять добавлять новые записи о космических объектах (планеты, звезды, астероиды и т.д.) с
+                информацией о них (название, тип, координаты, описание)
+            </li>
+            <li>Отображать список всех объектов</li>
+            <li>Позволять искать объекты по названию или типу</li>
+            <li>Позволять удалять объекты из журнала</li>
+            <li>Сортировать объекты по разным параметрам (название, тип)</li>
+            <li>Сохранять данные между запусками программы (можно использовать простое сохранение в текстовый файл)</li>
+        </ol>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== КОСМИЧЕСКИЙ ЖУРНАЛ =====</span><br>
+            <span class="system-output">Выберите действие:</span><br>
+            <span class="system-output">1. Добавить новый объект</span><br>
+            <span class="system-output">2. Показать все объекты</span><br>
+            <span class="system-output">3. Найти объект</span><br>
+            <span class="system-output">4. Удалить объект</span><br>
+            <span class="system-output">5. Сортировать объекты</span><br>
+            <span class="system-output">0. Выход</span><br>
+            <span class="system-output">Ваш выбор: </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== Добавление нового объекта =====
+Введите название: </span><span class="user-input">Альфа Центавра</span><br>
+            <span class="system-output">Введите тип (планета, звезда, астероид и т.д.): </span><span class="user-input">звезда</span><br>
+            <span class="system-output">Введите координаты (x,y,z): </span><span class="user-input">4.3,0,0</span><br>
+            <span class="system-output">Введите описание: </span><span class="user-input">Ближайшая к Солнцу звездная система</span><br>
+            <span class="system-output">
+Объект успешно добавлен!
+
+===== КОСМИЧЕСКИЙ ЖУРНАЛ =====
+Выберите действие:
+1. Добавить новый объект
+2. Показать все объекты
+3. Найти объект
+4. Удалить объект
+5. Сортировать объекты
+0. Выход
+Ваш выбор: </span><span class="user-input">2</span><br>
+            <span class="system-output">
+===== Список всех объектов =====
+1. Альфа Центавра (звезда) - [4.3, 0.0, 0.0]
+   Ближайшая к Солнцу звездная система
+
+===== КОСМИЧЕСКИЙ ЖУРНАЛ =====
+Выберите действие:
+1. Добавить новый объект
+2. Показать все объекты
+3. Найти объект
+4. Удалить объект
+5. Сортировать объекты
+0. Выход
+Ваш выбор: </span><span class="user-input">0</span><br>
+            <span class="system-output">
+Данные сохранены. До новых космических открытий!
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Словария"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Массивия".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">mapping</div>
+        <p>Используй этот код на главной странице для доступа к уроку 9.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson7.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson9.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function () {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>

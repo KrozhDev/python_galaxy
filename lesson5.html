@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Условия" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 41.66%; /* 5/12 для пятого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .flowchart {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #5d3fd3;
+        }
+
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .flowchart-box {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flowchart-condition {
+            background-color: rgba(123, 104, 238, 0.2);
+            border: 2px solid var(--highlight-color);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            padding: 20px 30px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flowchart-action {
+            background-color: rgba(78, 204, 163, 0.2);
+            border: 2px solid var(--success-color);
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid var(--text-color);
+            margin: 5px 0;
+        }
+
+        .flowchart-branch {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .flowchart-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+        }
+
+        .flowchart-label {
+            color: var(--text-color);
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+
+        .comparison-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Условия"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 5/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Добро пожаловать на планету "Условия", космический программист! Эта планета является центром принятия решений Галактической Сети.</p>
+        <p>Здесь мы научимся использовать условные операторы, которые позволяют программе выбирать разные пути выполнения в зависимости от условий. Это критически важный навык для создания интеллектуальных систем.</p>
+        <p>Наша задача - освоить условные конструкции и научиться создавать программы, способные принимать решения на основе данных.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Условия -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#7b68ee;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#5d3fd3;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+        <!-- Развилки путей на поверхности -->
+        <path d="M100,50 L70,80 M100,50 L130,80" stroke="#e1e6fa" stroke-width="3" />
+        <path d="M70,120 L100,150 M130,120 L100,150" stroke="#e1e6fa" stroke-width="3" />
+        <path d="M60,100 L30,100 M140,100 L170,100" stroke="#e1e6fa" stroke-width="3" />
+
+        <!-- Символы условий на поверхности -->
+        <text x="95" y="105" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">?</text>
+        <text x="70" y="75" font-family="'JetBrains Mono', monospace" font-size="15" fill="white">T</text>
+        <text x="125" y="75" font-family="'JetBrains Mono', monospace" font-size="15" fill="white">F</text>
+
+        <!-- Кратеры -->
+        <circle cx="60" cy="60" r="10" fill="#4a3b9f" />
+        <circle cx="140" cy="70" r="15" fill="#4a3b9f" />
+        <circle cx="50" cy="130" r="8" fill="#4a3b9f" />
+        <circle cx="130" cy="150" r="12" fill="#4a3b9f" />
+
+        <!-- Светящиеся точки на перекрестках -->
+        <circle cx="100" cy="50" r="5" fill="#4ecca3" filter="url(#glow)" />
+        <circle cx="70" cy="80" r="3" fill="#4ecca3" filter="url(#glow)" />
+        <circle cx="130" cy="80" r="3" fill="#4ecca3" filter="url(#glow)" />
+        <circle cx="100" cy="150" r="5" fill="#4ecca3" filter="url(#glow)" />
+    </svg>
+
+    <h2>Что такое условные операторы?</h2>
+
+    <p>Условные операторы позволяют программе выполнять разные действия в зависимости от того, выполняется ли определенное условие. Это основа принятия решений в программировании.</p>
+
+    <div class="note-block">
+        <p><strong>Аналогия:</strong> Представьте, что вы стоите на развилке дорог. Если идет дождь, вы выбираете дорогу с укрытием. Если солнечно, вы идете по живописному маршруту. Условные операторы работают так же - они направляют программу по разным путям в зависимости от условий.</p>
+    </div>
+
+    <h2>Оператор if</h2>
+
+    <p>Самый простой условный оператор - <code>if</code>. Он выполняет блок кода только если условие истинно:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Простой пример использования if</span><br>
+        <span class="code-keyword">temperature</span> = <span class="code-number">-5</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">temperature</span> < <span class="code-number">0</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Внимание! Температура ниже нуля."</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"Программа завершена."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Внимание! Температура ниже нуля.</span><br>
+        <span class="system-output">Программа завершена.</span>
+    </div>
+
+    <div class="flowchart">
+        <div class="flowchart-container">
+            <div class="flowchart-box flowchart-condition">temperature < 0?</div>
+            <div class="flowchart-arrow"></div>
+            <div class="flowchart-branch">
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Да</div>
+                    <div class="flowchart-box flowchart-action">Вывести предупреждение</div>
+                    <div class="flowchart-arrow"></div>
+                </div>
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Нет</div>
+                    <div class="flowchart-arrow"></div>
+                </div>
+            </div>
+            <div class="flowchart-box flowchart-action">Вывести "Программа завершена"</div>
+        </div>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Важно:</strong> В Python отступы имеют значение! Код внутри блока <code>if</code> должен быть с отступом (обычно 4 пробела). Это показывает, какой код выполняется при истинном условии.</p>
+    </div>
+
+    <h2>Операторы if-else</h2>
+
+    <p>Если нужно выполнить одно действие при истинном условии и другое при ложном, используется конструкция <code>if-else</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">fuel_level</span> = <span class="code-number">20</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">fuel_level</span> > <span class="code-number">30</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Топлива достаточно для путешествия."</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Внимание! Низкий уровень топлива."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Внимание! Низкий уровень топлива.</span>
+    </div>
+
+    <div class="flowchart">
+        <div class="flowchart-container">
+            <div class="flowchart-box flowchart-condition">fuel_level > 30?</div>
+            <div class="flowchart-arrow"></div>
+            <div class="flowchart-branch">
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Да</div>
+                    <div class="flowchart-box flowchart-action">Топлива достаточно</div>
+                </div>
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Нет</div>
+                    <div class="flowchart-box flowchart-action">Низкий уровень топлива</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Операторы if-elif-else</h2>
+
+    <p>Когда нужно проверить несколько условий, используется конструкция <code>if-elif-else</code> (elif - сокращение от "else if"):</p>
+
+    <div class="code-block">
+        <span class="code-keyword">radiation_level</span> = <span class="code-number">75</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">radiation_level</span> < <span class="code-number">50</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Уровень радиации безопасен."</span>)<br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">radiation_level</span> < <span class="code-number">100</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Внимание! Повышенный уровень радиации."</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"ОПАСНОСТЬ! Критический уровень радиации!"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Внимание! Повышенный уровень радиации.</span>
+    </div>
+
+    <div class="flowchart">
+        <div class="flowchart-container">
+            <div class="flowchart-box flowchart-condition">radiation_level < 50?</div>
+            <div class="flowchart-arrow"></div>
+            <div class="flowchart-branch">
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Да</div>
+                    <div class="flowchart-box flowchart-action">Уровень безопасен</div>
+                </div>
+                <div class="flowchart-path">
+                    <div class="flowchart-label">Нет</div>
+                    <div class="flowchart-box flowchart-condition">radiation_level < 100?</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-branch">
+                        <div class="flowchart-path">
+                            <div class="flowchart-label">Да</div>
+                            <div class="flowchart-box flowchart-action">Повышенный уровень</div>
+                        </div>
+                        <div class="flowchart-path">
+                            <div class="flowchart-label">Нет</div>
+                            <div class="flowchart-box flowchart-action">Критический уровень</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p>Вы можете использовать сколько угодно блоков <code>elif</code> для проверки различных условий. Python проверяет условия по порядку и выполняет код первого истинного условия.</p>
+
+    <h2>Операторы сравнения</h2>
+
+    <p>Для создания условий используются операторы сравнения:</p>
+
+    <table class="comparison-table">
+        <tr>
+            <th>Оператор</th>
+            <th>Описание</th>
+            <th>Пример</th>
+        </tr>
+        <tr>
+            <td>==</td>
+            <td>Равно</td>
+            <td>x == y</td>
+        </tr>
+        <tr>
+            <td>!=</td>
+            <td>Не равно</td>
+            <td>x != y</td>
+        </tr>
+        <tr>
+            <td>></td>
+            <td>Больше</td>
+            <td>x > y</td>
+        </tr>
+        <tr>
+            <td><</td>
+            <td>Меньше</td>
+            <td>x < y</td>
+        </tr>
+        <tr>
+            <td>>=</td>
+            <td>Больше или равно</td>
+            <td>x >= y</td>
+        </tr>
+        <tr>
+            <td><=</td>
+            <td>Меньше или равно</td>
+            <td>x <= y</td>
+        </tr>
+    </table>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> Не путайте оператор присваивания <code>=</code> с оператором сравнения <code>==</code>. Это одна из самых распространенных ошибок в программировании!</p>
+    </div>
+
+    <h2>Логические операторы</h2>
+
+    <p>Для создания сложных условий используются логические операторы:</p>
+
+    <table class="comparison-table">
+        <tr>
+            <th>Оператор</th>
+            <th>Описание</th>
+            <th>Пример</th>
+        </tr>
+        <tr>
+            <td>and</td>
+            <td>Логическое И (оба условия должны быть истинными)</td>
+            <td>x > 0 and x < 10</td>
+        </tr>
+        <tr>
+            <td>or</td>
+            <td>Логическое ИЛИ (хотя бы одно условие должно быть истинным)</td>
+            <td>x < 0 or x > 10</td>
+        </tr>
+        <tr>
+            <td>not</td>
+            <td>Логическое НЕ (инвертирует условие)</td>
+            <td>not x > 10</td>
+        </tr>
+    </table>
+
+    <div class="code-block">
+        <span class="code-keyword">temperature</span> = <span class="code-number">25</span><br>
+        <span class="code-keyword">pressure</span> = <span class="code-number">980</span><br>
+        <br>
+        <span class="code-comment"># Проверка нескольких условий с помощью and</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">temperature</span> > <span class="code-number">20</span> <span class="code-keyword">and</span> <span class="code-keyword">pressure</span> > <span class="code-number">1000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Условия оптимальные."</span>)<br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">temperature</span> > <span class="code-number">20</span> <span class="code-keyword">or</span> <span class="code-keyword">pressure</span> > <span class="code-number">1000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Условия приемлемые."</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Условия неблагоприятные."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Условия приемлемые.</span>
+    </div>
+
+    <h2>Вложенные условия</h2>
+
+    <p>Условные операторы можно вкладывать друг в друга для создания более сложной логики:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">oxygen_level</span> = <span class="code-number">85</span><br>
+        <span class="code-keyword">has_spacesuit</span> = <span class="code-keyword">True</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">oxygen_level</span> < <span class="code-number">90</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Внимание! Пониженный уровень кислорода."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">has_spacesuit</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Наденьте скафандр для безопасности."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"ОПАСНОСТЬ! Немедленно эвакуируйтесь!"</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Уровень кислорода в норме."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Внимание! Пониженный уровень кислорода.</span><br>
+        <span class="system-output">Наденьте скафандр для безопасности.</span>
+    </div>
+
+    <h2>Тернарный оператор</h2>
+
+    <p>Python также поддерживает тернарный оператор - краткую форму записи условия в одну строку:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">temperature</span> = <span class="code-number">-10</span><br>
+        <br>
+        <span class="code-comment"># Обычная запись с if-else</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">temperature</span> > <span class="code-number">0</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">weather</span> = <span class="code-string">"тепло"</span><br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">weather</span> = <span class="code-string">"холодно"</span><br>
+        <br>
+        <span class="code-comment"># Тернарный оператор (то же самое, но короче)</span><br>
+        <span class="code-keyword">weather</span> = <span class="code-string">"тепло"</span> <span class="code-keyword">if</span> <span class="code-keyword">temperature</span> > <span class="code-number">0</span> <span class="code-keyword">else</span> <span class="code-string">"холодно"</span><br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Сегодня {weather}."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Сегодня холодно.</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Синтаксис тернарного оператора:</strong> <code>значение_если_истина if условие else значение_если_ложь</code></p>
+    </div>
+
+    <h2>Проверка наличия элемента с помощью in</h2>
+
+    <p>Оператор <code>in</code> позволяет проверить, содержится ли элемент в последовательности (список, строка, кортеж и т.д.):</p>
+
+    <div class="code-block">
+        <span class="code-keyword">allowed_planets</span> = [<span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>, <span class="code-string">"Луна"</span>, <span class="code-string">"Венера"</span>]<br>
+        <span class="code-keyword">destination</span> = <span class="code-string">"Юпитер"</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">destination</span> <span class="code-keyword">in</span> <span class="code-keyword">allowed_planets</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Полет на {destination} разрешен."</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Полет на {destination} запрещен. Требуется специальное разрешение."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Полет на Юпитер запрещен. Требуется специальное разрешение.</span>
+    </div>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Пример 1: Проверка доступа</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Система проверки доступа</span><br>
+        <span class="code-keyword">username</span> = <span class="code-function">input</span>(<span class="code-string">"Введите имя пользователя: "</span>)<br>
+        <span class="code-keyword">password</span> = <span class="code-function">input</span>(<span class="code-string">"Введите пароль: "</span>)<br>
+        <br>
+        <span class="code-comment"># Правильные учетные данные</span><br>
+        <span class="code-keyword">correct_username</span> = <span class="code-string">"admin"</span><br>
+        <span class="code-keyword">correct_password</span> = <span class="code-string">"12345"</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">username</span> == <span class="code-keyword">correct_username</span> <span class="code-keyword">and</span> <span class="code-keyword">password</span> == <span class="code-keyword">correct_password</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Доступ разрешен. Добро пожаловать в систему!"</span>)<br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">username</span> == <span class="code-keyword">correct_username</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Ошибка: неверный пароль."</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Ошибка: пользователь не найден."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Введите имя пользователя: </span><span class="user-input">admin</span><br>
+        <span class="system-output">Введите пароль: </span><span class="user-input">wrong</span><br>
+        <span class="system-output">Ошибка: неверный пароль.</span>
+    </div>
+
+    <h3>Пример 2: Классификация планет</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Классификация планет по размеру</span><br>
+        <span class="code-keyword">diameter</span> = <span class="code-function">float</span>(<span class="code-function">input</span>(<span class="code-string">"Введите диаметр планеты (км): "</span>))<br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">diameter</span> < <span class="code-number">5000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"карликовая планета"</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">diameter</span> < <span class="code-number">10000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"планета земной группы"</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">diameter</span> < <span class="code-number">50000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"газовый гигант"</span><br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"сверхгигант"</span><br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Объект с диаметром {diameter} км классифицируется как {planet_type}."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Введите диаметр планеты (км): </span><span class="user-input">12756</span><br>
+        <span class="system-output">Объект с диаметром 12756.0 км классифицируется как газовый гигант.</span>
+    </div>
+
+    <h3>Пример 3: Калькулятор стоимости доставки</h3>
+
+    <div class="code-block">
+        <span class="code-function">print</span>(<span class="code-string">"Калькулятор стоимости межпланетной доставки"</span>)<br>
+        <span class="code-keyword">weight</span> = <span class="code-function">float</span>(<span class="code-function">input</span>(<span class="code-string">"Введите вес груза (кг): "</span>))<br>
+        <span class="code-keyword">destination</span> = <span class="code-function">input</span>(<span class="code-string">"Введите пункт назначения (Луна/Марс/Венера): "</span>)<br>
+        <br>
+        <span class="code-comment"># Базовая стоимость доставки</span><br>
+        <span class="code-keyword">base_cost</span> = <span class="code-number">1000</span><br>
+        <br>
+        <span class="code-comment"># Коэффициенты для разных планет</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">destination</span>.<span class="code-function">lower</span>() == <span class="code-string">"луна"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coefficient</span> = <span class="code-number">1.0</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">destination</span>.<span class="code-function">lower</span>() == <span class="code-string">"марс"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coefficient</span> = <span class="code-number">2.5</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">destination</span>.<span class="code-function">lower</span>() == <span class="code-string">"венера"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coefficient</span> = <span class="code-number">3.0</span><br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Ошибка: неизвестный пункт назначения"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coefficient</span> = <span class="code-number">0</span><br>
+        <br>
+        <span class="code-comment"># Надбавка за вес</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">weight</span> < <span class="code-number">10</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">weight_surcharge</span> = <span class="code-number">100</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">weight</span> < <span class="code-number">100</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">weight_surcharge</span> = <span class="code-keyword">weight</span> * <span class="code-number">25</span><br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">weight_surcharge</span> = <span class="code-keyword">weight</span> * <span class="code-number">50</span><br>
+        <br>
+        <span class="code-comment"># Расчет итоговой стоимости</span><br>
+        <span class="code-keyword">total_cost</span> = (<span class="code-keyword">base_cost</span> + <span class="code-keyword">weight_surcharge</span>) * <span class="code-keyword">coefficient</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">coefficient</span> > <span class="code-number">0</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Стоимость доставки {weight} кг на {destination}: ${total_cost:.2f}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Калькулятор стоимости межпланетной доставки</span><br>
+        <span class="system-output">Введите вес груза (кг): </span><span class="user-input">50</span><br>
+        <span class="system-output">Введите пункт назначения (Луна/Марс/Венера): </span><span class="user-input">Марс</span><br>
+        <span class="system-output">Стоимость доставки 50.0 кг на Марс: \$3750.00</span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Диагностика космического корабля", которая:</p>
+        <ol>
+            <li>Запрашивает у пользователя уровень топлива (0-100%)</li>
+            <li>Запрашивает температуру двигателя (в градусах Цельсия)</li>
+            <li>Запрашивает давление в кабине (в кПа, нормальное значение около 100 кПа)</li>
+            <li>Анализирует состояние корабля и выводит диагностическое сообщение</li>
+        </ol>
+        <p>Правила диагностики:</p>
+        <ul>
+            <li>Если топлива меньше 20% - "Критический уровень топлива"</li>
+            <li>Если температура двигателя выше 110°C - "Перегрев двигателя"</li>
+            <li>Если давление в кабине ниже 80 кПа или выше 120 кПа - "Разгерметизация кабины"</li>
+            <li>Если все показатели в норме - "Все системы работают нормально"</li>
+            <li>Если есть несколько проблем, нужно вывести все соответствующие предупреждения</li>
+            <li>В конце нужно вывести общий статус: "ПОЛЕТ ВОЗМОЖЕН" (если все в норме или только низкий уровень топлива) или "ПОЛЕТ НЕВОЗМОЖЕН" (при любых других проблемах)</li>
+        </ul>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== ДИАГНОСТИКА КОСМИЧЕСКОГО КОРАБЛЯ =====</span><br>
+            <span class="system-output">Введите уровень топлива (0-100%): </span><span class="user-input">15</span><br>
+            <span class="system-output">Введите температуру двигателя (°C): </span><span class="user-input">120</span><br>
+            <span class="system-output">Введите давление в кабине (кПа): </span><span class="user-input">95</span><br>
+            <span class="system-output">
+==============================<br>
+РЕЗУЛЬТАТЫ ДИАГНОСТИКИ<br>
+==============================<br>
+ВНИМАНИЕ! Критический уровень топлива<br>
+ВНИМАНИЕ! Перегрев двигателя<br>
+==============================<br>
+ОБЩИЙ СТАТУС: ПОЛЕТ НЕВОЗМОЖЕН<br>
+Рекомендация: Требуется техническое обслуживание
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Циклон"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Условия".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">repeat</div>
+        <p>Используй этот код на главной странице для доступа к уроку 6.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson4.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson6.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>

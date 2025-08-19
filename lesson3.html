@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Ввод-Вывод" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 25%; /* 3/12 для третьего урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .output-example {
+            background-color: #1a1f35;
+            border: 1px solid #5d3fd3;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Ввод-Вывод"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 3/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Приветствую на планете "Ввод-Вывод", космический программист! Эта планета является ключевым коммуникационным узлом Галактической Сети.</p>
+        <p>Здесь мы научимся взаимодействовать с пользователем: получать данные от него и выводить информацию в различных форматах. Эти навыки критически важны для восстановления связи между колониями.</p>
+        <p>Наша задача - освоить все способы ввода и вывода данных в Python, чтобы наладить коммуникацию между различными системами.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Ввод-Вывод -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4ecca3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2d8f78;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+        <!-- Коммуникационные линии -->
+        <path d="M100,30 L100,10" stroke="#e1e6fa" stroke-width="2" />
+        <path d="M100,170 L100,190" stroke="#e1e6fa" stroke-width="2" />
+        <path d="M30,100 L10,100" stroke="#e1e6fa" stroke-width="2" />
+        <path d="M170,100 L190,100" stroke="#e1e6fa" stroke-width="2" />
+
+        <!-- Антенны -->
+        <circle cx="100" cy="5" r="5" fill="#ff7e67" filter="url(#glow)" />
+        <circle cx="100" cy="195" r="5" fill="#ff7e67" filter="url(#glow)" />
+        <circle cx="5" cy="100" r="5" fill="#ff7e67" filter="url(#glow)" />
+        <circle cx="195" cy="100" r="5" fill="#ff7e67" filter="url(#glow)" />
+
+        <!-- Символы ввода-вывода -->
+        <text x="85" y="90" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">></text>
+        <text x="105" y="110" font-family="'JetBrains Mono', monospace" font-size="20" fill="white"><</text>
+
+        <!-- Кратеры/коммуникационные центры -->
+        <circle cx="130" cy="70" r="15" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <circle cx="70" cy="130" r="15" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <circle cx="130" cy="130" r="10" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <circle cx="70" cy="70" r="10" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+    </svg>
+
+    <h2>Ввод данных в Python</h2>
+
+    <p>Мы уже познакомились с функцией <code>input()</code> на предыдущей планете. Давай углубим наши знания о том, как получать данные от пользователя.</p>
+
+    <h3>Базовое использование input()</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Простой запрос данных</span><br>
+        <span class="code-keyword">name</span> = <span class="code-function">input</span>(<span class="code-string">"Введите ваше имя: "</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Привет, "</span> + <span class="code-keyword">name</span> + <span class="code-string">"!"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Введите ваше имя: </span><span class="user-input">Алекс</span><br>
+        <span class="system-output">Привет, Алекс!</span>
+    </div>
+
+    <h3>Преобразование типов при вводе</h3>
+
+    <p>Как мы уже знаем, <code>input()</code> всегда возвращает строку. Если нам нужно число, мы должны преобразовать ввод:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Получение числа от пользователя</span><br>
+        <span class="code-keyword">age_str</span> = <span class="code-function">input</span>(<span class="code-string">"Введите ваш возраст: "</span>)<br>
+        <span class="code-keyword">age</span> = <span class="code-function">int</span>(<span class="code-keyword">age_str</span>)<br>
+        <br>
+        <span class="code-comment"># Более компактная запись</span><br>
+        <span class="code-keyword">height</span> = <span class="code-function">float</span>(<span class="code-function">input</span>(<span class="code-string">"Введите ваш рост в метрах: "</span>))
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> При преобразовании ввода в число может возникнуть ошибка, если пользователь введет что-то, что нельзя преобразовать в число. Позже мы научимся обрабатывать такие ошибки.</p>
+    </div>
+
+    <h3>Множественный ввод</h3>
+
+    <p>Иногда нам нужно получить несколько значений за один раз. Для этого можно использовать метод <code>split()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Получение нескольких чисел в одной строке</span><br>
+        <span class="code-keyword">coordinates_str</span> = <span class="code-function">input</span>(<span class="code-string">"Введите координаты x и y через пробел: "</span>)<br>
+        <span class="code-keyword">x_str</span>, <span class="code-keyword">y_str</span> = <span class="code-keyword">coordinates_str</span>.<span class="code-function">split</span>()<br>
+        <span class="code-keyword">x</span> = <span class="code-function">float</span>(<span class="code-keyword">x_str</span>)<br>
+        <span class="code-keyword">y</span> = <span class="code-function">float</span>(<span class="code-keyword">y_str</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Координаты: ({x}, {y})"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Введите координаты x и y через пробел: </span><span class="user-input">10.5 -3.2</span><br>
+        <span class="system-output">Координаты: (10.5, -3.2)</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Совет:</strong> Метод <code>split()</code> по умолчанию разделяет строку по пробелам. Вы можете указать другой разделитель, например: <code>input_str.split(',')</code> для разделения по запятым.</p>
+    </div>
+
+    <h2>Вывод данных в Python</h2>
+
+    <p>Теперь давайте рассмотрим различные способы вывода информации пользователю.</p>
+
+    <h3>Функция print()</h3>
+
+    <p>Функция <code>print()</code> - основной способ вывода данных в Python. Она имеет множество возможностей:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Простой вывод</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Привет, мир!"</span>)<br>
+        <br>
+        <span class="code-comment"># Вывод нескольких значений</span><br>
+        <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+        <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Имя:"</span>, <span class="code-keyword">name</span>, <span class="code-string">"Возраст:"</span>, <span class="code-keyword">age</span>)<br>
+        <br>
+        <span class="code-comment"># Вывод без перехода на новую строку</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Один"</span>, <span class="code-function">end</span>=<span class="code-string">" "</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Два"</span>, <span class="code-function">end</span>=<span class="code-string">" "</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Три"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, мир!</span><br>
+        <span class="system-output">Имя: Алекс Возраст: 15</span><br>
+        <span class="system-output">Один Два Три</span>
+    </div>
+
+    <h3>Разделители в print()</h3>
+
+    <p>Вы можете изменить разделитель между выводимыми значениями с помощью параметра <code>sep</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Изменение разделителя</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Яблоко"</span>, <span class="code-string">"Банан"</span>, <span class="code-string">"Апельсин"</span>, <span class="code-function">sep</span>=<span class="code-string">" | "</span>)<br>
+        <br>
+        <span class="code-comment"># Вывод координат</span><br>
+        <span class="code-keyword">x</span> = <span class="code-number">10.5</span><br>
+        <span class="code-keyword">y</span> = <span class="code-number">-3.2</span><br>
+        <span class="code-function">print</span>(<span class="code-keyword">x</span>, <span class="code-keyword">y</span>, <span class="code-function">sep</span>=<span class="code-string">", "</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Яблоко | Банан | Апельсин</span><br>
+        <span class="system-output">10.5, -3.2</span>
+    </div>
+
+    <h3>Форматирование строк</h3>
+
+    <p>В Python есть несколько способов форматирования строк для вывода:</p>
+
+    <h4>1. f-строки (рекомендуемый способ в современном Python)</h4>
+
+    <div class="code-block">
+        <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+        <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Привет, {name}! Тебе {age} лет."</span>)<br>
+        <br>
+        <span class="code-comment"># Форматирование чисел</span><br>
+        <span class="code-keyword">pi</span> = <span class="code-number">3.14159265359</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Значение π с точностью до 2 знаков: {pi:.2f}"</span>)<br>
+        <br>
+        <span class="code-comment"># Выравнивание</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'Имя':<10}|{'Возраст':>8}|{'Планета':^15}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'-'*10}|{'-'*8}|{'-'*15}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'Алекс':<10}|{15:>8}|{'Земля':^15}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'Мария':<10}|{17:>8}|{'Марс':^15}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, Алекс! Тебе 15 лет.</span><br>
+        <span class="system-output">Значение π с точностью до 2 знаков: 3.14</span><br>
+        <span class="system-output">Имя       |  Возраст|    Планета    </span><br>
+        <span class="system-output">----------|--------|---------------</span><br>
+        <span class="system-output">Алекс     |      15|     Земля     </span><br>
+        <span class="system-output">Мария     |      17|      Марс     </span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Обозначения форматирования:</strong></p>
+        <ul>
+            <li><code>{переменная:&lt;ширина}</code> - выравнивание по левому краю</li>
+            <li><code>{переменная:&gt;ширина}</code> - выравнивание по правому краю</li>
+            <li><code>{переменная:^ширина}</code> - выравнивание по центру</li>
+            <li><code>{число:.точность f}</code> - форматирование числа с плавающей точкой</li>
+        </ul>
+    </div>
+
+    <h4>2. Метод format()</h4>
+
+    <div class="code-block">
+        <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+        <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Привет, {}! Тебе {} лет."</span>.<span class="code-function">format</span>(<span class="code-keyword">name</span>, <span class="code-keyword">age</span>))<br>
+        <br>
+        <span class="code-comment"># С указанием порядка</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Планета {1} находится в системе {0}."</span>.<span class="code-function">format</span>(<span class="code-string">"Солнечная"</span>, <span class="code-string">"Земля"</span>))
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, Алекс! Тебе 15 лет.</span><br>
+        <span class="system-output">Планета Земля находится в системе Солнечная.</span>
+    </div>
+
+    <h4>3. Старый стиль форматирования с %</h4>
+
+    <div class="code-block">
+        <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+        <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Привет, %s! Тебе %d лет."</span> % (<span class="code-keyword">name</span>, <span class="code-keyword">age</span>))<br>
+        <br>
+        <span class="code-comment"># Форматирование чисел</span><br>
+        <span class="code-keyword">pi</span> = <span class="code-number">3.14159265359</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Значение π: %.2f"</span> % <span class="code-keyword">pi</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, Алекс! Тебе 15 лет.</span><br>
+        <span class="system-output">Значение π: 3.14</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Рекомендация:</strong> В современном Python рекомендуется использовать f-строки, так как они более читаемые и удобные. Они доступны начиная с Python 3.6.</p>
+    </div>
+
+    <h3>Вывод в файл</h3>
+
+    <p>Помимо вывода в консоль, Python позволяет записывать данные в файлы:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Открываем файл для записи</span><br>
+        <span class="code-keyword">file</span> = <span class="code-function">open</span>(<span class="code-string">"log.txt"</span>, <span class="code-string">"w"</span>)<br>
+        <br>
+        <span class="code-comment"># Записываем данные</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Лог системы. Дата: 2142-05-15"</span>, <span class="code-function">file</span>=<span class="code-keyword">file</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Статус: подключение установлено"</span>, <span class="code-function">file</span>=<span class="code-keyword">file</span>)<br>
+        <br>
+        <span class="code-comment"># Закрываем файл</span><br>
+        <span class="code-keyword">file</span>.<span class="code-function">close</span>()<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"Данные записаны в файл log.txt"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Данные записаны в файл log.txt</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Содержимое файла log.txt:</strong></p>
+        <pre>Лог системы. Дата: 2142-05-15
+Статус: подключение установлено</pre>
+    </div>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Калькулятор</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Простой калькулятор</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Калькулятор"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Доступные операции: +, -, *, /"</span>)<br>
+        <br>
+        <span class="code-keyword">num1</span> = <span class="code-function">float</span>(<span class="code-function">input</span>(<span class="code-string">"Введите первое число: "</span>))<br>
+        <span class="code-keyword">operation</span> = <span class="code-function">input</span>(<span class="code-string">"Введите операцию: "</span>)<br>
+        <span class="code-keyword">num2</span> = <span class="code-function">float</span>(<span class="code-function">input</span>(<span class="code-string">"Введите второе число: "</span>))<br>
+        <br>
+        <span class="code-keyword">result</span> = <span class="code-number">0</span><br>
+        <br>
+        <span class="code-keyword">if</span> <span class="code-keyword">operation</span> == <span class="code-string">"+"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">result</span> = <span class="code-keyword">num1</span> + <span class="code-keyword">num2</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">operation</span> == <span class="code-string">"-"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">result</span> = <span class="code-keyword">num1</span> - <span class="code-keyword">num2</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">operation</span> == <span class="code-string">"*"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">result</span> = <span class="code-keyword">num1</span> * <span class="code-keyword">num2</span><br>
+        <span class="code-keyword">elif</span> <span class="code-keyword">operation</span> == <span class="code-string">"/"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">result</span> = <span class="code-keyword">num1</span> / <span class="code-keyword">num2</span><br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"{num1} {operation} {num2} = {result}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Калькулятор</span><br>
+        <span class="system-output">Доступные операции: +, -, *, /</span><br>
+        <span class="system-output">Введите первое число: </span><span class="user-input">10</span><br>
+        <span class="system-output">Введите операцию: </span><span class="user-input">*</span><br>
+        <span class="system-output">Введите второе число: </span><span class="user-input">5</span><br>
+        <span class="system-output">10.0 * 5.0 = 50.0</span>
+    </div>
+
+    <h3>Форматированный вывод таблицы</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Вывод таблицы планет</span><br>
+        <span class="code-keyword">planets</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Меркурий"</span>, <span class="code-string">"distance"</span>: <span class="code-number">57.9</span>, <span class="code-string">"diameter"</span>: <span class="code-number">4879</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Венера"</span>, <span class="code-string">"distance"</span>: <span class="code-number">108.2</span>, <span class="code-string">"diameter"</span>: <span class="code-number">12104</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>, <span class="code-string">"distance"</span>: <span class="code-number">149.6</span>, <span class="code-string">"diameter"</span>: <span class="code-number">12756</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Марс"</span>, <span class="code-string">"distance"</span>: <span class="code-number">227.9</span>, <span class="code-string">"diameter"</span>: <span class="code-number">6792</span>}<br>
+        ]<br>
+        <br>
+        <span class="code-comment"># Заголовок таблицы</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'Планета':<12}|{'Расстояние (млн км)':>20}|{'Диаметр (км)':>15}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"{'-'*12}|{'-'*20}|{'-'*15}"</span>)<br>
+        <br>
+        <span class="code-comment"># Данные таблицы</span><br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{planet['name']:<12}|{planet['distance']:>20.1f}|{planet['diameter']:>15}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Планета     |  Расстояние (млн км)|  Диаметр (км)</span><br>
+        <span class="system-output">------------|--------------------|--------------</span><br>
+        <span class="system-output">Меркурий    |                57.9|          4879</span><br>
+        <span class="system-output">Венера      |               108.2|         12104</span><br>
+        <span class="system-output">Земля       |               149.6|         12756</span><br>
+        <span class="system-output">Марс        |               227.9|          6792</span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Космический журнал", которая:</p>
+        <ol>
+            <li>Запрашивает у пользователя его позывной (имя)</li>
+            <li>Запрашивает текущую дату в формате ГГГГ-ММ-ДД</li>
+            <li>Запрашивает название планеты, на которой находится пользователь</li>
+            <li>Запрашивает три показателя: температуру, давление и уровень радиации (числа)</li>
+            <li>Выводит красиво отформатированный отчет, используя f-строки</li>
+        </ol>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== КОСМИЧЕСКИЙ ЖУРНАЛ =====</span><br>
+            <span class="system-output">Введите ваш позывной: </span><span class="user-input">Алекс-7</span><br>
+            <span class="system-output">Введите текущую дату (ГГГГ-ММ-ДД): </span><span class="user-input">2142-05-15</span><br>
+            <span class="system-output">Введите название планеты: </span><span class="user-input">Марс</span><br>
+            <span class="system-output">Введите температуру (°C): </span><span class="user-input">-20.5</span><br>
+            <span class="system-output">Введите давление (кПа): </span><span class="user-input">10.2</span><br>
+            <span class="system-output">Введите уровень радиации (мЗв): </span><span class="user-input">0.8</span><br>
+            <span class="system-output">
+==============================<br>
+ОТЧЕТ КОСМИЧЕСКОГО ЖУРНАЛА<br>
+==============================<br>
+Дата: 2142-05-15<br>
+Позывной: Алекс-7<br>
+Планета: Марс<br>
+------------------------------<br>
+ПОКАЗАТЕЛИ ОКРУЖАЮЩЕЙ СРЕДЫ:<br>
+Температура: -20.5 °C<br>
+Давление: 10.2 кПа<br>
+Радиация: 0.8 мЗв<br>
+------------------------------<br>
+Статус: НОРМАЛЬНЫЙ<br>
+==============================
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Математика"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Ввод-Вывод".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">calculate</div>
+        <p>Используй этот код на главной странице для доступа к уроку 4.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson2.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson4.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>

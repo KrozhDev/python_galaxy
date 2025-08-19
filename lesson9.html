@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Словария" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 75%; /* 9/12 для девятого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .dict-diagram {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #5d3fd3;
+            overflow-x: auto;
+        }
+
+        .dict-container {
+            display: inline-flex;
+            flex-direction: column;
+            margin: 20px 0;
+            border: 2px solid var(--highlight-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dict-title {
+            background-color: rgba(93, 63, 211, 0.4);
+            padding: 10px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .dict-pair {
+            display: flex;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .dict-key {
+            width: 120px;
+            padding: 10px;
+            background-color: rgba(93, 63, 211, 0.2);
+            border-right: 1px solid rgba(93, 63, 211, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .dict-value {
+            width: 200px;
+            padding: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .method-table th {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+
+        .method-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .method-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .method-table tr:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+        }
+
+        .method-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .method-example {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Словария"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 9/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Добро пожаловать на планету "Словария", космический программист! Эта планета является центром хранения ключевой информации Галактической Сети.</p>
+        <p>Здесь мы изучим словари (dictionaries) - одну из самых мощных и гибких структур данных в Python. Словари позволяют хранить данные в виде пар "ключ-значение", что делает их идеальными для работы с именованными данными и сложными структурами.</p>
+        <p>Наша задача - освоить создание и манипуляцию словарями, чтобы эффективно управлять данными в нашей миссии по восстановлению Галактической Сети.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Словария -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ff9a00;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ff5500;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+        <!-- Структуры данных на поверхности -->
+        <rect x="60" y="70" width="80" height="60" rx="5" fill="#cc4400" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Ключи и значения -->
+        <line x1="100" y1="70" x2="100" y2="130" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="60" y1="90" x2="140" y2="90" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="60" y1="110" x2="140" y2="110" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Текст на структурах -->
+        <text x="80" y="83" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">key1</text>
+        <text x="120" y="83" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">value1</text>
+        <text x="80" y="103" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">key2</text>
+        <text x="120" y="103" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">value2</text>
+        <text x="80" y="123" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">key3</text>
+        <text x="120" y="123" font-family="'JetBrains Mono', monospace" font-size="8" fill="white" text-anchor="middle">value3</text>
+
+        <!-- Кратеры -->
+        <circle cx="40" cy="50" r="10" fill="#cc4400" />
+        <circle cx="160" cy="60" r="15" fill="#cc4400" />
+        <circle cx="50" cy="150" r="12" fill="#cc4400" />
+        <circle cx="150" cy="140" r="8" fill="#cc4400" />
+
+        <!-- Светящиеся точки в структурах данных -->
+        <circle cx="80" y="83" r="2" fill="#4ecca3" filter="url(#glow)" />
+        <circle cx="80" y="103" r="2" fill="#4ecca3" filter="url(#glow)" />
+        <circle cx="80" y="123" r="2" fill="#4ecca3" filter="url(#glow)" />
+    </svg>
+
+    <h2>Что такое словари?</h2>
+
+    <p>Словарь (dictionary) в Python - это неупорядоченная коллекция пар "ключ-значение". Каждый ключ связан с определенным значением, что позволяет быстро находить, добавлять и изменять данные. Словари являются изменяемыми (mutable) и могут содержать элементы разных типов.</p>
+
+    <div class="note-block">
+        <p><strong>Аналогия:</strong> Представьте словарь как настоящий словарь или телефонную книгу. Чтобы найти номер телефона (значение), вы ищете имя человека (ключ). Ключи в словаре должны быть уникальными, как и имена в телефонной книге, а значения могут повторяться.</p>
+    </div>
+
+    <div class="dict-diagram">
+        <div class="dict-container">
+            <div class="dict-title">planet_info</div>
+            <div class="dict-pair">
+                <div class="dict-key">"name"</div>
+                <div class="dict-value">"Марс"</div>
+            </div>
+            <div class="dict-pair">
+                <div class="dict-key">"diameter"</div>
+                <div class="dict-value">6779</div>
+            </div>
+            <div class="dict-pair">
+                <div class="dict-key">"moons"</div>
+                <div class="dict-value">["Фобос", "Деймос"]</div>
+            </div>
+            <div class="dict-pair">
+                <div class="dict-key">"has_rings"</div>
+                <div class="dict-value">False</div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Создание словарей</h2>
+
+    <p>Словари в Python создаются с помощью фигурных скобок <code>{}</code> или функции <code>dict()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Пустой словарь</span><br>
+        <span class="code-keyword">empty_dict</span> = {}<br>
+        <span class="code-keyword">also_empty</span> = <span class="code-function">dict</span>()<br>
+        <br>
+        <span class="code-comment"># Словарь с элементами</span><br>
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12742</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">149.6</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_moon"</span>: <span class="code-keyword">True</span><br>
+        }<br>
+        <br>
+        <span class="code-comment"># Создание словаря с помощью функции dict()</span><br>
+        <span class="code-keyword">planet2</span> = <span class="code-function">dict</span>(<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">name</span>=<span class="code-string">"Марс"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">diameter</span>=<span class="code-number">6779</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">distance_from_sun</span>=<span class="code-number">227.9</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">has_moon</span>=<span class="code-keyword">True</span><br>
+        )<br>
+        <br>
+        <span class="code-comment"># Создание словаря из списка кортежей</span><br>
+        <span class="code-keyword">planet_items</span> = [(<span class="code-string">"name"</span>, <span class="code-string">"Венера"</span>), (<span class="code-string">"diameter"</span>, <span class="code-number">12104</span>), (<span class="code-string">"has_moon"</span>, <span class="code-keyword">False</span>)]<br>
+        <span class="code-keyword">planet3</span> = <span class="code-function">dict</span>(<span class="code-keyword">planet_items</span>)<br>
+        <br>
+        <span class="code-comment"># Вывод словарей</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Земля:"</span>, <span class="code-keyword">planet</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Марс:"</span>, <span class="code-keyword">planet2</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Венера:"</span>, <span class="code-keyword">planet3</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Земля: {'name': 'Земля', 'diameter': 12742, 'distance_from_sun': 149.6, 'has_moon': True}</span><br>
+        <span class="system-output">Марс: {'name': 'Марс', 'diameter': 6779, 'distance_from_sun': 227.9, 'has_moon': True}</span><br>
+        <span class="system-output">Венера: {'name': 'Венера', 'diameter': 12104, 'has_moon': False}</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Важно:</strong> Ключи словаря должны быть неизменяемыми (immutable) типами данных, такими как строки, числа или кортежи. Списки и другие словари не могут быть ключами, так как они изменяемы. Значения могут быть любого типа, включая списки, словари и другие сложные объекты.</p>
+    </div>
+
+    <h2>Доступ к элементам словаря</h2>
+
+    <p>Для доступа к значениям словаря используются квадратные скобки с указанием ключа или метод <code>get()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12742</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">149.6</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_moon"</span>: <span class="code-keyword">True</span><br>
+        }<br>
+        <br>
+        <span class="code-comment"># Доступ с помощью квадратных скобок</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Название планеты:"</span>, <span class="code-keyword">planet</span>[<span class="code-string">"name"</span>])<br>
+        <span class="code-function">print</span>(<span class="code-string">"Диаметр планеты:"</span>, <span class="code-keyword">planet</span>[<span class="code-string">"diameter"</span>], <span class="code-string">"км"</span>)<br>
+        <br>
+        <span class="code-comment"># Доступ с помощью метода get()</span><br>
+        <span class="code-comment"># get() возвращает None, если ключ не найден</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Расстояние от Солнца:"</span>, <span class="code-keyword">planet</span>.<span class="code-function">get</span>(<span class="code-string">"distance_from_sun"</span>), <span class="code-string">"млн км"</span>)<br>
+        <br>
+        <span class="code-comment"># get() с значением по умолчанию</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Атмосфера:"</span>, <span class="code-keyword">planet</span>.<span class="code-function">get</span>(<span class="code-string">"atmosphere"</span>, <span class="code-string">"Нет данных"</span>))
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Название планеты: Земля</span><br>
+        <span class="system-output">Диаметр планеты: 12742 км</span><br>
+        <span class="system-output">Расстояние от Солнца: 149.6 млн км</span><br>
+        <span class="system-output">Атмосфера: Нет данных</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> Если ключ не существует, доступ через квадратные скобки вызовет ошибку <code>KeyError</code>. Метод <code>get()</code> безопаснее, так как он возвращает <code>None</code> или указанное значение по умолчанию, если ключ не найден.</p>
+    </div>
+
+    <h2>Изменение элементов словаря</h2>
+
+    <p>Словари в Python являются изменяемыми, поэтому мы можем добавлять, изменять и удалять их элементы:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Марс"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">6779</span><br>
+        }<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный словарь:"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Добавление нового элемента</span><br>
+        <span class="code-keyword">planet</span>[<span class="code-string">"moons"</span>] = [<span class="code-string">"Фобос"</span>, <span class="code-string">"Деймос"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"После добавления спутников:"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Изменение существующего элемента</span><br>
+        <span class="code-keyword">planet</span>[<span class="code-string">"diameter"</span>] = <span class="code-number">6780</span>  <span class="code-comment"># Уточненное значение</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"После изменения диаметра:"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Добавление нескольких элементов с помощью update()</span><br>
+        <span class="code-keyword">planet</span>.<span class="code-function">update</span>({<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">227.9</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_rings"</span>: <span class="code-keyword">False</span><br>
+        })<br>
+        <span class="code-function">print</span>(<span class="code-string">"После update():"</span>, <span class="code-keyword">planet</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный словарь: {'name': 'Марс', 'diameter': 6779}</span><br>
+        <span class="system-output">После добавления спутников: {'name': 'Марс', 'diameter': 6779, 'moons': ['Фобос', 'Деймос']}</span><br>
+        <span class="system-output">После изменения диаметра: {'name': 'Марс', 'diameter': 6780, 'moons': ['Фобос', 'Деймос']}</span><br>
+        <span class="system-output">После update(): {'name': 'Марс', 'diameter': 6780, 'moons': ['Фобос', 'Деймос'], 'distance_from_sun': 227.9, 'has_rings': False}</span>
+    </div>
+
+    <h2>Удаление элементов словаря</h2>
+
+    <div class="code-block">
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Юпитер"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">139820</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">778.5</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_rings"</span>: <span class="code-keyword">True</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons_count"</span>: <span class="code-number">79</span><br>
+        }<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный словарь:"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление элемента с помощью del</span><br>
+        <span class="code-keyword">del</span> <span class="code-keyword">planet</span>[<span class="code-string">"has_rings"</span>]<br>
+        <span class="code-function">print</span>(<span class="code-string">"После del:"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление и возврат элемента с помощью pop()</span><br>
+        <span class="code-keyword">moons</span> = <span class="code-keyword">planet</span>.<span class="code-function">pop</span>(<span class="code-string">"moons_count"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Удаленное значение: {moons}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После pop():"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление и возврат произвольной пары с помощью popitem()</span><br>
+        <span class="code-comment"># В Python 3.7+ popitem() удаляет последнюю добавленную пару</span><br>
+        <span class="code-keyword">item</span> = <span class="code-keyword">planet</span>.<span class="code-function">popitem</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Удаленная пара: {item}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"После popitem():"</span>, <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Очистка словаря</span><br>
+        <span class="code-keyword">planet</span>.<span class="code-function">clear</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">"После clear():"</span>, <span class="code-keyword">planet</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Исходный словарь: {'name': 'Юпитер', 'diameter': 139820, 'distance_from_sun': 778.5, 'has_rings': True, 'moons_count': 79}</span><br>
+        <span class="system-output">После del: {'name': 'Юпитер', 'diameter': 139820, 'distance_from_sun': 778.5, 'moons_count': 79}</span><br>
+        <span class="system-output">Удаленное значение: 79</span><br>
+        <span class="system-output">После pop(): {'name': 'Юпитер', 'diameter': 139820, 'distance_from_sun': 778.5}</span><br>
+        <span class="system-output">Удаленная пара: ('distance_from_sun', 778.5)</span><br>
+        <span class="system-output">После popitem(): {'name': 'Юпитер', 'diameter': 139820}</span><br>
+        <span class="system-output">После clear(): {}</span>
+    </div>
+
+    <h2>Проверка наличия ключа</h2>
+
+    <p>Для проверки наличия ключа в словаре используется оператор <code>in</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Сатурн"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">116460</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_rings"</span>: <span class="code-keyword">True</span><br>
+        }<br>
+        <br>
+        <span class="code-comment"># Проверка наличия ключа</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Есть ли ключ 'name'?"</span>, <span class="code-string">"name"</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Есть ли ключ 'moons'?"</span>, <span class="code-string">"moons"</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Проверка отсутствия ключа</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Отсутствует ли ключ 'temperature'?"</span>, <span class="code-string">"temperature"</span> <span class="code-keyword">not in</span> <span class="code-keyword">planet</span>)<br>
+        <br>
+        <span class="code-comment"># Безопасный доступ к значению с проверкой</span><br>
+        <span class="code-keyword">if</span> <span class="code-string">"moons"</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Спутники:"</span>, <span class="code-keyword">planet</span>[<span class="code-string">"moons"</span>])<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Информация о спутниках отсутствует"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Есть ли ключ 'name'? True</span><br>
+        <span class="system-output">Есть ли ключ 'moons'? False</span><br>
+        <span class="system-output">Отсутствует ли ключ 'temperature'? True</span><br>
+        <span class="system-output">Информация о спутниках отсутствует</span>
+    </div>
+
+    <h2>Итерация по словарю</h2>
+
+    <p>Существует несколько способов перебора элементов словаря:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">planet</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Нептун"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">49244</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">4495.1</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"has_rings"</span>: <span class="code-keyword">True</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Тритон"</span>, <span class="code-string">"Нереида"</span>, <span class="code-string">"Наяда"</span>]<br>
+        }<br>
+        <br>
+        <span class="code-comment"># Итерация по ключам (поведение по умолчанию)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Ключи словаря:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">key</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {key}"</span>)<br>
+        <br>
+        <span class="code-comment"># Итерация по ключам с помощью keys()</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nКлючи с помощью keys():"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">key</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>.<span class="code-function">keys</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {key}"</span>)<br>
+        <br>
+        <span class="code-comment"># Итерация по значениям с помощью values()</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nЗначения словаря:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">value</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>.<span class="code-function">values</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {value}"</span>)<br>
+        <br>
+        <span class="code-comment"># Итерация по парам ключ-значение с помощью items()</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nПары ключ-значение:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">key</span>, <span class="code-keyword">value</span> <span class="code-keyword">in</span> <span class="code-keyword">planet</span>.<span class="code-function">items</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {key}: {value}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Ключи словаря:</span><br>
+        <span class="system-output">- name</span><br>
+        <span class="system-output">- diameter</span><br>
+        <span class="system-output">- distance_from_sun</span><br>
+        <span class="system-output">- has_rings</span><br>
+        <span class="system-output">- moons</span><br>
+        <span class="system-output">
+Ключи с помощью keys():</span><br>
+        <span class="system-output">- name</span><br>
+        <span class="system-output">- diameter</span><br>
+        <span class="system-output">- distance_from_sun</span><br>
+        <span class="system-output">- has_rings</span><br>
+        <span class="system-output">- moons</span><br>
+        <span class="system-output">
+Значения словаря:</span><br>
+        <span class="system-output">- Нептун</span><br>
+        <span class="system-output">- 49244</span><br>
+        <span class="system-output">- 4495.1</span><br>
+        <span class="system-output">- True</span><br>
+        <span class="system-output">- ['Тритон', 'Нереида', 'Наяда']</span><br>
+        <span class="system-output">
+Пары ключ-значение:</span><br>
+        <span class="system-output">- name: Нептун</span><br>
+        <span class="system-output">- diameter: 49244</span><br>
+        <span class="system-output">- distance_from_sun: 4495.1</span><br>
+        <span class="system-output">- has_rings: True</span><br>
+        <span class="system-output">- moons: ['Тритон', 'Нереида', 'Наяда']</span>
+    </div>
+
+    <h2>Вложенные словари</h2>
+
+    <p>Словари могут содержать другие словари в качестве значений, что позволяет создавать сложные структуры данных:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Словарь с информацией о планетах</span><br>
+        <span class="code-keyword">solar_system</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Mercury"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">4879</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">57.9</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Venus"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12104</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">108.2</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Earth"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12742</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">149.6</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Moon"</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        }<br>
+        <br>
+        <span class="code-comment"># Доступ к вложенным данным</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Диаметр Земли: {solar_system['Earth']['diameter']} км"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Расстояние от Венеры до Солнца: {solar_system['Venus']['distance_from_sun']} млн км"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Спутники Земли: {', '.join(solar_system['Earth']['moons'])}"</span>)<br>
+        <br>
+        <span class="code-comment"># Добавление новой планеты</span><br>
+        <span class="code-keyword">solar_system</span>[<span class="code-string">"Mars"</span>] = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">6779</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">227.9</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Phobos"</span>, <span class="code-string">"Deimos"</span>]<br>
+        }<br>
+        <br>
+        <span class="code-comment"># Перебор вложенных словарей</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nИнформация о планетах:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet_name</span>, <span class="code-keyword">planet_info</span> <span class="code-keyword">in</span> <span class="code-keyword">solar_system</span>.<span class="code-function">items</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\n{planet_name}:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"  Диаметр: {planet_info['diameter']} км"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"  Расстояние от Солнца: {planet_info['distance_from_sun']} млн км"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">planet_info</span>[<span class="code-string">'moons'</span>]:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"  Спутники: {', '.join(planet_info['moons'])}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"  Спутники: нет"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Диаметр Земли: 12742 км</span><br>
+        <span class="system-output">Расстояние от Венеры до Солнца: 108.2 млн км</span><br>
+        <span class="system-output">Спутники Земли: Moon</span><br>
+        <span class="system-output">
+Информация о планетах:
+
+Mercury:
+  Диаметр: 4879 км
+  Расстояние от Солнца: 57.9 млн км
+  Спутники: нет
+
+Venus:
+  Диаметр: 12104 км
+  Расстояние от Солнца: 108.2 млн км
+  Спутники: нет
+
+Earth:
+  Диаметр: 12742 км
+  Расстояние от Солнца: 149.6 млн км
+  Спутники: Moon
+
+Mars:
+  Диаметр: 6779 км
+  Расстояние от Солнца: 227.9 млн км
+  Спутники: Phobos, Deimos</span>
+    </div>
+
+    <h2>Словарные включения (Dictionary Comprehensions)</h2>
+
+    <p>Словарные включения - это компактный способ создания словарей, аналогичный списочным включениям:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Создание словаря с помощью словарного включения</span><br>
+        <br>
+        <span class="code-comment"># Словарь квадратов чисел</span><br>
+        <span class="code-keyword">squares</span> = {<span class="code-keyword">x</span>: <span class="code-keyword">x</span>**<span class="code-number">2</span> <span class="code-keyword">for</span> <span class="code-keyword">x</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">6</span>)}<br>
+        <span class="code-function">print</span>(<span class="code-string">"Словарь квадратов:"</span>, <span class="code-keyword">squares</span>)<br>
+        <br>
+        <span class="code-comment"># Словарь с условием</span><br>
+        <span class="code-keyword">even_squares</span> = {<span class="code-keyword">x</span>: <span class="code-keyword">x</span>**<span class="code-number">2</span> <span class="code-keyword">for</span> <span class="code-keyword">x</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">11</span>) <span class="code-keyword">if</span> <span class="code-keyword">x</span> % <span class="code-number">2</span> == <span class="code-number">0</span>}<br>
+        <span class="code-function">print</span>(<span class="code-string">"Словарь четных квадратов:"</span>, <span class="code-keyword">even_squares</span>)<br>
+        <br>
+        <span class="code-comment"># Преобразование списка в словарь</span><br>
+        <span class="code-keyword">planets</span> = [<span class="code-string">"Mercury"</span>, <span class="code-string">"Venus"</span>, <span class="code-string">"Earth"</span>, <span class="code-string">"Mars"</span>]<br>
+        <span class="code-keyword">planet_lengths</span> = {<span class="code-keyword">planet</span>: <span class="code-function">len</span>(<span class="code-keyword">planet</span>) <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>}<br>
+        <span class="code-function">print</span>(<span class="code-string">"Длины названий планет:"</span>, <span class="code-keyword">planet_lengths</span>)<br>
+        <br>
+        <span class="code-comment"># Обмен ключей и значений</span><br>
+        <span class="code-keyword">original</span> = {<span class="code-string">"a"</span>: <span class="code-number">1</span>, <span class="code-string">"b"</span>: <span class="code-number">2</span>, <span class="code-string">"c"</span>: <span class="code-number">3</span>}<br>
+        <span class="code-keyword">inverted</span> = {<span class="code-keyword">value</span>: <span class="code-keyword">key</span> <span class="code-keyword">for</span> <span class="code-keyword">key</span>, <span class="code-keyword">value</span> <span class="code-keyword">in</span> <span class="code-keyword">original</span>.<span class="code-function">items</span>()}<br>
+        <span class="code-function">print</span>(<span class="code-string">"Исходный словарь:"</span>, <span class="code-keyword">original</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Инвертированный словарь:"</span>, <span class="code-keyword">inverted</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Словарь квадратов: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</span><br>
+        <span class="system-output">Словарь четных квадратов: {2: 4, 4: 16, 6: 36, 8: 64, 10: 100}</span><br>
+        <span class="system-output">Длины названий планет: {'Mercury': 7, 'Venus': 5, 'Earth': 5, 'Mars': 4}</span><br>
+        <span class="system-output">Исходный словарь: {'a': 1, 'b': 2, 'c': 3}</span><br>
+        <span class="system-output">Инвертированный словарь: {1: 'a', 2: 'b', 3: 'c'}</span>
+    </div>
+
+    <h2>Сводная таблица методов словарей</h2>
+
+    <table class="method-table">
+        <tr>
+            <th>Метод</th>
+            <th>Описание</th>
+            <th>Пример</th>
+        </tr>
+        <tr>
+            <td class="method-name">clear()</td>
+            <td>Удаляет все элементы из словаря</td>
+            <td class="method-example">planet.clear()</td>
+        </tr>
+        <tr>
+            <td class="method-name">copy()</td>
+            <td>Возвращает копию словаря</td>
+            <td class="method-example">new_dict = planet.copy()</td>
+        </tr>
+        <tr>
+            <td class="method-name">fromkeys(keys, value)</td>
+            <td>Создает новый словарь с указанными ключами и значением</td>
+            <td class="method-example">dict.fromkeys(['a', 'b'], 0)</td>
+        </tr>
+        <tr>
+            <td class="method-name">get(key, default)</td>
+            <td>Возвращает значение ключа, или default если ключ не найден</td>
+            <td class="method-example">planet.get('name', 'Unknown')</td>
+        </tr>
+        <tr>
+            <td class="method-name">items()</td>
+            <td>Возвращает представление пар ключ-значение</td>
+            <td class="method-example">for k, v in planet.items()</td>
+        </tr>
+        <tr>
+            <td class="method-name">keys()</td>
+            <td>Возвращает представление ключей</td>
+            <td class="method-example">for k in planet.keys()</td>
+        </tr>
+        <tr>
+            <td class="method-name">pop(key, default)</td>
+            <td>Удаляет ключ и возвращает значение, или default если ключ не найден</td>
+            <td class="method-example">name = planet.pop('name')</td>
+        </tr>
+        <tr>
+            <td class="method-name">popitem()</td>
+            <td>Удаляет и возвращает произвольную пару (ключ, значение)</td>
+            <td class="method-example">item = planet.popitem()</td>
+        </tr>
+        <tr>
+            <td class="method-name">setdefault(key, default)</td>
+            <td>Возвращает значение ключа, если ключ есть в словаре, иначе добавляет ключ со значением default</td>
+            <td class="method-example">planet.setdefault('moons', [])</td>
+        </tr>
+        <tr>
+            <td class="method-name">update(dict)</td>
+            <td>Обновляет словарь, добавляя пары из другого словаря</td>
+            <td class="method-example">planet.update({'moons': 2})</td>
+        </tr>
+        <tr>
+            <td class="method-name">values()</td>
+            <td>Возвращает представление значений</td>
+            <td class="method-example">for v in planet.values()</td>
+        </tr>
+    </table>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Пример 1: Подсчет частоты слов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">count_words</span>(<span class="code-keyword">text</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Разбиваем текст на слова и удаляем знаки препинания</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">words</span> = <span class="code-keyword">text</span>.<span class="code-function">lower</span>().<span class="code-function">replace</span>(<span class="code-string">','</span>, <span class="code-string">''</span>).<span class="code-function">replace</span>(<span class="code-string">'.'</span>, <span class="code-string">''</span>).<span class="code-function">replace</span>(<span class="code-string">'!'</span>, <span class="code-string">''</span>).<span class="code-function">replace</span>(<span class="code-string">'?'</span>, <span class="code-string">''</span>).<span class="code-function">split</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Создаем словарь для подсчета частоты</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">word_count</span> = {}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Подсчитываем частоту каждого слова</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">word</span> <span class="code-keyword">in</span> <span class="code-keyword">words</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">word</span> <span class="code-keyword">in</span> <span class="code-keyword">word_count</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">word_count</span>[<span class="code-keyword">word</span>] += <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">word_count</span>[<span class="code-keyword">word</span>] = <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Альтернативный способ с использованием setdefault</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># for word in words:</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">#     word_count.setdefault(word, 0)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">#     word_count[word] += 1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">word_count</span><br>
+        <br>
+        <span class="code-comment"># Пример использования</span><br>
+        <span class="code-keyword">text</span> = <span class="code-string">"""Космос - это огромное пространство за пределами Земли.
+            Космос содержит планеты, звезды, галактики и многое другое.
+            Люди изучают космос с помощью телескопов и космических аппаратов."""</span><br>
+        <br>
+        <span class="code-keyword">word_frequency</span> = <span class="code-function">count_words</span>(<span class="code-keyword">text</span>)<br>
+        <br>
+        <span class="code-comment"># Вывод результатов</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"Частота слов в тексте:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">word</span>, <span class="code-keyword">count</span> <span class="code-keyword">in</span> <span class="code-function">sorted</span>(<span class="code-keyword">word_frequency</span>.<span class="code-function">items</span>(), <span class="code-function">key</span>=<span class="code-keyword">lambda</span> <span class="code-keyword">x</span>: <span class="code-keyword">x</span>[<span class="code-number">1</span>], <span class="code-function">reverse</span>=<span class="code-keyword">True</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-function">len</span>(<span class="code-keyword">word</span>) > <span class="code-number">3</span>:  <span class="code-comment"># Пропускаем короткие слова</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{word}: {count}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Частота слов в тексте:</span><br>
+        <span class="system-output">космос: 3</span><br>
+        <span class="system-output">планеты: 1</span><br>
+        <span class="system-output">звезды: 1</span><br>
+        <span class="system-output">галактики: 1</span><br>
+        <span class="system-output">многое: 1</span><br>
+        <span class="system-output">другое: 1</span><br>
+        <span class="system-output">люди: 1</span><br>
+        <span class="system-output">изучают: 1</span><br>
+        <span class="system-output">помощью: 1</span><br>
+        <span class="system-output">телескопов: 1</span><br>
+        <span class="system-output">космических: 1</span><br>
+        <span class="system-output">аппаратов: 1</span><br>
+        <span class="system-output">пределами: 1</span><br>
+        <span class="system-output">земли: 1</span><br>
+        <span class="system-output">содержит: 1</span><br>
+        <span class="system-output">огромное: 1</span><br>
+        <span class="system-output">пространство: 1</span>
+    </div>
+
+    <h3>Пример 2: Каталог космических объектов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">display_catalog</span>(<span class="code-keyword">catalog</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\n===== КАТАЛОГ КОСМИЧЕСКИХ ОБЪЕКТОВ ====="</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">obj_id</span>, <span class="code-keyword">obj_info</span> <span class="code-keyword">in</span> <span class="code-function">sorted</span>(<span class="code-keyword">catalog</span>.<span class="code-function">items</span>()):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nID: {obj_id}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Название: {obj_info['name']}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Тип: {obj_info['type']}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-string">'distance'</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Расстояние: {obj_info['distance']} световых лет"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-string">'description'</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Описание: {obj_info['description']}"</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">add_object</span>(<span class="code-keyword">catalog</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\n===== ДОБАВЛЕНИЕ НОВОГО ОБЪЕКТА ====="</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">obj_id</span> = <span class="code-function">input</span>(<span class="code-string">"Введите ID объекта: "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">obj_id</span> <span class="code-keyword">in</span> <span class="code-keyword">catalog</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Объект с ID {obj_id} уже существует!"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">name</span> = <span class="code-function">input</span>(<span class="code-string">"Введите название: "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">obj_type</span> = <span class="code-function">input</span>(<span class="code-string">"Введите тип (планета, звезда, галактика и т.д.): "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">distance</span> = <span class="code-function">input</span>(<span class="code-string">"Введите расстояние в световых годах (оставьте пустым, если неизвестно): "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">description</span> = <span class="code-function">input</span>(<span class="code-string">"Введите описание (оставьте пустым, если нет): "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Создаем словарь с информацией об объекте</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">obj_info</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-keyword">name</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-keyword">obj_type</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">distance</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">obj_info</span>[<span class="code-string">"distance"</span>] = <span class="code-function">float</span>(<span class="code-keyword">distance</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">description</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">obj_info</span>[<span class="code-string">"description"</span>] = <span class="code-keyword">description</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Добавляем объект в каталог</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">catalog</span>[<span class="code-keyword">obj_id</span>] = <span class="code-keyword">obj_info</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Объект {name} успешно добавлен в каталог!"</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">search_objects</span>(<span class="code-keyword">catalog</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\n===== ПОИСК ОБЪЕКТОВ ====="</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">search_term</span> = <span class="code-function">input</span>(<span class="code-string">"Введите поисковый запрос: "</span>).<span class="code-function">lower</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">found</span> = <span class="code-keyword">False</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nРезультаты поиска:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">obj_id</span>, <span class="code-keyword">obj_info</span> <span class="code-keyword">in</span> <span class="code-keyword">catalog</span>.<span class="code-function">items</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-keyword">search_term</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_id</span>.<span class="code-function">lower</span>() <span class="code-keyword">or</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">search_term</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span>[<span class="code-string">'name'</span>].<span class="code-function">lower</span>() <span class="code-keyword">or</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">search_term</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span>[<span class="code-string">'type'</span>].<span class="code-function">lower</span>() <span class="code-keyword">or</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="code-string">'description'</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span> <span class="code-keyword">and</span> <span class="code-keyword">search_term</span> <span class="code-keyword">in</span> <span class="code-keyword">obj_info</span>[<span class="code-string">'description'</span>].<span class="code-function">lower</span>())):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nID: {obj_id}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Название: {obj_info['name']}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Тип: {obj_info['type']}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">found</span> = <span class="code-keyword">True</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">not</span> <span class="code-keyword">found</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Ничего не найдено."</span>)<br>
+        <br>
+        <span class="code-comment"># Пример использования</span><br>
+        <span class="code-comment"># Инициализация каталога с несколькими объектами</span><br>
+        <span class="code-keyword">space_catalog</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"SOL-001"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Солнце"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"звезда"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance"</span>: <span class="code-number">0.0000158</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"description"</span>: <span class="code-string">"Звезда Солнечной системы, желтый карлик"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"PROX-001"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Проксима Центавра"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"звезда"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance"</span>: <span class="code-number">4.2</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"description"</span>: <span class="code-string">"Ближайшая к Солнцу звезда"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        }<br>
+        <br>
+        <span class="code-comment"># Демонстрация работы функций</span><br>
+        <span class="code-function">display_catalog</span>(<span class="code-keyword">space_catalog</span>)<br>
+        <span class="code-function">add_object</span>(<span class="code-keyword">space_catalog</span>)<br>
+        <span class="code-function">display_catalog</span>(<span class="code-keyword">space_catalog</span>)<br>
+        <span class="code-function">search_objects</span>(<span class="code-keyword">space_catalog</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">
+===== КАТАЛОГ КОСМИЧЕСКИХ ОБЪЕКТОВ =====
+
+ID: PROX-001
+Название: Проксима Центавра
+Тип: звезда
+Расстояние: 4.2 световых лет
+Описание: Ближайшая к Солнцу звезда
+
+ID: SOL-001
+Название: Солнце
+Тип: звезда
+Расстояние: 1.58e-05 световых лет
+Описание: Звезда Солнечной системы, желтый карлик
+
+===== ДОБАВЛЕНИЕ НОВОГО ОБЪЕКТА =====
+Введите ID объекта: </span><span class="user-input">AND-001</span><br>
+        <span class="system-output">Введите название: </span><span class="user-input">Туманность Андромеды</span><br>
+        <span class="system-output">Введите тип (планета, звезда, галактика и т.д.): </span><span class="user-input">галактика</span><br>
+        <span class="system-output">Введите расстояние в световых годах (оставьте пустым, если неизвестно): </span><span class="user-input">2537000</span><br>
+        <span class="system-output">Введите описание (оставьте пустым, если нет): </span><span class="user-input">Спиральная галактика, ближайшая к Млечному Пути</span><br>
+        <span class="system-output">Объект Туманность Андромеды успешно добавлен в каталог!
+
+===== КАТАЛОГ КОСМИЧЕСКИХ ОБЪЕКТОВ =====
+
+ID: AND-001
+Название: Туманность Андромеды
+Тип: галактика
+Расстояние: 2537000.0 световых лет
+Описание: Спиральная галактика, ближайшая к Млечному Пути
+
+ID: PROX-001
+Название: Проксима Центавра
+Тип: звезда
+Расстояние: 4.2 световых лет
+Описание: Ближайшая к Солнцу звезда
+
+ID: SOL-001
+Название: Солнце
+Тип: звезда
+Расстояние: 1.58e-05 световых лет
+Описание: Звезда Солнечной системы, желтый карлик
+
+===== ПОИСК ОБЪЕКТОВ =====
+Введите поисковый запрос: </span><span class="user-input">галактика</span><br>
+        <span class="system-output">
+Результаты поиска:
+
+ID: AND-001
+Название: Туманность Андромеды
+Тип: галактика</span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Космический справочник", которая будет использовать словари для хранения и обработки данных о космических объектах.</p>
+        <p>Программа должна:</p>
+        <ol>
+            <li>Хранить информацию о различных категориях космических объектов (планеты, звезды, галактики, спутники и т.д.)</li>
+            <li>Для каждой категории хранить несколько объектов с их характеристиками</li>
+            <li>Позволять пользователю просматривать объекты по категориям</li>
+            <li>Позволять пользователю искать объекты по названию или характеристикам</li>
+            <li>Позволять пользователю добавлять новые объекты и категории</li>
+            <li>Сохранять данные между запусками программы (можно использовать простое сохранение в текстовый файл)</li>
+        </ol>
+        <p>Пример структуры данных:</p>
+        <div class="code-block">
+            <span class="code-keyword">space_guide</span> = {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"planets"</span>: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Earth"</span>: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12742</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"mass"</span>: <span class="code-number">5.97e24</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"distance_from_sun"</span>: <span class="code-number">149.6</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"description"</span>: <span class="code-string">"Наша родная планета"</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Mars"</span>: { <span class="code-comment">/* характеристики Марса */</span> }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"stars"</span>: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Sun"</span>: { <span class="code-comment">/* характеристики Солнца */</span> },<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Proxima Centauri"</span>: { <span class="code-comment">/* характеристики Проксимы Центавра */</span> }<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </div>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== КОСМИЧЕСКИЙ СПРАВОЧНИК =====</span><br>
+            <span class="system-output">Выберите действие:</span><br>
+            <span class="system-output">1. Просмотр по категориям</span><br>
+            <span class="system-output">2. Поиск объекта</span><br>
+            <span class="system-output">3. Добавить новый объект</span><br>
+            <span class="system-output">4. Добавить новую категорию</span><br>
+            <span class="system-output">0. Выход</span><br>
+            <span class="system-output">Ваш выбор: </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== КАТЕГОРИИ =====
+1. planets
+2. stars
+Выберите категорию: </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== ПЛАНЕТЫ =====
+1. Earth
+2. Mars
+Выберите объект (0 для возврата): </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== Earth =====
+Диаметр: 12742 км
+Масса: 5.97e+24 кг
+Расстояние от Солнца: 149.6 млн км
+Описание: Наша родная планета
+
+Нажмите Enter для продолжения...</span><span class="user-input"></span><br>
+            <span class="system-output">
+===== КОСМИЧЕСКИЙ СПРАВОЧНИК =====
+Выберите действие:
+1. Просмотр по категориям
+2. Поиск объекта
+3. Добавить новый объект
+4. Добавить новую категорию
+0. Выход
+Ваш выбор: </span><span class="user-input">0</span><br>
+            <span class="system-output">
+Данные сохранены. До новых космических открытий!
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Файлия"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Словария".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">storage</div>
+        <p>Используй этот код на главной странице для доступа к уроку 10.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson8.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson10.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>

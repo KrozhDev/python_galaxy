@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Функция" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 58.33%; /* 7/12 для седьмого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .function-diagram {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #5d3fd3;
+        }
+
+        .function-box {
+            display: inline-block;
+            background-color: rgba(93, 63, 211, 0.2);
+            border: 2px solid var(--highlight-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .function-name {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .function-params {
+            background-color: rgba(78, 204, 163, 0.2);
+            border: 1px solid var(--success-color);
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        .function-return {
+            background-color: rgba(255, 126, 103, 0.2);
+            border: 1px solid var(--warning-color);
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid var(--text-color);
+            margin: 5px auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Функция"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 7/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Добро пожаловать на планету "Функция", космический программист! Эта планета является центром организации и модульности Галактической Сети.</p>
+        <p>Здесь мы научимся создавать и использовать функции - блоки кода, которые можно вызывать многократно. Функции позволяют структурировать программу, избегать повторения кода и делать его более читаемым и поддерживаемым.</p>
+        <p>Наша задача - освоить создание функций и научиться эффективно применять их для решения практических задач.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Функция -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4ecca3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2d8f78;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+        <!-- Модули/блоки на поверхности -->
+        <rect x="70" y="70" width="20" height="20" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="110" y="70" width="20" height="20" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="70" y="110" width="20" height="20" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="110" y="110" width="20" height="20" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Соединения между модулями -->
+        <line x1="90" y1="80" x2="110" y2="80" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="80" y1="90" x2="80" y2="110" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="120" y1="90" x2="120" y2="110" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="90" y1="120" x2="110" y2="120" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Символы функций на поверхности -->
+        <text x="77" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="white">f()</text>
+        <text x="117" y="85" font-family="'JetBrains Mono', monospace" font-size="10" fill="white">g()</text>
+        <text x="77" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="white">h()</text>
+        <text x="117" y="125" font-family="'JetBrains Mono', monospace" font-size="10" fill="white">j()</text>
+
+        <!-- Кратеры -->
+        <circle cx="50" cy="50" r="10" fill="#2d8f78" />
+        <circle cx="150" cy="60" r="15" fill="#2d8f78" />
+        <circle cx="40" cy="140" r="8" fill="#2d8f78" />
+        <circle cx="140" cy="150" r="12" fill="#2d8f78" />
+
+        <!-- Светящиеся точки в модулях -->
+        <circle cx="80" cy="80" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="120" cy="80" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="80" cy="120" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="120" cy="120" r="2" fill="#e1e6fa" filter="url(#glow)" />
+    </svg>
+
+    <h2>Что такое функции?</h2>
+
+    <p>Функции - это блоки кода, которые выполняют определенную задачу и могут быть вызваны многократно. Они позволяют разбить программу на логические части, что делает код более организованным и легким для понимания.</p>
+
+    <div class="note-block">
+        <p><strong>Аналогия:</strong> Представьте, что вы строите космический корабль. Вместо того, чтобы каждый раз создавать двигатель с нуля, вы разрабатываете его один раз и затем используете эту "функцию" в разных кораблях. Функции в программировании работают так же - вы пишете код один раз и используете его многократно.</p>
+    </div>
+
+    <div class="function-diagram">
+        <div class="function-box">
+            <div class="function-name">calculate_area(radius)</div>
+            <div class="function-params">Параметр: radius</div>
+            <div>Вычисляет площадь круга</div>
+            <div class="function-return">Возвращает: площадь</div>
+        </div>
+        <div class="arrow-down"></div>
+        <div>Вызов функции: calculate_area(5)</div>
+        <div class="arrow-down"></div>
+        <div>Результат: 78.54</div>
+    </div>
+
+    <h2>Определение функций</h2>
+
+    <p>В Python функция определяется с помощью ключевого слова <code>def</code>, за которым следует имя функции и круглые скобки. Параметры функции указываются в скобках:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Определение простой функции без параметров</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">greet</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Привет, космический путешественник!"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов функции</span><br>
+        <span class="code-function">greet</span>()
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, космический путешественник!</span>
+    </div>
+
+    <h3>Функции с параметрами</h3>
+
+    <p>Функции могут принимать параметры - значения, которые передаются в функцию при ее вызове:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Функция с одним параметром</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">greet_by_name</span>(<span class="code-keyword">name</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Привет, {name}!"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов функции с аргументом</span><br>
+        <span class="code-function">greet_by_name</span>(<span class="code-string">"Алекс"</span>)<br>
+        <span class="code-function">greet_by_name</span>(<span class="code-string">"Капитан"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Привет, Алекс!</span><br>
+        <span class="system-output">Привет, Капитан!</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Терминология:</strong> Параметры - это переменные, указанные в определении функции. Аргументы - это значения, которые передаются функции при ее вызове.</p>
+    </div>
+
+    <h3>Функции с несколькими параметрами</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Функция с несколькими параметрами</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">calculate_fuel</span>(<span class="code-keyword">distance</span>, <span class="code-keyword">consumption</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">fuel_needed</span> = <span class="code-keyword">distance</span> * <span class="code-keyword">consumption</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Для путешествия на {distance} световых лет потребуется {fuel_needed} единиц топлива."</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов функции с двумя аргументами</span><br>
+        <span class="code-function">calculate_fuel</span>(<span class="code-number">100</span>, <span class="code-number">0.5</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Для путешествия на 100 световых лет потребуется 50.0 единиц топлива.</span>
+    </div>
+
+    <h2>Возвращение значений из функций</h2>
+
+    <p>Функции могут возвращать значения с помощью ключевого слова <code>return</code>. Это позволяет использовать результат работы функции в других частях программы:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Функция, возвращающая значение</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">calculate_area</span>(<span class="code-keyword">radius</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">pi</span> = <span class="code-number">3.14159</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">area</span> = <span class="code-keyword">pi</span> * <span class="code-keyword">radius</span> ** <span class="code-number">2</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">area</span><br>
+        <br>
+        <span class="code-comment"># Использование возвращаемого значения</span><br>
+        <span class="code-keyword">circle_area</span> = <span class="code-function">calculate_area</span>(<span class="code-number">5</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Площадь круга с радиусом 5 равна {circle_area:.2f}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Площадь круга с радиусом 5 равна 78.54</span>
+    </div>
+
+    <p>Функция может возвращать несколько значений, которые будут упакованы в кортеж:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Функция, возвращающая несколько значений</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">get_coordinates</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">x</span> = <span class="code-number">10</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">y</span> = <span class="code-number">20</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">z</span> = <span class="code-number">30</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">x</span>, <span class="code-keyword">y</span>, <span class="code-keyword">z</span><br>
+        <br>
+        <span class="code-comment"># Получение нескольких значений</span><br>
+        <span class="code-keyword">x</span>, <span class="code-keyword">y</span>, <span class="code-keyword">z</span> = <span class="code-function">get_coordinates</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Координаты: ({x}, {y}, {z})"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Координаты: (10, 20, 30)</span>
+    </div>
+
+    <h2>Параметры по умолчанию</h2>
+
+    <p>Функции могут иметь параметры с значениями по умолчанию. Если при вызове функции не указан аргумент для такого параметра, будет использовано значение по умолчанию:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Функция с параметром по умолчанию</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">greet_astronaut</span>(<span class="code-keyword">name</span>, <span class="code-keyword">rank</span>=<span class="code-string">"Космонавт"</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Приветствую, {rank} {name}!"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов с обоими аргументами</span><br>
+        <span class="code-function">greet_astronaut</span>(<span class="code-string">"Иванов"</span>, <span class="code-string">"Капитан"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов только с обязательным аргументом</span><br>
+        <span class="code-function">greet_astronaut</span>(<span class="code-string">"Петров"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Приветствую, Капитан Иванов!</span><br>
+        <span class="system-output">Приветствую, Космонавт Петров!</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Важно:</strong> Параметры с значениями по умолчанию должны идти после параметров без значений по умолчанию. Иначе Python выдаст ошибку синтаксиса.</p>
+    </div>
+
+    <h2>Именованные аргументы</h2>
+
+    <p>При вызове функции можно явно указывать имена параметров. Это делает код более читаемым и позволяет передавать аргументы в любом порядке:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">calculate_trip</span>(<span class="code-keyword">distance</span>, <span class="code-keyword">speed</span>, <span class="code-keyword">fuel_consumption</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">time</span> = <span class="code-keyword">distance</span> / <span class="code-keyword">speed</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">fuel</span> = <span class="code-keyword">distance</span> * <span class="code-keyword">fuel_consumption</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Время в пути: {time:.2f} часов"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Требуется топлива: {fuel:.2f} единиц"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов с позиционными аргументами</span><br>
+        <span class="code-function">calculate_trip</span>(<span class="code-number">100</span>, <span class="code-number">20</span>, <span class="code-number">0.5</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов с именованными аргументами</span><br>
+        <span class="code-function">calculate_trip</span>(<span class="code-function">speed</span>=<span class="code-number">25</span>, <span class="code-function">distance</span>=<span class="code-number">150</span>, <span class="code-function">fuel_consumption</span>=<span class="code-number">0.4</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Время в пути: 5.00 часов</span><br>
+        <span class="system-output">Требуется топлива: 50.00 единиц</span><br>
+        <span class="system-output">Время в пути: 6.00 часов</span><br>
+        <span class="system-output">Требуется топлива: 60.00 единиц</span>
+    </div>
+
+    <h2>Переменное количество аргументов</h2>
+
+    <p>Иногда нужно создать функцию, которая принимает произвольное количество аргументов. В Python это можно сделать с помощью специальных синтаксических конструкций:</p>
+
+    <h3>*args - произвольное количество позиционных аргументов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">calculate_average</span>(*<span class="code-keyword">args</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">total</span> = <span class="code-function">sum</span>(<span class="code-keyword">args</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">count</span> = <span class="code-function">len</span>(<span class="code-keyword">args</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">total</span> / <span class="code-keyword">count</span> <span class="code-keyword">if</span> <span class="code-keyword">count</span> > <span class="code-number">0</span> <span class="code-keyword">else</span> <span class="code-number">0</span><br>
+        <br>
+        <span class="code-comment"># Вызов с разным количеством аргументов</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Среднее из 1, 2, 3: {calculate_average(1, 2, 3)}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Среднее из 10, 20: {calculate_average(10, 20)}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Среднее из 5, 10, 15, 20, 25: {calculate_average(5, 10, 15, 20, 25)}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Среднее из 1, 2, 3: 2.0</span><br>
+        <span class="system-output">Среднее из 10, 20: 15.0</span><br>
+        <span class="system-output">Среднее из 5, 10, 15, 20, 25: 15.0</span>
+    </div>
+
+    <h3>**kwargs - произвольное количество именованных аргументов</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">create_spaceship</span>(**<span class="code-keyword">kwargs</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Создание космического корабля со следующими параметрами:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">key</span>, <span class="code-keyword">value</span> <span class="code-keyword">in</span> <span class="code-keyword">kwargs</span>.<span class="code-function">items</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {key}: {value}"</span>)<br>
+        <br>
+        <span class="code-comment"># Вызов с разными именованными аргументами</span><br>
+        <span class="code-function">create_spaceship</span>(<span class="code-function">name</span>=<span class="code-string">"Звездный скиталец"</span>, <span class="code-function">engine</span>=<span class="code-string">"Ионный"</span>, <span class="code-function">speed</span>=<span class="code-string">"0.5c"</span>)<br>
+        <br>
+        <span class="code-function">create_spaceship</span>(<span class="code-function">name</span>=<span class="code-string">"Галактический странник"</span>, <span class="code-function">crew</span>=<span class="code-number">5</span>, <span class="code-function">weapons</span>=<span class="code-string">"Фотонные торпеды"</span>, <span class="code-function">shields</span>=<span class="code-string">"Активные"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Создание космического корабля со следующими параметрами:</span><br>
+        <span class="system-output">- name: Звездный скиталец</span><br>
+        <span class="system-output">- engine: Ионный</span><br>
+        <span class="system-output">- speed: 0.5c</span><br>
+        <span class="system-output">Создание космического корабля со следующими параметрами:</span><br>
+        <span class="system-output">- name: Галактический странник</span><br>
+        <span class="system-output">- crew: 5</span><br>
+        <span class="system-output">- weapons: Фотонные торпеды</span><br>
+        <span class="system-output">- shields: Активные</span>
+    </div>
+
+    <h2>Область видимости переменных</h2>
+
+    <p>Переменные, определенные внутри функции, имеют локальную область видимости и не доступны за пределами функции:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">calculate_speed</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">distance</span> = <span class="code-number">100</span>  <span class="code-comment"># Локальная переменная</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">time</span> = <span class="code-number">5</span>  <span class="code-comment"># Локальная переменная</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">speed</span> = <span class="code-keyword">distance</span> / <span class="code-keyword">time</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Скорость: {speed} км/ч"</span>)<br>
+        <br>
+        <span class="code-function">calculate_speed</span>()<br>
+        <br>
+        <span class="code-comment"># Попытка доступа к локальной переменной вызовет ошибку</span><br>
+        <span class="code-comment"># print(distance)  # NameError: name 'distance' is not defined</span>
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Скорость: 20.0 км/ч</span>
+    </div>
+
+    <p>Глобальные переменные (определенные вне функций) доступны внутри функций, но для их изменения нужно использовать ключевое слово <code>global</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">total_distance</span> = <span class="code-number">0</span>  <span class="code-comment"># Глобальная переменная</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">add_distance</span>(<span class="code-keyword">distance</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">global</span> <span class="code-keyword">total_distance</span>  <span class="code-comment"># Указываем, что хотим изменить глобальную переменную</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">total_distance</span> += <span class="code-keyword">distance</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Добавлено {distance} км. Общее расстояние: {total_distance} км"</span>)<br>
+        <br>
+        <span class="code-function">add_distance</span>(<span class="code-number">100</span>)<br>
+        <span class="code-function">add_distance</span>(<span class="code-number">50</span>)<br>
+        <span class="code-function">add_distance</span>(<span class="code-number">75</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Итоговое расстояние: {total_distance} км"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Добавлено 100 км. Общее расстояние: 100 км</span><br>
+        <span class="system-output">Добавлено 50 км. Общее расстояние: 150 км</span><br>
+        <span class="system-output">Добавлено 75 км. Общее расстояние: 225 км</span><br>
+        <span class="system-output">Итоговое расстояние: 225 км</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Совет:</strong> Старайтесь избегать использования глобальных переменных и ключевого слова <code>global</code>. Вместо этого лучше передавать значения через параметры и возвращать результаты через <code>return</code>. Это делает код более модульным и легким для тестирования.</p>
+    </div>
+
+    <h2>Рекурсивные функции</h2>
+
+    <p>Рекурсивная функция - это функция, которая вызывает сама себя. Рекурсия полезна для решения задач, которые можно разбить на подзадачи того же типа:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Рекурсивная функция для вычисления факториала</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">factorial</span>(<span class="code-keyword">n</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">n</span> <= <span class="code-number">1</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">n</span> * <span class="code-function">factorial</span>(<span class="code-keyword">n</span> - <span class="code-number">1</span>)<br>
+        <br>
+        <span class="code-comment"># Вычисление факториала</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"5! = {factorial(5)}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"3! = {factorial(3)}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">5! = 120</span><br>
+        <span class="system-output">3! = 6</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Внимание:</strong> При использовании рекурсии важно определить базовый случай (условие выхода из рекурсии), иначе функция будет вызывать себя бесконечно, что приведет к ошибке переполнения стека.</p>
+    </div>
+
+    <h2>Лямбда-функции</h2>
+
+    <p>Лямбда-функции (или анонимные функции) - это небольшие функции, которые можно определить в одной строке. Они полезны, когда нужна простая функция, которая используется только один раз:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Обычная функция</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">square</span>(<span class="code-keyword">x</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">x</span> ** <span class="code-number">2</span><br>
+        <br>
+        <span class="code-comment"># Эквивалентная лямбда-функция</span><br>
+        <span class="code-keyword">square_lambda</span> = <span class="code-keyword">lambda</span> <span class="code-keyword">x</span>: <span class="code-keyword">x</span> ** <span class="code-number">2</span><br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"square(5) = {square(5)}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"square_lambda(5) = {square_lambda(5)}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">square(5) = 25</span><br>
+        <span class="system-output">square_lambda(5) = 25</span>
+    </div>
+
+    <p>Лямбда-функции часто используются с функциями высшего порядка, такими как <code>map()</code>, <code>filter()</code> и <code>sorted()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Использование лямбда-функции с map()</span><br>
+        <span class="code-keyword">numbers</span> = [<span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>]<br>
+        <span class="code-keyword">squared</span> = <span class="code-function">list</span>(<span class="code-function">map</span>(<span class="code-keyword">lambda</span> <span class="code-keyword">x</span>: <span class="code-keyword">x</span> ** <span class="code-number">2</span>, <span class="code-keyword">numbers</span>))<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Квадраты чисел: {squared}"</span>)<br>
+        <br>
+        <span class="code-comment"># Использование лямбда-функции с filter()</span><br>
+        <span class="code-keyword">even_numbers</span> = <span class="code-function">list</span>(<span class="code-function">filter</span>(<span class="code-keyword">lambda</span> <span class="code-keyword">x</span>: <span class="code-keyword">x</span> % <span class="code-number">2</span> == <span class="code-number">0</span>, <span class="code-keyword">numbers</span>))<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Четные числа: {even_numbers}"</span>)<br>
+        <br>
+        <span class="code-comment"># Использование лямбда-функции с sorted()</span><br>
+        <span class="code-keyword">planets</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>, <span class="code-string">"radius"</span>: <span class="code-number">6371</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Марс"</span>, <span class="code-string">"radius"</span>: <span class="code-number">3389</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Юпитер"</span>, <span class="code-string">"radius"</span>: <span class="code-number">69911</span>},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-string">"name"</span>: <span class="code-string">"Меркурий"</span>, <span class="code-string">"radius"</span>: <span class="code-number">2439</span>}<br>
+        ]<br>
+        <br>
+        <span class="code-keyword">sorted_planets</span> = <span class="code-function">sorted</span>(<span class="code-keyword">planets</span>, <span class="code-function">key</span>=<span class="code-keyword">lambda</span> <span class="code-keyword">planet</span>: <span class="code-keyword">planet</span>[<span class="code-string">"radius"</span>])<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">sorted_planets</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{planet['name']}: {planet['radius']} км"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Квадраты чисел: [1, 4, 9, 16, 25]</span><br>
+        <span class="system-output">Четные числа: [2, 4]</span><br>
+        <span class="system-output">Меркурий: 2439 км</span><br>
+        <span class="system-output">Марс: 3389 км</span><br>
+        <span class="system-output">Земля: 6371 км</span><br>
+        <span class="system-output">Юпитер: 69911 км</span>
+    </div>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Пример 1: Конвертер температуры</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">def</span> <span class="code-function">celsius_to_fahrenheit</span>(<span class="code-keyword">celsius</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> (<span class="code-keyword">celsius</span> * <span class="code-number">9</span>/<span class="code-number">5</span>) + <span class="code-number">32</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">fahrenheit_to_celsius</span>(<span class="code-keyword">fahrenheit</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> (<span class="code-keyword">fahrenheit</span> - <span class="code-number">32</span>) * <span class="code-number">5</span>/<span class="code-number">9</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">kelvin_to_celsius</span>(<span class="code-keyword">kelvin</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">kelvin</span> - <span class="code-number">273.15</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">celsius_to_kelvin</span>(<span class="code-keyword">celsius</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">celsius</span> + <span class="code-number">273.15</span><br>
+        <br>
+        <span class="code-comment"># Функция-конвертер</span><br>
+        <span class="code-keyword">def</span> <span class="code-function">convert_temperature</span>(<span class="code-keyword">value</span>, <span class="code-keyword">from_unit</span>, <span class="code-keyword">to_unit</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Сначала конвертируем в Цельсии</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">from_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"C"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">celsius</span> = <span class="code-keyword">value</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">from_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"F"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">celsius</span> = <span class="code-function">fahrenheit_to_celsius</span>(<span class="code-keyword">value</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">from_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"K"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">celsius</span> = <span class="code-function">kelvin_to_celsius</span>(<span class="code-keyword">value</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"Неизвестная единица измерения"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Затем конвертируем из Цельсия в нужную единицу</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">to_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"C"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">celsius</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">to_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"F"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-function">celsius_to_fahrenheit</span>(<span class="code-keyword">celsius</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">to_unit</span>.<span class="code-function">upper</span>() == <span class="code-string">"K"</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-function">celsius_to_kelvin</span>(<span class="code-keyword">celsius</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"Неизвестная единица измерения"</span><br>
+        <br>
+        <span class="code-comment"># Примеры использования</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"0°C = {convert_temperature(0, 'C', 'F'):.2f}°F"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"98.6°F = {convert_temperature(98.6, 'F', 'C'):.2f}°C"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"300K = {convert_temperature(300, 'K', 'C'):.2f}°C"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"25°C = {convert_temperature(25, 'C', 'K'):.2f}K"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">0°C = 32.00°F</span><br>
+        <span class="system-output">98.6°F = 37.00°C</span><br>
+        <span class="system-output">300K = 26.85°C</span><br>
+        <span class="system-output">25°C = 298.15K</span>
+    </div>
+
+    <h3>Пример 2: Калькулятор расстояния между планетами</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">math</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">calculate_distance</span>(<span class="code-keyword">x1</span>, <span class="code-keyword">y1</span>, <span class="code-keyword">z1</span>, <span class="code-keyword">x2</span>, <span class="code-keyword">y2</span>, <span class="code-keyword">z2</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Вычисляем расстояние между двумя точками в трехмерном пространстве</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">math</span>.<span class="code-function">sqrt</span>((<span class="code-keyword">x2</span> - <span class="code-keyword">x1</span>)**<span class="code-number">2</span> + (<span class="code-keyword">y2</span> - <span class="code-keyword">y1</span>)**<span class="code-number">2</span> + (<span class="code-keyword">z2</span> - <span class="code-keyword">z1</span>)**<span class="code-number">2</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">get_planet_coordinates</span>(<span class="code-keyword">planet_name</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Словарь с координатами планет (условные значения)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planets</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"меркурий"</span>: (<span class="code-number">0.39</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"венера"</span>: (<span class="code-number">0.72</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"земля"</span>: (<span class="code-number">1.0</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"марс"</span>: (<span class="code-number">1.52</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"юпитер"</span>: (<span class="code-number">5.2</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"сатурн"</span>: (<span class="code-number">9.54</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"уран"</span>: (<span class="code-number">19.2</span>, <span class="code-number">0</span>, <span class="code-number">0</span>),<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"нептун"</span>: (<span class="code-number">30.06</span>, <span class="code-number">0</span>, <span class="code-number">0</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">planets</span>.<span class="code-function">get</span>(<span class="code-keyword">planet_name</span>.<span class="code-function">lower</span>(), <span class="code-keyword">None</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">calculate_travel_time</span>(<span class="code-keyword">distance</span>, <span class="code-keyword">speed</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Вычисляем время путешествия в днях</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Расстояние в а.е., скорость в а.е./день</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">distance</span> / <span class="code-keyword">speed</span><br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">planet_distance_calculator</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Калькулятор расстояния между планетами"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Доступные планеты: Меркурий, Венера, Земля, Марс, Юпитер, Сатурн, Уран, Нептун"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet1</span> = <span class="code-function">input</span>(<span class="code-string">"Введите название первой планеты: "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet2</span> = <span class="code-function">input</span>(<span class="code-string">"Введите название второй планеты: "</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coords1</span> = <span class="code-function">get_planet_coordinates</span>(<span class="code-keyword">planet1</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">coords2</span> = <span class="code-function">get_planet_coordinates</span>(<span class="code-keyword">planet2</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">coords1</span> <span class="code-keyword">is</span> <span class="code-keyword">None</span> <span class="code-keyword">or</span> <span class="code-keyword">coords2</span> <span class="code-keyword">is</span> <span class="code-keyword">None</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Одна из планет не найдена. Проверьте правильность ввода."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">x1</span>, <span class="code-keyword">y1</span>, <span class="code-keyword">z1</span> = <span class="code-keyword">coords1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">x2</span>, <span class="code-keyword">y2</span>, <span class="code-keyword">z2</span> = <span class="code-keyword">coords2</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">distance</span> = <span class="code-function">calculate_distance</span>(<span class="code-keyword">x1</span>, <span class="code-keyword">y1</span>, <span class="code-keyword">z1</span>, <span class="code-keyword">x2</span>, <span class="code-keyword">y2</span>, <span class="code-keyword">z2</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nРасстояние между планетами {planet1.capitalize()} и {planet2.capitalize()}: {distance:.2f} а.е."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Это примерно {distance * 149.6:.2f} миллионов километров."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Расчет времени путешествия для разных скоростей</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">speeds</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Космический зонд (0.001 а.е./день)"</span>: <span class="code-number">0.001</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Космический корабль (0.005 а.е./день)"</span>: <span class="code-number">0.005</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Быстрый корабль (0.01 а.е./день)"</span>: <span class="code-number">0.01</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nРасчетное время путешествия:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">name</span>, <span class="code-keyword">speed</span> <span class="code-keyword">in</span> <span class="code-keyword">speeds</span>.<span class="code-function">items</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">days</span> = <span class="code-function">calculate_travel_time</span>(<span class="code-keyword">distance</span>, <span class="code-keyword">speed</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {name}: {days:.1f} дней ({days/365:.2f} лет)"</span>)<br>
+        <br>
+        <span class="code-comment"># Запуск калькулятора</span><br>
+        <span class="code-function">planet_distance_calculator</span>()
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Калькулятор расстояния между планетами</span><br>
+        <span class="system-output">Доступные планеты: Меркурий, Венера, Земля, Марс, Юпитер, Сатурн, Уран, Нептун</span><br>
+        <span class="system-output">Введите название первой планеты: </span><span class="user-input">Земля</span><br>
+        <span class="system-output">Введите название второй планеты: </span><span class="user-input">Марс</span><br>
+        <span class="system-output">
+Расстояние между планетами Земля и Марс: 0.52 а.е.
+Это примерно 77.79 миллионов километров.
+
+Расчетное время путешествия:
+- Космический зонд (0.001 а.е./день): 520.0 дней (1.42 лет)
+- Космический корабль (0.005 а.е./день): 104.0 дней (0.28 лет)
+- Быстрый корабль (0.01 а.е./день): 52.0 дней (0.14 лет)
+            </span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Космический калькулятор", которая будет содержать набор полезных функций для космических расчетов. Программа должна:</p>
+        <ol>
+            <li>Содержать функцию для расчета силы гравитации между двумя объектами (F = G * (m1 * m2) / r²), где G - гравитационная постоянная (6.67430e-11), m1 и m2 - массы объектов, r - расстояние между ними</li>
+            <li>Содержать функцию для расчета времени падения объекта на поверхность планеты с заданной высоты (t = √(2h/g), где h - высота, g - ускорение свободного падения)</li>
+            <li>Содержать функцию для расчета скорости, необходимой для выхода на орбиту планеты (v = √(G * M / r), где G - гравитационная постоянная, M - масса планеты, r - радиус орбиты от центра планеты)</li>
+            <li>Содержать функцию для перевода между различными единицами измерения (километры в световые годы, метры в секунду в километры в час и т.д.)</li>
+            <li>Иметь главное меню, которое позволяет пользователю выбрать нужный расчет</li>
+        </ol>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== КОСМИЧЕСКИЙ КАЛЬКУЛЯТОР =====</span><br>
+            <span class="system-output">Выберите функцию:</span><br>
+            <span class="system-output">1. Расчет гравитационной силы</span><br>
+            <span class="system-output">2. Расчет времени падения</span><br>
+            <span class="system-output">3. Расчет орбитальной скорости</span><br>
+            <span class="system-output">4. Конвертер единиц измерения</span><br>
+            <span class="system-output">0. Выход</span><br>
+            <span class="system-output">Ваш выбор: </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== Расчет гравитационной силы =====
+Введите массу первого объекта (кг): </span><span class="user-input">5.97e24</span><br>
+            <span class="system-output">Введите массу второго объекта (кг): </span><span class="user-input">7.35e22</span><br>
+            <span class="system-output">Введите расстояние между объектами (м): </span><span class="user-input">384400000</span><br>
+            <span class="system-output">
+Сила гравитационного притяжения: 1.98e+20 Н
+
+Хотите выполнить еще один расчет? (да/нет): </span><span class="user-input">да</span><br>
+            <span class="system-output">
+===== КОСМИЧЕСКИЙ КАЛЬКУЛЯТОР =====
+Выберите функцию:
+1. Расчет гравитационной силы
+2. Расчет времени падения
+3. Расчет орбитальной скорости
+4. Конвертер единиц измерения
+0. Выход
+Ваш выбор: </span><span class="user-input">4</span><br>
+            <span class="system-output">
+===== Конвертер единиц измерения =====
+Выберите тип конвертации:
+1. Километры в световые годы
+2. Метры в секунду в километры в час
+3. Дни в секунды
+Ваш выбор: </span><span class="user-input">2</span><br>
+            <span class="system-output">Введите скорость в метрах в секунду: </span><span class="user-input">1000</span><br>
+            <span class="system-output">
+1000.0 м/с = 3600.0 км/ч
+
+Хотите выполнить еще один расчет? (да/нет): </span><span class="user-input">нет</span><br>
+            <span class="system-output">
+Спасибо за использование Космического Калькулятора!
+До новых встреч в космосе!
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Массивия"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Функция".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">collection</div>
+        <p>Используй этот код на главной странице для доступа к уроку 8.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson6.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson8.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>

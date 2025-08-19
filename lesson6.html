@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Циклон" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 50%; /* 6/12 для шестого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+
+        .comparison-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+        }
+
+        .animation-container {
+            width: 100%;
+            height: 80px;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #5d3fd3;
+        }
+
+        .animation-dot {
+            width: 20px;
+            height: 20px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            animation: moveRight 3s linear infinite;
+        }
+
+        @keyframes moveRight {
+            0% { left: 0; }
+            100% { left: calc(100% - 20px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Звезды на фоне -->
+    <div id="stars-container"></div>
+
+    <header>
+        <div class="container">
+            <h1>Планета "Циклон"</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+            <div class="progress-text">Прогресс миссии: 6/12</div>
+        </div>
+
+        <div class="mission-brief">
+            <div class="mission-title">
+                <span class="mission-icon">🪐</span> Брифинг миссии
+            </div>
+            <p>Добро пожаловать на планету "Циклон", космический программист! Эта планета известна своими повторяющимися процессами и вихрями данных.</p>
+            <p>Здесь мы научимся использовать циклы - конструкции, которые позволяют выполнять код многократно. Это критически важный навык для автоматизации повторяющихся задач и обработки больших объемов данных.</p>
+            <p>Наша задача - освоить различные типы циклов и научиться эффективно применять их для решения практических задач.</p>
+        </div>
+
+        <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Планета Циклон -->
+            <defs>
+                <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff7e67;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff5252;stop-opacity:1" />
+                </linearGradient>
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2.5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+            </defs>
+
+            <!-- Основная планета -->
+            <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+            <!-- Вихри на поверхности -->
+            <path d="M100,100 m-40,0 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0" fill="none" stroke="#e1e6fa" stroke-width="2" stroke-dasharray="5,5" />
+            <path d="M100,100 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0" fill="none" stroke="#e1e6fa" stroke-width="2" stroke-dasharray="5,5" />
+            <path d="M100,100 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0" fill="none" stroke="#e1e6fa" stroke-width="2" stroke-dasharray="5,5" />
+
+            <!-- Символы циклов на поверхности -->
+            <text x="95" y="105" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">∞</text>
+
+            <!-- Кратеры -->
+            <circle cx="60" cy="60" r="10" fill="#d84c3b" />
+            <circle cx="140" cy="70" r="15" fill="#d84c3b" />
+            <circle cx="50" cy="130" r="8" fill="#d84c3b" />
+            <circle cx="130" cy="150" r="12" fill="#d84c3b" />
+
+            <!-- Светящиеся точки в вихрях -->
+            <circle cx="100" cy="60" r="3" fill="#4ecca3" filter="url(#glow)" />
+            <circle cx="140" cy="100" r="3" fill="#4ecca3" filter="url(#glow)" />
+            <circle cx="100" cy="140" r="3" fill="#4ecca3" filter="url(#glow)" />
+            <circle cx="60" cy="100" r="3" fill="#4ecca3" filter="url(#glow)" />
+        </svg>
+
+        <h2>Что такое циклы?</h2>
+
+        <p>Циклы - это конструкции, которые позволяют выполнять блок кода многократно. Они помогают автоматизировать повторяющиеся задачи и значительно сокращают объем кода.</p>
+
+        <div class="note-block">
+            <p><strong>Аналогия:</strong> Представьте, что вам нужно пересчитать 1000 звезд. Вместо того, чтобы писать 1000 строк кода для подсчета каждой звезды, вы можете использовать цикл, который автоматически повторит процесс подсчета для всех звезд.</p>
+        </div>
+
+        <div class="animation-container">
+            <div class="animation-dot"></div>
+        </div>
+
+        <h2>Цикл while</h2>
+
+        <p>Цикл <code>while</code> выполняет блок кода, пока указанное условие истинно:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Простой пример цикла while</span><br>
+            <span class="code-keyword">count</span> = <span class="code-number">1</span><br>
+            <br>
+            <span class="code-keyword">while</span> <span class="code-keyword">count</span> <= <span class="code-number">5</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Счетчик: {count}"</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">count</span> += <span class="code-number">1</span>  <span class="code-comment"># Увеличиваем счетчик</span><br>
+            <br>
+            <span class="code-function">print</span>(<span class="code-string">"Цикл завершен!"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Счетчик: 1</span><br>
+            <span class="system-output">Счетчик: 2</span><br>
+            <span class="system-output">Счетчик: 3</span><br>
+            <span class="system-output">Счетчик: 4</span><br>
+            <span class="system-output">Счетчик: 5</span><br>
+            <span class="system-output">Цикл завершен!</span>
+        </div>
+
+        <p>Цикл <code>while</code> проверяет условие перед каждой итерацией. Если условие истинно, выполняется блок кода. Если условие ложно, цикл завершается.</p>
+
+        <div class="warning-block">
+            <p><strong>Внимание:</strong> Важно обеспечить, чтобы условие в какой-то момент стало ложным, иначе цикл будет выполняться бесконечно (бесконечный цикл). В примере выше мы увеличиваем <code>count</code> на каждой итерации, чтобы в конечном итоге условие <code>count <= 5</code> стало ложным.</p>
+        </div>
+
+        <h3>Пример: Ввод пароля</h3>
+
+        <div class="code-block">
+            <span class="code-comment"># Проверка пароля с использованием цикла while</span><br>
+            <span class="code-keyword">correct_password</span> = <span class="code-string">"космос123"</span><br>
+            <span class="code-keyword">password</span> = <span class="code-string">""</span><br>
+            <span class="code-keyword">attempts</span> = <span class="code-number">0</span><br>
+            <span class="code-keyword">max_attempts</span> = <span class="code-number">3</span><br>
+            <br>
+            <span class="code-keyword">while</span> <span class="code-keyword">password</span> != <span class="code-keyword">correct_password</span> <span class="code-keyword">and</span> <span class="code-keyword">attempts</span> < <span class="code-keyword">max_attempts</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">password</span> = <span class="code-function">input</span>(<span class="code-string">"Введите пароль: "</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">attempts</span> += <span class="code-number">1</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">password</span> != <span class="code-keyword">correct_password</span> <span class="code-keyword">and</span> <span class="code-keyword">attempts</span> < <span class="code-keyword">max_attempts</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Неверный пароль! Осталось попыток: {max_attempts - attempts}"</span>)<br>
+            <br>
+            <span class="code-keyword">if</span> <span class="code-keyword">password</span> == <span class="code-keyword">correct_password</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Доступ разрешен. Добро пожаловать!"</span>)<br>
+            <span class="code-keyword">else</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Превышено количество попыток. Доступ заблокирован."</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Введите пароль: </span><span class="user-input">123456</span><br>
+            <span class="system-output">Неверный пароль! Осталось попыток: 2</span><br>
+            <span class="system-output">Введите пароль: </span><span class="user-input">космос</span><br>
+            <span class="system-output">Неверный пароль! Осталось попыток: 1</span><br>
+            <span class="system-output">Введите пароль: </span><span class="user-input">космос123</span><br>
+            <span class="system-output">Доступ разрешен. Добро пожаловать!</span>
+        </div>
+
+        <h2>Цикл for</h2>
+
+        <p>Цикл <code>for</code> используется для итерации по последовательности (списку, строке, диапазону и т.д.):</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Простой пример цикла for с range()</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">5</span>):  <span class="code-comment"># range(5) создает последовательность [0, 1, 2, 3, 4]</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Итерация {i}"</span>)<br>
+            <br>
+            <span class="code-function">print</span>(<span class="code-string">"Цикл завершен!"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Итерация 0</span><br>
+            <span class="system-output">Итерация 1</span><br>
+            <span class="system-output">Итерация 2</span><br>
+            <span class="system-output">Итерация 3</span><br>
+            <span class="system-output">Итерация 4</span><br>
+            <span class="system-output">Цикл завершен!</span>
+        </div>
+
+        <h3>Функция range()</h3>
+
+        <p>Функция <code>range()</code> создает последовательность чисел и часто используется с циклом <code>for</code>:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># range(stop) - от 0 до stop-1</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">3</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">i</span>)  <span class="code-comment"># Выведет: 0, 1, 2</span><br>
+            <br>
+            <span class="code-comment"># range(start, stop) - от start до stop-1</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">2</span>, <span class="code-number">5</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">i</span>)  <span class="code-comment"># Выведет: 2, 3, 4</span><br>
+            <br>
+            <span class="code-comment"># range(start, stop, step) - от start до stop-1 с шагом step</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">0</span>, <span class="code-number">10</span>, <span class="code-number">2</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">i</span>)  <span class="code-comment"># Выведет: 0, 2, 4, 6, 8</span>
+        </div>
+
+        <h3>Итерация по последовательностям</h3>
+
+        <p>Цикл <code>for</code> может итерировать по различным типам последовательностей:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Итерация по строке</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">char</span> <span class="code-keyword">in</span> <span class="code-string">"Привет"</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">char</span>)<br>
+            <br>
+            <span class="code-comment"># Итерация по списку</span><br>
+            <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>]<br>
+            <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Планета: {planet}"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">П</span><br>
+            <span class="system-output">р</span><br>
+            <span class="system-output">и</span><br>
+            <span class="system-output">в</span><br>
+            <span class="system-output">е</span><br>
+            <span class="system-output">т</span><br>
+            <span class="system-output">Планета: Меркурий</span><br>
+            <span class="system-output">Планета: Венера</span><br>
+            <span class="system-output">Планета: Земля</span><br>
+            <span class="system-output">Планета: Марс</span>
+        </div>
+
+        <h3>Функция enumerate()</h3>
+
+        <p>Если вам нужен индекс элемента во время итерации, используйте функцию <code>enumerate()</code>:</p>
+
+        <div class="code-block">
+            <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>]<br>
+            <br>
+            <span class="code-keyword">for</span> <span class="code-keyword">index</span>, <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">planets</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Планета #{index + 1}: {planet}"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Планета #1: Меркурий</span><br>
+            <span class="system-output">Планета #2: Венера</span><br>
+            <span class="system-output">Планета #3: Земля</span><br>
+            <span class="system-output">Планета #4: Марс</span>
+        </div>
+
+        <h2>Управление циклами: break и continue</h2>
+
+        <h3>Оператор break</h3>
+
+        <p>Оператор <code>break</code> используется для досрочного выхода из цикла:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Поиск планеты в списке</span><br>
+            <span class="code-keyword">planets</span> = [<span class="code-string">"Меркурий"</span>, <span class="code-string">"Венера"</span>, <span class="code-string">"Земля"</span>, <span class="code-string">"Марс"</span>, <span class="code-string">"Юпитер"</span>]<br>
+            <span class="code-keyword">target</span> = <span class="code-string">"Земля"</span><br>
+            <br>
+            <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Проверяем планету: {planet}"</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">planet</span> == <span class="code-keyword">target</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Планета {target} найдена!"</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>  <span class="code-comment"># Выходим из цикла, как только нашли нужную планету</span>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Проверяем планету: Меркурий</span><br>
+            <span class="system-output">Проверяем планету: Венера</span><br>
+            <span class="system-output">Проверяем планету: Земля</span><br>
+            <span class="system-output">Планета Земля найдена!</span>
+        </div>
+
+        <h3>Оператор continue</h3>
+
+        <p>Оператор <code>continue</code> используется для перехода к следующей итерации цикла, пропуская оставшийся код в текущей итерации:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Вывод только четных чисел</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">11</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">i</span> % <span class="code-number">2</span> != <span class="code-number">0</span>:  <span class="code-comment"># Если число нечетное</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">continue</span>  <span class="code-comment"># Пропускаем оставшийся код и переходим к следующей итерации</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Четное число: {i}"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Четное число: 2</span><br>
+            <span class="system-output">Четное число: 4</span><br>
+            <span class="system-output">Четное число: 6</span><br>
+            <span class="system-output">Четное число: 8</span><br>
+            <span class="system-output">Четное число: 10</span>
+        </div>
+
+        <h2>Цикл while vs. цикл for</h2>
+
+        <table class="comparison-table">
+            <tr>
+                <th>Цикл while</th>
+                <th>Цикл for</th>
+            </tr>
+            <tr>
+                <td>Выполняется, пока условие истинно</td>
+                <td>Выполняется для каждого элемента в последовательности</td>
+            </tr>
+            <tr>
+                <td>Подходит, когда количество итераций заранее неизвестно</td>
+                <td>Подходит, когда количество итераций известно или нужно перебрать все элементы</td>
+            </tr>
+            <tr>
+                <td>Требует ручного изменения переменной для завершения цикла</td>
+                <td>Автоматически переходит к следующему элементу</td>
+            </tr>
+            <tr>
+                <td>Может привести к бесконечному циклу, если условие никогда не станет ложным</td>
+                <td>Завершается после перебора всех элементов</td>
+            </tr>
+        </table>
+
+        <h2>Вложенные циклы</h2>
+
+        <p>Циклы могут быть вложены друг в друга для решения более сложных задач:</p>
+
+        <div class="code-block">
+            <span class="code-comment"># Таблица умножения с помощью вложенных циклов</span><br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">6</span>):  <span class="code-comment"># Внешний цикл: от 1 до 5</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">j</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-number">6</span>):  <span class="code-comment"># Внутренний цикл: от 1 до 5</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{i} × {j} = {i * j}"</span>, <span class="code-function">end</span>=<span class="code-string">"\t"</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>()  <span class="code-comment"># Переход на новую строку после завершения внутреннего цикла</span>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">1 × 1 = 1	1 × 2 = 2	1 × 3 = 3	1 × 4 = 4	1 × 5 = 5	</span><br>
+            <span class="system-output">2 × 1 = 2	2 × 2 = 4	2 × 3 = 6	2 × 4 = 8	2 × 5 = 10	</span><br>
+            <span class="system-output">3 × 1 = 3	3 × 2 = 6	3 × 3 = 9	3 × 4 = 12	3 × 5 = 15	</span><br>
+            <span class="system-output">4 × 1 = 4	4 × 2 = 8	4 × 3 = 12	4 × 4 = 16	4 × 5 = 20	</span><br>
+            <span class="system-output">5 × 1 = 5	5 × 2 = 10	5 × 3 = 15	5 × 4 = 20	5 × 5 = 25	</span>
+        </div>
+
+        <div class="warning-block">
+            <p><strong>Внимание:</strong> Вложенные циклы могут быть вычислительно затратными, особенно при большом количестве итераций. Используйте их с осторожностью и старайтесь оптимизировать код, если это возможно.</p>
+        </div>
+
+        <h2>Практические примеры</h2>
+
+        <h3>Пример 1: Сумма чисел</h3>
+
+        <div class="code-block">
+            <span class="code-comment"># Вычисление суммы чисел от 1 до n</span><br>
+            <span class="code-keyword">n</span> = <span class="code-function">int</span>(<span class="code-function">input</span>(<span class="code-string">"Введите число n: "</span>))<br>
+            <span class="code-keyword">sum_result</span> = <span class="code-number">0</span><br>
+            <br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-keyword">n</span> + <span class="code-number">1</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">sum_result</span> += <span class="code-keyword">i</span><br>
+            <br>
+            <span class="code-function">print</span>(<span class="code-string">f"Сумма чисел от 1 до {n} равна {sum_result}"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Введите число n: </span><span class="user-input">10</span><br>
+            <span class="system-output">Сумма чисел от 1 до 10 равна 55</span>
+        </div>
+
+        <h3>Пример 2: Факториал числа</h3>
+
+        <div class="code-block">
+            <span class="code-comment"># Вычисление факториала числа</span><br>
+            <span class="code-keyword">n</span> = <span class="code-function">int</span>(<span class="code-function">input</span>(<span class="code-string">"Введите число для вычисления факториала: "</span>))<br>
+            <span class="code-keyword">factorial</span> = <span class="code-number">1</span><br>
+            <br>
+            <span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">1</span>, <span class="code-keyword">n</span> + <span class="code-number">1</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">factorial</span> *= <span class="code-keyword">i</span><br>
+            <br>
+            <span class="code-function">print</span>(<span class="code-string">f"{n}! = {factorial}"</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Введите число для вычисления факториала: </span><span class="user-input">5</span><br>
+            <span class="system-output">5! = 120</span>
+        </div>
+
+        <h3>Пример 3: Поиск простых чисел</h3>
+
+        <div class="code-block">
+            <span class="code-comment"># Поиск простых чисел в заданном диапазоне</span><br>
+            <span class="code-keyword">start</span> = <span class="code-function">int</span>(<span class="code-function">input</span>(<span class="code-string">"Введите начало диапазона: "</span>))<br>
+            <span class="code-keyword">end</span> = <span class="code-function">int</span>(<span class="code-function">input</span>(<span class="code-string">"Введите конец диапазона: "</span>))<br>
+            <br>
+            <span class="code-function">print</span>(<span class="code-string">f"Простые числа в диапазоне от {start} до {end}:"</span>)<br>
+            <br>
+            <span class="code-keyword">for</span> <span class="code-keyword">num</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-keyword">start</span>, <span class="code-keyword">end</span> + <span class="code-number">1</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Пропускаем числа меньше 2, так как они не являются простыми</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">num</span> < <span class="code-number">2</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">continue</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Проверяем, делится ли число на какое-либо число от 2 до sqrt(num)</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">is_prime</span> = <span class="code-keyword">True</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span> <span class="code-keyword">in</span> <span class="code-function">range</span>(<span class="code-number">2</span>, <span class="code-function">int</span>(<span class="code-keyword">num</span> ** <span class="code-number">0.5</span>) + <span class="code-number">1</span>):<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">num</span> % <span class="code-keyword">i</span> == <span class="code-number">0</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">is_prime</span> = <span class="code-keyword">False</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">is_prime</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">num</span>, <span class="code-function">end</span>=<span class="code-string">" "</span>)
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">Введите начало диапазона: </span><span class="user-input">10</span><br>
+            <span class="system-output">Введите конец диапазона: </span><span class="user-input">30</span><br>
+            <span class="system-output">Простые числа в диапазоне от 10 до 30:</span><br>
+            <span class="system-output">11 13 17 19 23 29 </span>
+        </div>
+
+        <div class="task-block">
+            <div class="task-title">🚀 Задание для завершения миссии</div>
+            <p>Для получения кода доступа к следующей планете, создай программу "Космический счетчик", которая:</p>
+            <ol>
+                <li>Запрашивает у пользователя количество планет для обратного отсчета</li>
+                <li>Запрашивает у пользователя шаг обратного отсчета (сколько планет пропускать)</li>
+                <li>Выводит обратный отсчет, пропуская указанное количество планет</li>
+                <li>После достижения нуля выводит сообщение о запуске</li>
+            </ol>
+            <p>Дополнительные требования:</p>
+            <ul>
+                <li>Если пользователь вводит отрицательное число планет или шаг, программа должна вывести сообщение об ошибке и запросить данные снова</li>
+                <li>Если шаг равен 0, программа должна вывести сообщение об ошибке и запросить данные снова</li>
+                <li>Программа должна использовать цикл while для проверки корректности ввода и цикл for для обратного отсчета</li>
+            </ul>
+            <p>Пример работы программы:</p>
+            <div class="terminal">
+                <div class="terminal-header">Терминал</div>
+                <span class="system-output">===== КОСМИЧЕСКИЙ СЧЕТЧИК =====</span><br>
+                <span class="system-output">Введите количество планет для обратного отсчета: </span><span class="user-input">-5</span><br>
+                <span class="system-output">Ошибка! Количество планет должно быть положительным числом.</span><br>
+                <span class="system-output">Введите количество планет для обратного отсчета: </span><span class="user-input">10</span><br>
+                <span class="system-output">Введите шаг обратного отсчета: </span><span class="user-input">0</span><br>
+                <span class="system-output">Ошибка! Шаг должен быть положительным числом.</span><br>
+                <span class="system-output">Введите шаг обратного отсчета: </span><span class="user-input">2</span><br>
+                <span class="system-output">
+Начинаем обратный отсчет!<br>
+10...<br>
+8...<br>
+6...<br>
+4...<br>
+2...<br>
+0...<br>
+ЗАПУСК! Космический корабль отправляется в путешествие!
+                </span>
+            </div>
+        </div>
+
+        <div class="password-reveal">
+            <div class="password-title">🔑 Код доступа к планете "Функция"</div>
+            <p>Поздравляю! Ты успешно завершил миссию на планете "Циклон".</p>
+            <p>Вот код доступа к следующей планете:</p>
+            <div class="password-code">organize</div>
+            <p>Используй этот код на главной странице для доступа к уроку 7.</p>
+        </div>
+
+        <div class="navigation">
+            <a href="lesson5.html" class="nav-button">← Предыдущая планета</a>
+            <a href="index.html" class="nav-button home">На главную</a>
+            <a href="lesson7.html" class="nav-button">Следующая планета →</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Галактическая Академия Программирования © 2142</p>
+        <p>Удачи в твоей миссии, космический программист!</p>
+    </div>
+
+    <script>
+        // Создание звезд на фоне
+        document.addEventListener('DOMContentLoaded', function() {
+            const starsContainer = document.getElementById('stars-container');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                // Случайный размер и позиция
+                const size = Math.random() * 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+
+                // Случайная анимация мерцания
+                star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+
+                starsContainer.appendChild(star);
+            }
+        });
+    </script>
+</body>
+</html>

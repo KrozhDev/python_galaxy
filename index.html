@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        .intro {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-brief {
+            font-style: italic;
+            color: #b8c0e0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(93, 63, 211, 0.1);
+            margin: 15px 0;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .lesson-card {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(93, 63, 211, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+        }
+
+        .lesson-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+        }
+
+        .lesson-card.unlocked::after {
+            content: '🚀';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+        }
+
+        .lesson-title {
+            color: var(--highlight-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .lesson-description {
+            color: #b8c0e0;
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--header-color);
+            border-radius: 10px;
+            border: 2px solid var(--accent-color);
+            width: 350px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(93, 63, 211, 0.5);
+            text-align: center;
+        }
+
+        .modal-title {
+            color: var(--highlight-color);
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(225, 230, 250, 0.1);
+            color: var(--text-color);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            box-sizing: border-box;
+            border: 1px solid rgba(93, 63, 211, 0.3);
+            transition: border-color 0.3s;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 8px rgba(123, 104, 238, 0.5);
+        }
+
+        .password-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .password-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .password-button:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: var(--warning-color);
+            display: none;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .space-header {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .space-ship {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <div class="space-header">
+            <svg class="space-ship" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Космический корабль -->
+                <defs>
+                    <linearGradient id="shipGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#5d3fd3;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#7b68ee;stop-opacity:1" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+
+                <!-- Звезды на фоне -->
+                <circle cx="100" cy="50" r="2" fill="white" opacity="0.8" />
+                <circle cx="300" cy="30" r="1" fill="white" opacity="0.6" />
+                <circle cx="500" cy="70" r="1.5" fill="white" opacity="0.7" />
+                <circle cx="700" cy="40" r="2" fill="white" opacity="0.8" />
+                <circle cx="200" cy="80" r="1" fill="white" opacity="0.6" />
+                <circle cx="400" cy="20" r="1.5" fill="white" opacity="0.7" />
+                <circle cx="600" cy="90" r="1" fill="white" opacity="0.6" />
+
+                <!-- Корабль -->
+                <path d="M400,100 L500,180 L550,180 C570,180 580,170 580,150 L580,130 C580,110 570,100 550,100 L400,100 Z" fill="url(#shipGradient)" />
+                <path d="M400,100 L300,180 L250,180 C230,180 220,170 220,150 L220,130 C220,110 230,100 250,100 L400,100 Z" fill="url(#shipGradient)" />
+                <ellipse cx="400" cy="140" rx="120" ry="40" fill="url(#shipGradient)" />
+
+                <!-- Иллюминаторы -->
+                <circle cx="400" cy="140" r="20" fill="#0a0e17" stroke="#7b68ee" stroke-width="2" />
+                <circle cx="350" cy="140" r="10" fill="#0a0e17" stroke="#7b68ee" stroke-width="2" />
+                <circle cx="450" cy="140" r="10" fill="#0a0e17" stroke="#7b68ee" stroke-width="2" />
+
+                <!-- Двигатели -->
+                <rect x="220" y="140" width="20" height="10" fill="#ff7e67" filter="url(#glow)" />
+                <rect x="560" y="140" width="20" height="10" fill="#ff7e67" filter="url(#glow)" />
+
+                <!-- Название -->
+                <text x="400" y="145" font-family="'Exo 2', sans-serif" font-size="18" fill="white" text-anchor="middle">PYTHON-9000</text>
+            </svg>
+        </div>
+        <h1>Путешествие по Галактике Питон</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="intro">
+        <h2>Миссия: Восстановление Галактической Сети</h2>
+        <div class="mission-brief">
+            <p><strong>Год 2142.</strong> Человечество колонизировало несколько планет, но связь между ними внезапно прервалась. Причина — сбой в Галактической Сети, управляемой искусственным интеллектом PYTHON-9000.</p>
+            <p>Ты — молодой программист, которому предстоит восстановить работу сети, изучая язык программирования Python и решая задачи на разных планетах Галактики Питон.</p>
+            <p>Твоя миссия — посетить 12 планет, изучить основы Python и вернуть связь между колониями человечества!</p>
+        </div>
+    </div>
+
+    <h2>Карта Галактики Питон</h2>
+    <div class="lessons-grid">
+        <div class="lesson-card unlocked" onclick="window.location.href='lesson1.html'">
+            <h3 class="lesson-title">Станция "Начало"</h3>
+            <p class="lesson-description">Первое знакомство с Python и установка среды разработки. Начни свое путешествие здесь!</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(2)">
+            <h3 class="lesson-title">Планета "Переменная"</h3>
+            <p class="lesson-description">Изучение переменных и типов данных. Научись хранить информацию в программе.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(3)">
+            <h3 class="lesson-title">Планета "Ввод-Вывод"</h3>
+            <p class="lesson-description">Освоение ввода и вывода информации. Научись общаться с пользователем.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(4)">
+            <h3 class="lesson-title">Планета "Математика"</h3>
+            <p class="lesson-description">Операции с числами и математические функции. Преврати Python в мощный калькулятор.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(5)">
+            <h3 class="lesson-title">Планета "Условия"</h3>
+            <p class="lesson-description">Условные операторы if-elif-else. Научи программу принимать решения.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(6)">
+            <h3 class="lesson-title">Планета "Циклон"</h3>
+            <p class="lesson-description">Циклы while и for. Автоматизируй повторяющиеся действия.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(7)">
+            <h3 class="lesson-title">Планета "Функция"</h3>
+            <p class="lesson-description">Создание и использование функций. Научись организовывать код и избегать повторений.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(8)">
+            <h3 class="lesson-title">Планета "Массивия"</h3>
+            <p class="lesson-description">Списки и операции с ними. Работай с коллекциями данных.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(9)">
+            <h3 class="lesson-title">Планета "Кортежия"</h3>
+            <p class="lesson-description">Кортежи и их особенности. Используй неизменяемые последовательности.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(10)">
+            <h3 class="lesson-title">Планета "Множество"</h3>
+            <p class="lesson-description">Множества и операции с ними. Работай с уникальными элементами.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(11)">
+            <h3 class="lesson-title">Планета "Словарь"</h3>
+            <p class="lesson-description">Словари и их применение. Создавай структуры данных с ключами и значениями.</p>
+        </div>
+
+        <div class="lesson-card locked" onclick="showPasswordModal(12)">
+            <h3 class="lesson-title">Станция "Финал"</h3>
+            <p class="lesson-description">Итоговый проект - создание космической игры. Примени все полученные знания!</p>
+        </div>
+    </div>
+
+    <!-- Модальное окно для ввода пароля -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Требуется код доступа</h3>
+            <p>Для доступа к этой планете введите код, полученный на предыдущей планете:</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Введите код доступа...">
+            <p id="errorMessage" class="error-message">Неверный код! Возможно, вы еще не завершили предыдущую миссию.</p>
+            <button id="submitPassword" class="password-button">Активировать телепорт</button>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+
+    // Пароли для каждого урока (скрыты от пользователя в JavaScript)
+    const passwords = {
+        2: "variable", // Пароль для урока 2
+        3: "input", // Пароль для урока 3
+        4: "calculate", // Пароль для урока 4
+        5: "decision", // Пароль для урока 5
+        6: "repeat", // Пароль для урока 6
+        7: "organize", // Пароль для урока 7
+        8: "collection", // Пароль для урока 8
+        9: "immutable", // Пароль для урока 9
+        10: "unique", // Пароль для урока 10
+        11: "keyvalue", // Пароль для урока 11
+        12: "finale" // Пароль для урока 12
+    };
+
+    let currentLesson = 0;
+
+    // Функция для отображения модального окна
+    function showPasswordModal(lessonNumber) {
+        currentLesson = lessonNumber;
+        document.getElementById('passwordModal').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('passwordInput').focus();
+    }
+
+    // Функция для проверки пароля
+    function checkPassword() {
+        const password = document.getElementById('passwordInput').value.toLowerCase();
+        if (password === passwords[currentLesson]) {
+            // Если пароль верный, перенаправляем на страницу урока
+            window.location.href = `lesson${currentLesson}.html`;
+        } else {
+            // Если пароль неверный, показываем сообщение об ошибке
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    }
+
+    // Обработчик нажатия кнопки "Активировать телепорт"
+    document.getElementById('submitPassword').addEventListener('click', checkPassword);
+
+    // Обработчик нажатия Enter в поле ввода пароля
+    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    // Закрытие модального окна при клике вне его области
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('passwordModal')) {
+            document.getElementById('passwordModal').style.display = 'none';
+        }
+    };
+</script>
+</body>
+</html>

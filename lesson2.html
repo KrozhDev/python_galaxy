@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Планета "Переменная" | Путешествие по Галактике Питон</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+      --main-bg-color: #0a0e17;
+      --header-color: #1a1f35;
+      --accent-color: #5d3fd3;
+      --text-color: #e1e6fa;
+      --highlight-color: #7b68ee;
+      --success-color: #4ecca3;
+      --warning-color: #ff7e67;
+      --code-bg-color: #1e2538;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--main-bg-color);
+      background-image:
+              radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+              radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+              radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: var(--header-color);
+      padding: 20px 0;
+      margin-bottom: 30px;
+      border-bottom: 3px solid var(--accent-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      text-align: center;
+      margin: 0;
+      padding: 10px 0;
+      color: var(--highlight-color);
+      text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+    }
+
+    h2 {
+      color: var(--highlight-color);
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 10px;
+      margin-top: 40px;
+    }
+
+    h3 {
+      color: var(--success-color);
+      margin-top: 30px;
+    }
+
+    .mission-brief {
+      background-color: rgba(26, 31, 53, 0.7);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 5px solid var(--accent-color);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .mission-title {
+      display: flex;
+      align-items: center;
+      font-size: 1.4em;
+      color: var(--highlight-color);
+      margin-bottom: 15px;
+    }
+
+    .mission-icon {
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
+
+    .code-block {
+      background-color: var(--code-bg-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95em;
+      line-height: 1.5;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .code-comment {
+      color: #6c7a95;
+    }
+
+    .code-keyword {
+      color: #c792ea;
+    }
+
+    .code-string {
+      color: #c3e88d;
+    }
+
+    .code-number {
+      color: #f78c6c;
+    }
+
+    .code-function {
+      color: #82aaff;
+    }
+
+    .note-block {
+      background-color: rgba(78, 204, 163, 0.1);
+      border-left: 4px solid var(--success-color);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .warning-block {
+      background-color: rgba(255, 126, 103, 0.1);
+      border-left: 4px solid var(--warning-color);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+
+    .task-block {
+      background-color: rgba(123, 104, 238, 0.1);
+      border-left: 4px solid var(--highlight-color);
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 5px;
+    }
+
+    .task-title {
+      font-weight: bold;
+      color: var(--highlight-color);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .password-reveal {
+      background-color: rgba(26, 31, 53, 0.9);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 30px 0;
+      text-align: center;
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+    }
+
+    .password-title {
+      color: var(--highlight-color);
+      font-size: 1.3em;
+      margin-bottom: 15px;
+    }
+
+    .password-code {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: var(--code-bg-color);
+      color: var(--success-color);
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.5em;
+      letter-spacing: 2px;
+      display: inline-block;
+      margin: 10px 0;
+      border: 1px dashed var(--accent-color);
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(93, 63, 211, 0.3);
+    }
+
+    .nav-button {
+      background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-button.home {
+      background: linear-gradient(90deg, #2c3e50, #4a6572);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 20px 0;
+      color: #b8c0e0;
+      font-size: 0.9em;
+      border-top: 1px solid rgba(93, 63, 211, 0.3);
+    }
+
+    .planet-image {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 1; }
+    }
+
+    .star {
+      position: fixed;
+      background-color: white;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      background-color: rgba(26, 31, 53, 0.7);
+      border-radius: 10px;
+      margin: 30px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 10px;
+      width: 16.66%; /* 2/12 для второго урока */
+      background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+      border-radius: 10px;
+      transition: width 1s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 0.9em;
+      color: #b8c0e0;
+      margin-top: 5px;
+    }
+
+    .type-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: rgba(26, 31, 53, 0.7);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .type-table th {
+      background-color: var(--accent-color);
+      color: white;
+      text-align: left;
+      padding: 12px 15px;
+    }
+
+    .type-table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+    }
+
+    .type-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .type-table tr:hover {
+      background-color: rgba(123, 104, 238, 0.1);
+    }
+
+    .type-name {
+      color: var(--highlight-color);
+      font-weight: bold;
+    }
+
+    .type-example {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--success-color);
+    }
+  </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+  <div class="container">
+    <h1>Планета "Переменная"</h1>
+  </div>
+</header>
+
+<div class="container">
+  <div class="progress-bar-container">
+    <div class="progress-bar"></div>
+    <div class="progress-text">Прогресс миссии: 2/12</div>
+  </div>
+
+  <div class="mission-brief">
+    <div class="mission-title">
+      <span class="mission-icon">🪐</span> Брифинг миссии
+    </div>
+    <p>Добро пожаловать на планету "Переменная", космический программист! Твой корабль успешно приземлился, и теперь нам предстоит изучить основу всех программ - переменные и типы данных.</p>
+    <p>На этой планете хранятся важные данные Галактической Сети, но они разбросаны и не структурированы. Наша задача - научиться создавать переменные, хранить в них различные типы данных и выполнять базовые операции.</p>
+    <p>Это критически важный этап для восстановления связи между колониями!</p>
+  </div>
+
+  <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Планета Переменная -->
+    <defs>
+      <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#5d3fd3;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#7b68ee;stop-opacity:1" />
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="2.5" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    <!-- Основная планета -->
+    <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+    <!-- Кольца планеты -->
+    <ellipse cx="100" cy="100" rx="90" ry="20" fill="none" stroke="#4ecca3" stroke-width="3" transform="rotate(30 100 100)" />
+    <ellipse cx="100" cy="100" rx="90" ry="20" fill="none" stroke="#4ecca3" stroke-width="1" filter="url(#glow)" transform="rotate(30 100 100)" />
+
+    <!-- Символы переменных на поверхности -->
+    <text x="80" y="90" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">x</text>
+    <text x="110" y="110" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">y</text>
+    <text x="70" y="120" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">z</text>
+    <text x="120" y="80" font-family="'JetBrains Mono', monospace" font-size="20" fill="white">a</text>
+
+    <!-- Кратеры -->
+    <circle cx="130" cy="130" r="10" fill="#4a3b9f" />
+    <circle cx="70" cy="60" r="15" fill="#4a3b9f" />
+    <circle cx="40" cy="110" r="8" fill="#4a3b9f" />
+  </svg>
+
+  <h2>Что такое переменные?</h2>
+
+  <p>Переменные в программировании - это контейнеры для хранения данных. Представь их как специальные ящики с этикетками, в которые можно положить различную информацию и потом использовать её.</p>
+
+  <div class="note-block">
+    <p><strong>Аналогия:</strong> Если программа - это рецепт блюда, то переменные - это ингредиенты, которые мы используем в процессе приготовления. Мы можем изменять их количество, смешивать и преобразовывать.</p>
+  </div>
+
+  <h3>Создание переменных в Python</h3>
+
+  <p>В Python создать переменную очень просто - нужно придумать ей имя и присвоить значение с помощью знака равенства (=):</p>
+
+  <div class="code-block">
+    <span class="code-comment"># Создаем переменную с именем 'age' и значением 15</span><br>
+    <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+    <br>
+    <span class="code-comment"># Создаем переменную с именем 'name' и значением "Алекс"</span><br>
+    <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+    <br>
+    <span class="code-comment"># Выводим значения переменных</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">name</span>)<br>
+    <span class="code-function">print</span>(<span class="code-keyword">age</span>)
+  </div>
+
+  <p>Результат выполнения этого кода:</p>
+
+  <div class="code-block">
+    Алекс<br>
+    15
+  </div>
+
+  <h3>Правила именования переменных</h3>
+
+  <p>При создании переменных нужно соблюдать определенные правила:</p>
+
+  <ul>
+    <li>Имя переменной может содержать буквы, цифры и символ подчеркивания (_)</li>
+    <li>Имя должно начинаться с буквы или символа подчеркивания, но не с цифры</li>
+    <li>Имена чувствительны к регистру (name и Name - это разные переменные)</li>
+    <li>Нельзя использовать зарезервированные слова Python (например, if, for, while)</li>
+  </ul>
+
+  <div class="code-block">
+    <span class="code-comment"># Правильные имена переменных</span><br>
+    <span class="code-keyword">user_name</span> = <span class="code-string">"Космонавт"</span><br>
+    <span class="code-keyword">age1</span> = <span class="code-number">25</span><br>
+    <span class="code-keyword">_temperature</span> = <span class="code-number">-50</span><br>
+    <br>
+    <span class="code-comment"># Неправильные имена переменных</span><br>
+    <span class="code-comment"># 1variable = 10  # Начинается с цифры</span><br>
+    <span class="code-comment"># user-name = "Ошибка"  # Содержит дефис</span><br>
+    <span class="code-comment"># if = "Ключевое слово"  # Зарезервированное слово</span>
+  </div>
+
+  <div class="warning-block">
+    <p><strong>Важно:</strong> В Python принято использовать "змеиный_регистр" (snake_case) для именования переменных - все буквы маленькие, а слова разделяются символом подчеркивания.</p>
+  </div>
+
+  <h2>Основные типы данных в Python</h2>
+
+  <p>Python - динамически типизированный язык, что означает, что тип переменной определяется автоматически в зависимости от присвоенного значения. Вот основные типы данных:</p>
+
+  <table class="type-table">
+    <tr>
+      <th>Тип данных</th>
+      <th>Описание</th>
+      <th>Пример</th>
+    </tr>
+    <tr>
+      <td class="type-name">int</td>
+      <td>Целые числа</td>
+      <td class="type-example">x = 10</td>
+    </tr>
+    <tr>
+      <td class="type-name">float</td>
+      <td>Числа с плавающей точкой (дробные)</td>
+      <td class="type-example">y = 3.14</td>
+    </tr>
+    <tr>
+      <td class="type-name">str</td>
+      <td>Строки (текст)</td>
+      <td class="type-example">name = "Алекс"</td>
+    </tr>
+    <tr>
+      <td class="type-name">bool</td>
+      <td>Логический тип (True или False)</td>
+      <td class="type-example">is_active = True</td>
+    </tr>
+    <tr>
+      <td class="type-name">list</td>
+      <td>Списки (упорядоченные коллекции)</td>
+      <td class="type-example">planets = ["Земля", "Марс"]</td>
+    </tr>
+    <tr>
+      <td class="type-name">tuple</td>
+      <td>Кортежи (неизменяемые списки)</td>
+      <td class="type-example">coords = (10, 20)</td>
+    </tr>
+    <tr>
+      <td class="type-name">dict</td>
+      <td>Словари (пары ключ-значение)</td>
+      <td class="type-example">user = {"name": "Алекс", "age": 15}</td>
+    </tr>
+    <tr>
+      <td class="type-name">set</td>
+      <td>Множества (уникальные элементы)</td>
+      <td class="type-example">unique_nums = {1, 2, 3}</td>
+    </tr>
+  </table>
+
+  <h3>Определение типа переменной</h3>
+
+  <p>Чтобы узнать тип переменной, можно использовать функцию <code>type()</code>:</p>
+
+  <div class="code-block">
+    <span class="code-keyword">age</span> = <span class="code-number">15</span><br>
+    <span class="code-keyword">pi</span> = <span class="code-number">3.14159</span><br>
+    <span class="code-keyword">name</span> = <span class="code-string">"Алекс"</span><br>
+    <span class="code-keyword">is_student</span> = <span class="code-keyword">True</span><br>
+    <br>
+    <span class="code-function">print</span>(<span class="code-function">type</span>(<span class="code-keyword">age</span>))<br>
+    <span class="code-function">print</span>(<span class="code-function">type</span>(<span class="code-keyword">pi</span>))<br>
+    <span class="code-function">print</span>(<span class="code-function">type</span>(<span class="code-keyword">name</span>))<br>
+    <span class="code-function">print</span>(<span class="code-function">type</span>(<span class="code-keyword">is_student</span>))
+  </div>
+
+  <p>Результат выполнения:</p>
+
+  <div class="code-block">
+    &lt;class 'int'&gt;<br>
+    &lt;class 'float'&gt;<br>
+    &lt;class 'str'&gt;<br>
+    &lt;class 'bool'&gt;
+  </div>
+
+  <h2>Преобразование типов данных</h2>
+
+  <p>Иногда нам нужно преобразовать один тип данных в другой. Для этого в Python есть специальные функции:</p>
+
+  <div class="code-block">
+    <span class="code-comment"># Преобразование строки в число</span><br>
+    <span class="code-keyword">age_str</span> = <span class="code-string">"15"</span><br>
+    <span class="code-keyword">age_int</span> = <span class="code-function">int</span>(<span class="code-keyword">age_str</span>)<br>
+    <span class="code-function">print</span>(<span class="code-keyword">age_int</span> + <span class="code-number">5</span>)  <span class="code-comment"># Теперь можно выполнять математические операции</span><br>
+    <br>
+    <span class="code-comment"># Преобразование числа в строку</span><br>
+    <span class="code-keyword">temperature</span> = <span class="code-number">-20</span><br>
+    <span class="code-keyword">message</span> = <span class="code-string">"Температура на планете: "</span> + <span class="code-function">str</span>(<span class="code-keyword">temperature</span>) + <span class="code-string">" градусов"</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">message</span>)<br>
+    <br>
+    <span class="code-comment"># Преобразование в логический тип</span><br>
+    <span class="code-function">print</span>(<span class="code-function">bool</span>(<span class="code-number">0</span>))  <span class="code-comment"># False</span><br>
+    <span class="code-function">print</span>(<span class="code-function">bool</span>(<span class="code-number">1</span>))  <span class="code-comment"># True</span><br>
+    <span class="code-function">print</span>(<span class="code-function">bool</span>(<span class="code-string">""</span>))  <span class="code-comment"># False (пустая строка)</span><br>
+    <span class="code-function">print</span>(<span class="code-function">bool</span>(<span class="code-string">"Привет"</span>))  <span class="code-comment"># True (непустая строка)</span>
+  </div>
+
+  <p>Результат выполнения:</p>
+
+  <div class="code-block">
+    20<br>
+    Температура на планете: -20 градусов<br>
+    False<br>
+    True<br>
+    False<br>
+    True
+  </div>
+
+  <h2>Операции с переменными</h2>
+
+  <h3>Математические операции</h3>
+
+  <div class="code-block">
+    <span class="code-keyword">a</span> = <span class="code-number">10</span><br>
+    <span class="code-keyword">b</span> = <span class="code-number">3</span><br>
+    <br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> + <span class="code-keyword">b</span>)  <span class="code-comment"># Сложение: 13</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> - <span class="code-keyword">b</span>)  <span class="code-comment"># Вычитание: 7</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> * <span class="code-keyword">b</span>)  <span class="code-comment"># Умножение: 30</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> / <span class="code-keyword">b</span>)  <span class="code-comment"># Деление: 3.3333...</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> // <span class="code-keyword">b</span>)  <span class="code-comment"># Целочисленное деление: 3</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> % <span class="code-keyword">b</span>)  <span class="code-comment"># Остаток от деления: 1</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">a</span> ** <span class="code-keyword">b</span>)  <span class="code-comment"># Возведение в степень: 1000</span>
+  </div>
+
+  <h3>Операции со строками</h3>
+
+  <div class="code-block">
+    <span class="code-keyword">first_name</span> = <span class="code-string">"Космо"</span><br>
+    <span class="code-keyword">last_name</span> = <span class="code-string">"Навт"</span><br>
+    <br>
+    <span class="code-comment"># Конкатенация (объединение) строк</span><br>
+    <span class="code-keyword">full_name</span> = <span class="code-keyword">first_name</span> + <span class="code-string">" "</span> + <span class="code-keyword">last_name</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">full_name</span>)  <span class="code-comment"># Космо Навт</span><br>
+    <br>
+    <span class="code-comment"># Повторение строки</span><br>
+    <span class="code-keyword">stars</span> = <span class="code-string">"*"</span> * <span class="code-number">10</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">stars</span>)  <span class="code-comment"># **********</span><br>
+    <br>
+    <span class="code-comment"># Длина строки</span><br>
+    <span class="code-function">print</span>(<span class="code-function">len</span>(<span class="code-keyword">full_name</span>))  <span class="code-comment"># 10</span>
+  </div>
+
+  <h3>Обновление переменных</h3>
+
+  <div class="code-block">
+    <span class="code-keyword">counter</span> = <span class="code-number">0</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">counter</span>)  <span class="code-comment"># 0</span><br>
+    <br>
+    <span class="code-comment"># Увеличиваем значение на 1</span><br>
+    <span class="code-keyword">counter</span> = <span class="code-keyword">counter</span> + <span class="code-number">1</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">counter</span>)  <span class="code-comment"># 1</span><br>
+    <br>
+    <span class="code-comment"># Сокращенная запись</span><br>
+    <span class="code-keyword">counter</span> += <span class="code-number">1</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">counter</span>)  <span class="code-comment"># 2</span><br>
+    <br>
+    <span class="code-comment"># Другие операции</span><br>
+    <span class="code-keyword">counter</span> *= <span class="code-number">5</span>  <span class="code-comment"># counter = counter * 5</span><br>
+    <span class="code-function">print</span>(<span class="code-keyword">counter</span>)  <span class="code-comment"># 10</span>
+  </div>
+
+  <h2>Ввод данных от пользователя</h2>
+
+  <p>Для получения данных от пользователя используется функция <code>input()</code>:</p>
+
+  <div class="code-block">
+    <span class="code-comment"># Запрос имени пользователя</span><br>
+    <span class="code-keyword">name</span> = <span class="code-function">input</span>(<span class="code-string">"Введите ваше имя: "</span>)<br>
+    <span class="code-function">print</span>(<span class="code-string">"Привет, "</span> + <span class="code-keyword">name</span> + <span class="code-string">"!"</span>)<br>
+    <br>
+    <span class="code-comment"># Запрос возраста и преобразование в число</span><br>
+    <span class="code-keyword">age_str</span> = <span class="code-function">input</span>(<span class="code-string">"Введите ваш возраст: "</span>)<br>
+    <span class="code-keyword">age</span> = <span class="code-function">int</span>(<span class="code-keyword">age_str</span>)<br>
+    <span class="code-function">print</span>(<span class="code-string">"Через 5 лет вам будет"</span>, <span class="code-keyword">age</span> + <span class="code-number">5</span>, <span class="code-string">"лет"</span>)
+  </div>
+
+  <div class="note-block">
+    <p><strong>Важно:</strong> Функция <code>input()</code> всегда возвращает строку. Если вам нужно число, необходимо преобразовать полученное значение с помощью <code>int()</code> или <code>float()</code>.</p>
+  </div>
+
+  <div class="task-block">
+    <div class="task-title">🚀 Задание для завершения миссии</div>
+    <p>Чтобы получить код доступа к следующей планете, напиши программу, которая:</p>
+    <ol>
+      <li>Запрашивает у пользователя его имя</li>
+      <li>Запрашивает возраст пользователя (и преобразует его в число)</li>
+      <li>Запрашивает название любимой планеты</li>
+      <li>Вычисляет, сколько лет пользователю будет через 10 лет</li>
+      <li>Выводит сообщение: "Привет, [имя]! Через 10 лет тебе будет [новый возраст] лет. Надеюсь, ты сможешь посетить планету [планета]!"</li>
+    </ol>
+    <p>Пример работы программы:</p>
+    <div class="code-block">
+      Введите ваше имя: Алекс<br>
+      Введите ваш возраст: 15<br>
+      Введите название вашей любимой планеты: Марс<br>
+      Привет, Алекс! Через 10 лет тебе будет 25 лет. Надеюсь, ты сможешь посетить планету Марс!
+    </div>
+  </div>
+
+  <div class="password-reveal">
+    <div class="password-title">🔑 Код доступа к планете "Ввод-Вывод"</div>
+    <p>Поздравляю! Ты успешно завершил миссию на планете "Переменная".</p>
+    <p>Вот код доступа к следующей планете:</p>
+    <div class="password-code">input</div>
+    <p>Используй этот код на главной странице для доступа к уроку 3.</p>
+  </div>
+
+  <div class="navigation">
+    <a href="lesson1.html" class="nav-button">← Предыдущая планета</a>
+    <a href="index.html" class="nav-button home">На главную</a>
+    <a href="lesson3.html" class="nav-button">Следующая планета →</a>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Галактическая Академия Программирования © 2142</p>
+  <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+  // Создание звезд на фоне
+  document.addEventListener('DOMContentLoaded', function() {
+    const starsContainer = document.getElementById('stars-container');
+    const starCount = 100;
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+
+      // Случайный размер и позиция
+      const size = Math.random() * 2;
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${posX}%`;
+      star.style.top = `${posY}%`;
+
+      // Случайная анимация мерцания
+      star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+      star.style.animationDelay = `${Math.random() * 5}s`;
+
+      starsContainer.appendChild(star);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планета "Файлия" | Путешествие по Галактике Питон</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        :root {
+            --main-bg-color: #0a0e17;
+            --header-color: #1a1f35;
+            --accent-color: #5d3fd3;
+            --text-color: #e1e6fa;
+            --highlight-color: #7b68ee;
+            --success-color: #4ecca3;
+            --warning-color: #ff7e67;
+            --code-bg-color: #1e2538;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--main-bg-color);
+            background-image:
+                    radial-gradient(circle at 10% 20%, rgba(93, 63, 211, 0.1) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 60%, rgba(123, 104, 238, 0.15) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(78, 204, 163, 0.05) 0%, transparent 30%);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-color);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 0;
+            padding: 10px 0;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
+        }
+
+        h2 {
+            color: var(--highlight-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--success-color);
+            margin-top: 30px;
+        }
+
+        .mission-brief {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .mission-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4em;
+            color: var(--highlight-color);
+            margin-bottom: 15px;
+        }
+
+        .mission-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .code-comment {
+            color: #6c7a95;
+        }
+
+        .code-keyword {
+            color: #c792ea;
+        }
+
+        .code-string {
+            color: #c3e88d;
+        }
+
+        .code-number {
+            color: #f78c6c;
+        }
+
+        .code-function {
+            color: #82aaff;
+        }
+
+        .note-block {
+            background-color: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-block {
+            background-color: rgba(255, 126, 103, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .task-block {
+            background-color: rgba(123, 104, 238, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .password-reveal {
+            background-color: rgba(26, 31, 53, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 12px rgba(93, 63, 211, 0.3);
+        }
+
+        .password-title {
+            color: var(--highlight-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .password-code {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--code-bg-color);
+            color: var(--success-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .nav-button {
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button.home {
+            background: linear-gradient(90deg, #2c3e50, #4a6572);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            color: #b8c0e0;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .planet-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background-color: white;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 10px;
+            width: 83.33%; /* 10/12 для десятого урока */
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b8c0e0;
+            margin-top: 5px;
+        }
+
+        .terminal {
+            background-color: #1a1f35;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #5d3fd3;
+        }
+
+        .terminal-header {
+            background-color: #5d3fd3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+        }
+
+        .user-input {
+            color: #4ecca3;
+        }
+
+        .system-output {
+            color: #e1e6fa;
+        }
+
+        .file-diagram {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #5d3fd3;
+            overflow-x: auto;
+        }
+
+        .file-icon {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 20px;
+        }
+
+        .file-image {
+            width: 60px;
+            height: 80px;
+            background-color: var(--code-bg-color);
+            border-radius: 5px;
+            border: 2px solid var(--highlight-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .file-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 15px;
+            border-style: solid;
+            border-color: var(--highlight-color) var(--highlight-color) transparent transparent;
+        }
+
+        .file-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        .file-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2em;
+            color: var(--text-color);
+        }
+
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .method-table th {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+
+        .method-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(93, 63, 211, 0.3);
+        }
+
+        .method-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .method-table tr:hover {
+            background-color: rgba(123, 104, 238, 0.1);
+        }
+
+        .method-name {
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .method-example {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--success-color);
+        }
+
+        .file-tree {
+            background-color: rgba(26, 31, 53, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+        }
+
+        .folder {
+            color: var(--highlight-color);
+        }
+
+        .file {
+            color: var(--text-color);
+        }
+
+        .indent {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- Звезды на фоне -->
+<div id="stars-container"></div>
+
+<header>
+    <div class="container">
+        <h1>Планета "Файлия"</h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="progress-text">Прогресс миссии: 10/12</div>
+    </div>
+
+    <div class="mission-brief">
+        <div class="mission-title">
+            <span class="mission-icon">🪐</span> Брифинг миссии
+        </div>
+        <p>Добро пожаловать на планету "Файлия", космический программист! Эта планета является центром хранения и обработки данных Галактической Сети.</p>
+        <p>Здесь мы изучим работу с файлами в Python - чтение, запись и обработку данных, хранящихся на внешних носителях. Умение работать с файлами критически важно для создания программ, которые могут сохранять состояние между запусками и обрабатывать большие объемы информации.</p>
+        <p>Наша задача - освоить различные методы работы с файлами, чтобы эффективно управлять данными в нашей миссии по восстановлению Галактической Сети.</p>
+    </div>
+
+    <svg class="planet-image" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Планета Файлия -->
+        <defs>
+            <linearGradient id="planetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#4ecca3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2d8f78;stop-opacity:1" />
+            </linearGradient>
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+        </defs>
+
+        <!-- Основная планета -->
+        <circle cx="100" cy="100" r="70" fill="url(#planetGradient)" />
+
+        <!-- Файловые структуры на поверхности -->
+        <rect x="70" y="60" width="30" height="40" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="110" y="60" width="30" height="40" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="70" y="110" width="30" height="40" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+        <rect x="110" y="110" width="30" height="40" rx="3" fill="#2d8f78" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Уголки файлов -->
+        <path d="M100 60 L100 70 L90 70 Z" fill="#e1e6fa" />
+        <path d="M140 60 L140 70 L130 70 Z" fill="#e1e6fa" />
+        <path d="M100 110 L100 120 L90 120 Z" fill="#e1e6fa" />
+        <path d="M140 110 L140 120 L130 120 Z" fill="#e1e6fa" />
+
+        <!-- Линии текста в файлах -->
+        <line x1="75" y1="80" x2="95" y2="80" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="75" y1="85" x2="95" y2="85" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="75" y1="90" x2="95" y2="90" stroke="#e1e6fa" stroke-width="1" />
+
+        <line x1="115" y1="80" x2="135" y2="80" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="115" y1="85" x2="135" y2="85" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="115" y1="90" x2="135" y2="90" stroke="#e1e6fa" stroke-width="1" />
+
+        <line x1="75" y1="130" x2="95" y2="130" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="75" y1="135" x2="95" y2="135" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="75" y1="140" x2="95" y2="140" stroke="#e1e6fa" stroke-width="1" />
+
+        <line x1="115" y1="130" x2="135" y2="130" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="115" y1="135" x2="135" y2="135" stroke="#e1e6fa" stroke-width="1" />
+        <line x1="115" y1="140" x2="135" y2="140" stroke="#e1e6fa" stroke-width="1" />
+
+        <!-- Кратеры -->
+        <circle cx="40" cy="50" r="10" fill="#2d8f78" />
+        <circle cx="160" cy="60" r="15" fill="#2d8f78" />
+        <circle cx="50" cy="150" r="12" fill="#2d8f78" />
+        <circle cx="150" cy="140" r="8" fill="#2d8f78" />
+
+        <!-- Светящиеся точки в файлах -->
+        <circle cx="85" cy="75" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="125" cy="75" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="85" cy="125" r="2" fill="#e1e6fa" filter="url(#glow)" />
+        <circle cx="125" cy="125" r="2" fill="#e1e6fa" filter="url(#glow)" />
+    </svg>
+
+    <h2>Зачем нужны файлы?</h2>
+
+    <p>Файлы позволяют программам сохранять данные на долгосрочной основе. В отличие от переменных, которые существуют только во время выполнения программы, файлы сохраняют информацию даже после завершения работы программы или выключения компьютера.</p>
+
+    <p>Основные причины использования файлов:</p>
+    <ul>
+        <li>Сохранение состояния программы между запусками</li>
+        <li>Обработка больших объемов данных, которые не помещаются в оперативную память</li>
+        <li>Обмен данными между разными программами</li>
+        <li>Хранение конфигурационных настроек</li>
+        <li>Логирование действий программы</li>
+        <li>Импорт и экспорт данных</li>
+    </ul>
+
+    <div class="file-diagram">
+        <div class="file-icon">
+            <div class="file-image">
+                <span class="file-content">txt</span>
+            </div>
+            <span class="file-name">Текстовый файл</span>
+        </div>
+        <div class="file-icon">
+            <div class="file-image">
+                <span class="file-content">csv</span>
+            </div>
+            <span class="file-name">Табличные данные</span>
+        </div>
+        <div class="file-icon">
+            <div class="file-image">
+                <span class="file-content">json</span>
+            </div>
+            <span class="file-name">Структурированные данные</span>
+        </div>
+        <div class="file-icon">
+            <div class="file-image">
+                <span class="file-content">bin</span>
+            </div>
+            <span class="file-name">Бинарные данные</span>
+        </div>
+    </div>
+
+    <h2>Основы работы с файлами</h2>
+
+    <p>В Python для работы с файлами используется встроенная функция <code>open()</code>, которая открывает файл и возвращает объект файла. После завершения работы с файлом его необходимо закрыть с помощью метода <code>close()</code>.</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Базовый синтаксис работы с файлами</span><br>
+        <span class="code-comment"># open(имя_файла, режим_доступа)</span><br>
+        <br>
+        <span class="code-comment"># Открытие файла для чтения</span><br>
+        <span class="code-keyword">file</span> = <span class="code-function">open</span>(<span class="code-string">"example.txt"</span>, <span class="code-string">"r"</span>)<br>
+        <span class="code-comment"># Чтение содержимого</span><br>
+        <span class="code-keyword">content</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>()<br>
+        <span class="code-function">print</span>(<span class="code-keyword">content</span>)<br>
+        <span class="code-comment"># Закрытие файла</span><br>
+        <span class="code-keyword">file</span>.<span class="code-function">close</span>()
+    </div>
+
+    <p>Однако рекомендуется использовать конструкцию <code>with</code>, которая автоматически закрывает файл после выхода из блока, даже если произошла ошибка:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Рекомендуемый способ работы с файлами</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"example.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">content</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">content</span>)<br>
+        <span class="code-comment"># Файл автоматически закрывается после выхода из блока with</span>
+    </div>
+
+    <h3>Режимы открытия файлов</h3>
+
+    <p>Функция <code>open()</code> принимает различные режимы доступа к файлу:</p>
+
+    <table class="method-table">
+        <tr>
+            <th>Режим</th>
+            <th>Описание</th>
+        </tr>
+        <tr>
+            <td class="method-name">"r"</td>
+            <td>Чтение (режим по умолчанию). Файл должен существовать.</td>
+        </tr>
+        <tr>
+            <td class="method-name">"w"</td>
+            <td>Запись. Создает новый файл или перезаписывает существующий.</td>
+        </tr>
+        <tr>
+            <td class="method-name">"a"</td>
+            <td>Добавление. Добавляет данные в конец файла, создает файл если он не существует.</td>
+        </tr>
+        <tr>
+            <td class="method-name">"x"</td>
+            <td>Эксклюзивное создание. Создает новый файл, выдает ошибку если файл уже существует.</td>
+        </tr>
+        <tr>
+            <td class="method-name">"b"</td>
+            <td>Бинарный режим (используется вместе с другими режимами, например "rb", "wb").</td>
+        </tr>
+        <tr>
+            <td class="method-name">"t"</td>
+            <td>Текстовый режим (режим по умолчанию).</td>
+        </tr>
+        <tr>
+            <td class="method-name">"+"</td>
+            <td>Чтение и запись (используется вместе с другими режимами, например "r+", "w+").</td>
+        </tr>
+    </table>
+
+    <div class="note-block">
+        <p><strong>Примечание:</strong> Режимы можно комбинировать. Например, "rb" открывает файл для чтения в бинарном режиме, а "w+" открывает файл для чтения и записи, создавая новый файл или перезаписывая существующий.</p>
+    </div>
+
+    <h2>Чтение из файлов</h2>
+
+    <p>Существует несколько способов чтения данных из файла:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Создадим тестовый файл для примеров</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"w"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Меркурий\nВенера\nЗемля\nМарс\nЮпитер\nСатурн\nУран\nНептун"</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение всего файла целиком</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">content</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Содержимое файла:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">content</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение файла построчно с помощью readlines()</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">lines</span> = <span class="code-keyword">file</span>.<span class="code-function">readlines</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nСписок строк:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span class="code-keyword">line</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">lines</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{i+1}. {line.strip()}"</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение файла построчно с помощью цикла</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nПланеты Солнечной системы:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">line</span> <span class="code-keyword">in</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {line.strip()}"</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение определенного количества символов</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">first_10</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>(<span class="code-number">10</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nПервые 10 символов:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">first_10</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Содержимое файла:</span><br>
+        <span class="system-output">Меркурий
+Венера
+Земля
+Марс
+Юпитер
+Сатурн
+Уран
+Нептун</span><br>
+        <span class="system-output">
+Список строк:</span><br>
+        <span class="system-output">1. Меркурий</span><br>
+        <span class="system-output">2. Венера</span><br>
+        <span class="system-output">3. Земля</span><br>
+        <span class="system-output">4. Марс</span><br>
+        <span class="system-output">5. Юпитер</span><br>
+        <span class="system-output">6. Сатурн</span><br>
+        <span class="system-output">7. Уран</span><br>
+        <span class="system-output">8. Нептун</span><br>
+        <span class="system-output">
+Планеты Солнечной системы:</span><br>
+        <span class="system-output">- Меркурий</span><br>
+        <span class="system-output">- Венера</span><br>
+        <span class="system-output">- Земля</span><br>
+        <span class="system-output">- Марс</span><br>
+        <span class="system-output">- Юпитер</span><br>
+        <span class="system-output">- Сатурн</span><br>
+        <span class="system-output">- Уран</span><br>
+        <span class="system-output">- Нептун</span><br>
+        <span class="system-output">
+Первые 10 символов:</span><br>
+        <span class="system-output">Меркурий
+В</span>
+    </div>
+
+    <div class="warning-block">
+        <p><strong>Важно:</strong> Метод <code>read()</code> считывает весь файл в память, что может быть проблематично для очень больших файлов. Для обработки больших файлов лучше читать их построчно с помощью цикла <code>for</code> или небольшими частями с помощью <code>read(size)</code>.</p>
+    </div>
+
+    <h3>Перемещение по файлу</h3>
+
+    <p>Для перемещения по файлу используются методы <code>seek()</code> и <code>tell()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Чтение первых 5 символов</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">start</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>(<span class="code-number">5</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Первые 5 символов: '{start}'"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Получение текущей позиции</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">position</span> = <span class="code-keyword">file</span>.<span class="code-function">tell</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Текущая позиция: {position}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Чтение следующих 5 символов</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">next_5</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>(<span class="code-number">5</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Следующие 5 символов: '{next_5}'"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Перемещение в начало файла</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">seek</span>(<span class="code-number">0</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Новая позиция после seek(0): {file.tell()}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Чтение первой строки после перемещения</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">first_line</span> = <span class="code-keyword">file</span>.<span class="code-function">readline</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Первая строка: '{first_line.strip()}'"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Перемещение на 20 байт от начала файла</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">seek</span>(<span class="code-number">20</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">pos_20</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>(<span class="code-number">10</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"10 символов с позиции 20: '{pos_20}'"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Первые 5 символов: 'Мерку'</span><br>
+        <span class="system-output">Текущая позиция: 5</span><br>
+        <span class="system-output">Следующие 5 символов: 'рий
+В'</span><br>
+        <span class="system-output">Новая позиция после seek(0): 0</span><br>
+        <span class="system-output">Первая строка: 'Меркурий'</span><br>
+        <span class="system-output">10 символов с позиции 20: 'я
+Марс
+Юпи'</span>
+    </div>
+
+    <h2>Запись в файлы</h2>
+
+    <p>Для записи данных в файл используются методы <code>write()</code> и <code>writelines()</code>:</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Запись строки в файл (создание нового файла или перезапись существующего)</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"space_facts.txt"</span>, <span class="code-string">"w"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Факт 1: Солнце составляет 99.86% массы Солнечной системы.\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Факт 2: На Венере день длиннее, чем год.\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Факт 3: Юпитер имеет 79 известных спутников.\n"</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение созданного файла</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"space_facts.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Содержимое файла space_facts.txt:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">file</span>.<span class="code-function">read</span>())<br>
+        <br>
+        <span class="code-comment"># Добавление данных в конец файла</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"space_facts.txt"</span>, <span class="code-string">"a"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Факт 4: Один день на Меркурии длится примерно 176 земных дней.\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Факт 5: На Марсе находится самая высокая гора в Солнечной системе - Олимп.\n"</span>)<br>
+        <br>
+        <span class="code-comment"># Запись списка строк с помощью writelines()</span><br>
+        <span class="code-keyword">more_facts</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Факт 6: Сатурн может плавать в воде из-за низкой плотности.\n"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Факт 7: Уран вращается "лёжа на боку".\n"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Факт 8: Нептун был открыт благодаря математическим расчётам.\n"</span><br>
+        ]<br>
+        <br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"space_facts.txt"</span>, <span class="code-string">"a"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">writelines</span>(<span class="code-keyword">more_facts</span>)<br>
+        <br>
+        <span class="code-comment"># Проверка содержимого файла после всех операций</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"space_facts.txt"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nОбновленное содержимое файла space_facts.txt:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span class="code-keyword">line</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">file</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-keyword">line</span>.<span class="code-function">strip</span>())
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Содержимое файла space_facts.txt:</span><br>
+        <span class="system-output">Факт 1: Солнце составляет 99.86% массы Солнечной системы.
+Факт 2: На Венере день длиннее, чем год.
+Факт 3: Юпитер имеет 79 известных спутников.
+</span><br>
+        <span class="system-output">
+Обновленное содержимое файла space_facts.txt:</span><br>
+        <span class="system-output">Факт 1: Солнце составляет 99.86% массы Солнечной системы.</span><br>
+        <span class="system-output">Факт 2: На Венере день длиннее, чем год.</span><br>
+        <span class="system-output">Факт 3: Юпитер имеет 79 известных спутников.</span><br>
+        <span class="system-output">Факт 4: Один день на Меркурии длится примерно 176 земных дней.</span><br>
+        <span class="system-output">Факт 5: На Марсе находится самая высокая гора в Солнечной системе - Олимп.</span><br>
+        <span class="system-output">Факт 6: Сатурн может плавать в воде из-за низкой плотности.</span><br>
+        <span class="system-output">Факт 7: Уран вращается "лёжа на боку".</span><br>
+        <span class="system-output">Факт 8: Нептун был открыт благодаря математическим расчётам.</span>
+    </div>
+
+    <h2>Работа с путями к файлам</h2>
+
+    <p>Для удобной работы с путями к файлам в Python используется модуль <code>os.path</code> или более современный модуль <code>pathlib</code>:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">os</span><br>
+        <span class="code-keyword">from</span> <span class="code-keyword">pathlib</span> <span class="code-keyword">import</span> <span class="code-keyword">Path</span><br>
+        <br>
+        <span class="code-comment"># Получение текущего рабочего каталога</span><br>
+        <span class="code-keyword">current_dir</span> = <span class="code-keyword">os</span>.<span class="code-function">getcwd</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Текущий каталог: {current_dir}"</span>)<br>
+        <br>
+        <span class="code-comment"># Объединение путей с помощью os.path</span><br>
+        <span class="code-keyword">data_file</span> = <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">join</span>(<span class="code-keyword">current_dir</span>, <span class="code-string">"data"</span>, <span class="code-string">"planets.csv"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Путь к файлу с данными: {data_file}"</span>)<br>
+        <br>
+        <span class="code-comment"># Проверка существования файла</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Файл space_facts.txt существует: {os.path.exists('space_facts.txt')}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Файл nonexistent.txt существует: {os.path.exists('nonexistent.txt')}"</span>)<br>
+        <br>
+        <span class="code-comment"># Получение информации о файле</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">exists</span>(<span class="code-string">'space_facts.txt'</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file_size</span> = <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">getsize</span>(<span class="code-string">'space_facts.txt'</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Размер файла space_facts.txt: {file_size} байт"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">base_name</span> = <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">basename</span>(<span class="code-string">'space_facts.txt'</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">dir_name</span> = <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">dirname</span>(<span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">abspath</span>(<span class="code-string">'space_facts.txt'</span>))<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Имя файла: {base_name}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Каталог файла: {dir_name}"</span>)<br>
+        <br>
+        <span class="code-comment"># Использование pathlib (более современный подход)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nРабота с pathlib:"</span>)<br>
+        <span class="code-keyword">current_path</span> = <span class="code-keyword">Path</span>.<span class="code-function">cwd</span>()<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Текущий каталог: {current_path}"</span>)<br>
+        <br>
+        <span class="code-keyword">file_path</span> = <span class="code-keyword">current_path</span> / <span class="code-string">"data"</span> / <span class="code-string">"planets.csv"</span><br>
+        <span class="code-function">print</span>(<span class="code-string">f"Путь к файлу: {file_path}"</span>)<br>
+        <br>
+        <span class="code-keyword">facts_file</span> = <span class="code-keyword">Path</span>(<span class="code-string">'space_facts.txt'</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Файл существует: {facts_file.exists()}"</span>)<br>
+        <span class="code-keyword">if</span> <span class="code-keyword">facts_file</span>.<span class="code-function">exists</span>():<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Размер файла: {facts_file.stat().st_size} байт"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Имя файла: {facts_file.name}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Расширение: {facts_file.suffix}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Родительский каталог: {facts_file.parent.absolute()}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Текущий каталог: /home/user/projects</span><br>
+        <span class="system-output">Путь к файлу с данными: /home/user/projects/data/planets.csv</span><br>
+        <span class="system-output">Файл space_facts.txt существует: True</span><br>
+        <span class="system-output">Файл nonexistent.txt существует: False</span><br>
+        <span class="system-output">Размер файла space_facts.txt: 452 байт</span><br>
+        <span class="system-output">Имя файла: space_facts.txt</span><br>
+        <span class="system-output">Каталог файла: /home/user/projects</span><br>
+        <span class="system-output">
+Работа с pathlib:</span><br>
+        <span class="system-output">Текущий каталог: /home/user/projects</span><br>
+        <span class="system-output">Путь к файлу: /home/user/projects/data/planets.csv</span><br>
+        <span class="system-output">Файл существует: True</span><br>
+        <span class="system-output">Размер файла: 452 байт</span><br>
+        <span class="system-output">Имя файла: space_facts.txt</span><br>
+        <span class="system-output">Расширение: .txt</span><br>
+        <span class="system-output">Родительский каталог: /home/user/projects</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Совет:</strong> Модуль <code>pathlib</code> предоставляет объектно-ориентированный интерфейс для работы с путями и считается более современным и удобным, чем <code>os.path</code>. Рекомендуется использовать его в новых проектах.</p>
+    </div>
+
+    <h2>Работа с CSV файлами</h2>
+
+    <p>CSV (Comma-Separated Values) - популярный формат для хранения табличных данных. Python предоставляет модуль <code>csv</code> для работы с такими файлами:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">csv</span><br>
+        <br>
+        <span class="code-comment"># Создание CSV файла</span><br>
+        <span class="code-keyword">planets_data</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Название"</span>, <span class="code-string">"Диаметр (км)"</span>, <span class="code-string">"Расстояние от Солнца (млн км)"</span>, <span class="code-string">"Количество спутников"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Меркурий"</span>, <span class="code-number">4879</span>, <span class="code-number">57.9</span>, <span class="code-number">0</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Венера"</span>, <span class="code-number">12104</span>, <span class="code-number">108.2</span>, <span class="code-number">0</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Земля"</span>, <span class="code-number">12742</span>, <span class="code-number">149.6</span>, <span class="code-number">1</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Марс"</span>, <span class="code-number">6779</span>, <span class="code-number">227.9</span>, <span class="code-number">2</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Юпитер"</span>, <span class="code-number">139820</span>, <span class="code-number">778.5</span>, <span class="code-number">79</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Сатурн"</span>, <span class="code-number">116460</span>, <span class="code-number">1434.0</span>, <span class="code-number">82</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Уран"</span>, <span class="code-number">50724</span>, <span class="code-number">2871.0</span>, <span class="code-number">27</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Нептун"</span>, <span class="code-number">49244</span>, <span class="code-number">4495.0</span>, <span class="code-number">14</span>]<br>
+        ]<br>
+        <br>
+        <span class="code-comment"># Запись данных в CSV файл</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.csv"</span>, <span class="code-string">"w"</span>, <span class="code-function">newline</span>=<span class="code-string">''</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span> = <span class="code-keyword">csv</span>.<span class="code-function">writer</span>(<span class="code-keyword">file</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span>.<span class="code-function">writerows</span>(<span class="code-keyword">planets_data</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"CSV файл создан успешно."</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение данных из CSV файла</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nЧтение CSV файла:"</span>)<br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.csv"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">reader</span> = <span class="code-keyword">csv</span>.<span class="code-function">reader</span>(<span class="code-keyword">file</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">header</span> = <span class="code-function">next</span>(<span class="code-keyword">reader</span>)  <span class="code-comment"># Чтение заголовка</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Заголовки: {', '.join(header)}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nПланеты Солнечной системы:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">row</span> <span class="code-keyword">in</span> <span class="code-keyword">reader</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{row[0]}: диаметр {row[1]} км, расстояние {row[2]} млн км, спутников: {row[3]}"</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение CSV в список словарей</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nЧтение CSV в словари:"</span>)<br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.csv"</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">dict_reader</span> = <span class="code-keyword">csv</span>.<span class="code-function">DictReader</span>(<span class="code-keyword">file</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planets_list</span> = <span class="code-function">list</span>(<span class="code-keyword">dict_reader</span>)<br>
+        <br>
+        <span class="code-comment"># Фильтрация и обработка данных</span><br>
+        <span class="code-keyword">large_planets</span> = [<span class="code-keyword">planet</span> <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets_list</span> <span class="code-keyword">if</span> <span class="code-function">int</span>(<span class="code-keyword">planet</span>[<span class="code-string">"Диаметр (км)"</span>]) > <span class="code-number">50000</span>]<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Планеты с диаметром более 50000 км: {len(large_planets)}"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">large_planets</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {planet['Название']} (диаметр: {planet['Диаметр (км)']} км)"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">CSV файл создан успешно.</span><br>
+        <span class="system-output">
+Чтение CSV файла:</span><br>
+        <span class="system-output">Заголовки: Название, Диаметр (км), Расстояние от Солнца (млн км), Количество спутников</span><br>
+        <span class="system-output">
+Планеты Солнечной системы:</span><br>
+        <span class="system-output">Меркурий: диаметр 4879 км, расстояние 57.9 млн км, спутников: 0</span><br>
+        <span class="system-output">Венера: диаметр 12104 км, расстояние 108.2 млн км, спутников: 0</span><br>
+        <span class="system-output">Земля: диаметр 12742 км, расстояние 149.6 млн км, спутников: 1</span><br>
+        <span class="system-output">Марс: диаметр 6779 км, расстояние 227.9 млн км, спутников: 2</span><br>
+        <span class="system-output">Юпитер: диаметр 139820 км, расстояние 778.5 млн км, спутников: 79</span><br>
+        <span class="system-output">Сатурн: диаметр 116460 км, расстояние 1434.0 млн км, спутников: 82</span><br>
+        <span class="system-output">Уран: диаметр 50724 км, расстояние 2871.0 млн км, спутников: 27</span><br>
+        <span class="system-output">Нептун: диаметр 49244 км, расстояние 4495.0 млн км, спутников: 14</span><br>
+        <span class="system-output">
+Чтение CSV в словари:</span><br>
+        <span class="system-output">Планеты с диаметром более 50000 км: 3</span><br>
+        <span class="system-output">- Юпитер (диаметр: 139820 км)</span><br>
+        <span class="system-output">- Сатурн (диаметр: 116460 км)</span><br>
+        <span class="system-output">- Уран (диаметр: 50724 км)</span>
+    </div>
+
+    <h2>Работа с JSON файлами</h2>
+
+    <p>JSON (JavaScript Object Notation) - популярный формат для хранения и обмена структурированными данными. Python предоставляет модуль <code>json</code> для работы с этим форматом:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">json</span><br>
+        <br>
+        <span class="code-comment"># Создание структуры данных для сохранения в JSON</span><br>
+        <span class="code-keyword">solar_system</span> = {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Солнечная система"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"star"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Солнце"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"G-type main-sequence"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">1392700</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"age"</span>: <span class="code-number">4.6e9</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"planets"</span>: [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Меркурий"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"Каменистая планета"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">4879</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Венера"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"Каменистая планета"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12104</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Земля"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"Каменистая планета"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">12742</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Луна"</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Марс"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"Каменистая планета"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">6779</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Фобос"</span>, <span class="code-string">"Деймос"</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+        }<br>
+        <br>
+        <span class="code-comment"># Запись данных в JSON файл</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"solar_system.json"</span>, <span class="code-string">"w"</span>, <span class="code-function">encoding</span>=<span class="code-string">"utf-8"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">json</span>.<span class="code-function">dump</span>(<span class="code-keyword">solar_system</span>, <span class="code-keyword">file</span>, <span class="code-function">ensure_ascii</span>=<span class="code-keyword">False</span>, <span class="code-function">indent</span>=<span class="code-number">4</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"JSON файл создан успешно."</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение данных из JSON файла</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"solar_system.json"</span>, <span class="code-string">"r"</span>, <span class="code-function">encoding</span>=<span class="code-string">"utf-8"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">loaded_data</span> = <span class="code-keyword">json</span>.<span class="code-function">load</span>(<span class="code-keyword">file</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"\nЗагружена информация о: {loaded_data['name']}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Звезда: {loaded_data['star']['name']}, тип: {loaded_data['star']['type']}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Количество планет: {len(loaded_data['planets'])}"</span>)<br>
+        <br>
+        <span class="code-comment"># Обработка загруженных данных</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nПланеты и их спутники:"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">loaded_data</span>[<span class="code-string">'planets'</span>]:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">moons_count</span> = <span class="code-function">len</span>(<span class="code-keyword">planet</span>[<span class="code-string">'moons'</span>])<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">moons_text</span> = <span class="code-string">", "</span>.<span class="code-function">join</span>(<span class="code-keyword">planet</span>[<span class="code-string">'moons'</span>]) <span class="code-keyword">if</span> <span class="code-keyword">moons_count</span> > <span class="code-number">0</span> <span class="code-keyword">else</span> <span class="code-string">"нет"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {planet['name']}: спутники: {moons_text}"</span>)<br>
+        <br>
+        <span class="code-comment"># Добавление новой планеты</span><br>
+        <span class="code-keyword">loaded_data</span>[<span class="code-string">'planets'</span>].<span class="code-function">append</span>({<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"name"</span>: <span class="code-string">"Юпитер"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"type"</span>: <span class="code-string">"Газовый гигант"</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"diameter"</span>: <span class="code-number">139820</span>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"moons"</span>: [<span class="code-string">"Ио"</span>, <span class="code-string">"Европа"</span>, <span class="code-string">"Ганимед"</span>, <span class="code-string">"Каллисто"</span>]<br>
+        })<br>
+        <br>
+        <span class="code-comment"># Сохранение обновленных данных</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"solar_system_updated.json"</span>, <span class="code-string">"w"</span>, <span class="code-function">encoding</span>=<span class="code-string">"utf-8"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">json</span>.<span class="code-function">dump</span>(<span class="code-keyword">loaded_data</span>, <span class="code-keyword">file</span>, <span class="code-function">ensure_ascii</span>=<span class="code-keyword">False</span>, <span class="code-function">indent</span>=<span class="code-number">4</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"\nОбновленный JSON файл создан успешно."</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Теперь в системе {len(loaded_data['planets'])} планет."</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">JSON файл создан успешно.</span><br>
+        <span class="system-output">
+Загружена информация о: Солнечная система</span><br>
+        <span class="system-output">Звезда: Солнце, тип: G-type main-sequence</span><br>
+        <span class="system-output">Количество планет: 4</span><br>
+        <span class="system-output">
+Планеты и их спутники:</span><br>
+        <span class="system-output">- Меркурий: спутники: нет</span><br>
+        <span class="system-output">- Венера: спутники: нет</span><br>
+        <span class="system-output">- Земля: спутники: Луна</span><br>
+        <span class="system-output">- Марс: спутники: Фобос, Деймос</span><br>
+        <span class="system-output">
+Обновленный JSON файл создан успешно.</span><br>
+        <span class="system-output">Теперь в системе 5 планет.</span>
+    </div>
+
+    <div class="note-block">
+        <p><strong>Примечание:</strong> Параметр <code>ensure_ascii=False</code> в функции <code>json.dump()</code> позволяет сохранять символы Unicode (например, кириллицу) в читаемом виде. Параметр <code>indent=4</code> делает JSON файл более читаемым, добавляя отступы.</p>
+    </div>
+
+    <h2>Работа с бинарными файлами</h2>
+
+    <p>Бинарные файлы содержат данные, которые не обязательно являются текстом. Для работы с ними используется режим "b":</p>
+
+    <div class="code-block">
+        <span class="code-comment"># Запись бинарных данных</span><br>
+        <span class="code-keyword">data</span> = <span class="code-function">bytes</span>([<span class="code-number">0</span>, <span class="code-number">1</span>, <span class="code-number">2</span>, <span class="code-number">3</span>, <span class="code-number">4</span>, <span class="code-number">5</span>, <span class="code-number">255</span>])<br>
+        <br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"binary_data.bin"</span>, <span class="code-string">"wb"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-keyword">data</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"Бинарный файл создан."</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение бинарных данных</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"binary_data.bin"</span>, <span class="code-string">"rb"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">binary_data</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>()<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Прочитано {len(binary_data)} байт: {list(binary_data)}"</span>)<br>
+        <br>
+        <span class="code-comment"># Использование модуля struct для работы со структурированными бинарными данными</span><br>
+        <span class="code-keyword">import</span> <span class="code-keyword">struct</span><br>
+        <br>
+        <span class="code-comment"># Упаковка данных в бинарный формат</span><br>
+        <span class="code-comment"># 'i' - целое число (4 байта)</span><br>
+        <span class="code-comment"># 'f' - число с плавающей точкой (4 байта)</span><br>
+        <span class="code-comment"># '10s' - строка длиной 10 байт</span><br>
+        <span class="code-keyword">packed_data</span> = <span class="code-keyword">struct</span>.<span class="code-function">pack</span>(<span class="code-string">'if10s'</span>, <span class="code-number">42</span>, <span class="code-number">3.14</span>, <span class="code-string">b'Hello Mars'</span>)<br>
+        <br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"struct_data.bin"</span>, <span class="code-string">"wb"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-keyword">packed_data</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">"\nСтруктурированные данные записаны."</span>)<br>
+        <br>
+        <span class="code-comment"># Чтение и распаковка структурированных данных</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"struct_data.bin"</span>, <span class="code-string">"rb"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">binary_data</span> = <span class="code-keyword">file</span>.<span class="code-function">read</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">unpacked_data</span> = <span class="code-keyword">struct</span>.<span class="code-function">unpack</span>(<span class="code-string">'if10s'</span>, <span class="code-keyword">binary_data</span>)<br>
+        <br>
+        <span class="code-function">print</span>(<span class="code-string">f"Распакованные данные: {unpacked_data}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Целое число: {unpacked_data[0]}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Число с плавающей точкой: {unpacked_data[1]}"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Строка: {unpacked_data[2].decode('utf-8').rstrip('\\x00')}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Бинарный файл создан.</span><br>
+        <span class="system-output">Прочитано 7 байт: [0, 1, 2, 3, 4, 5, 255]</span><br>
+        <span class="system-output">
+Структурированные данные записаны.</span><br>
+        <span class="system-output">Распакованные данные: (42, 3.140000104904175, b'Hello Mars')</span><br>
+        <span class="system-output">Целое число: 42</span><br>
+        <span class="system-output">Число с плавающей точкой: 3.140000104904175</span><br>
+        <span class="system-output">Строка: Hello Mars</span>
+    </div>
+
+    <h2>Работа с файловой системой</h2>
+
+    <p>Модули <code>os</code> и <code>shutil</code> предоставляют функции для работы с файловой системой:</p>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">os</span><br>
+        <span class="code-keyword">import</span> <span class="code-keyword">shutil</span><br>
+        <span class="code-keyword">from</span> <span class="code-keyword">pathlib</span> <span class="code-keyword">import</span> <span class="code-keyword">Path</span><br>
+        <br>
+        <span class="code-comment"># Создание директории</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">not</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">exists</span>(<span class="code-string">"data_folder"</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">os</span>.<span class="code-function">mkdir</span>(<span class="code-string">"data_folder"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Создана директория 'data_folder'"</span>)<br>
+        <br>
+        <span class="code-comment"># Создание вложенных директорий</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">not</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">exists</span>(<span class="code-string">"data_folder/nested/deep"</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">os</span>.<span class="code-function">makedirs</span>(<span class="code-string">"data_folder/nested/deep"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Созданы вложенные директории"</span>)<br>
+        <br>
+        <span class="code-comment"># Создание файла в директории</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"data_folder/test.txt"</span>, <span class="code-string">"w"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"Это тестовый файл."</span>)<br>
+        <br>
+        <span class="code-comment"># Получение списка файлов в директории</span><br>
+        <span class="code-keyword">files</span> = <span class="code-keyword">os</span>.<span class="code-function">listdir</span>(<span class="code-string">"data_folder"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"\nСодержимое директории 'data_folder': {files}"</span>)<br>
+        <br>
+        <span class="code-comment"># Проверка, является ли путь файлом или директорией</span><br>
+        <span class="code-keyword">for</span> <span class="code-keyword">item</span> <span class="code-keyword">in</span> <span class="code-keyword">files</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">full_path</span> = <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">join</span>(<span class="code-string">"data_folder"</span>, <span class="code-keyword">item</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">isfile</span>(<span class="code-keyword">full_path</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {item}: файл"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">isdir</span>(<span class="code-keyword">full_path</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- {item}: директория"</span>)<br>
+        <br>
+        <span class="code-comment"># Копирование файла</span><br>
+        <span class="code-keyword">shutil</span>.<span class="code-function">copy</span>(<span class="code-string">"data_folder/test.txt"</span>, <span class="code-string">"data_folder/test_copy.txt"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"\nФайл скопирован."</span>)<br>
+        <br>
+        <span class="code-comment"># Перемещение/переименование файла</span><br>
+        <span class="code-keyword">os</span>.<span class="code-function">rename</span>(<span class="code-string">"data_folder/test_copy.txt"</span>, <span class="code-string">"data_folder/renamed.txt"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"Файл переименован."</span>)<br>
+        <br>
+        <span class="code-comment"># Рекурсивный обход директорий</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nСтруктура директории 'data_folder':"</span>)<br>
+        <span class="code-keyword">for</span> <span class="code-keyword">root</span>, <span class="code-keyword">dirs</span>, <span class="code-keyword">files</span> <span class="code-keyword">in</span> <span class="code-keyword">os</span>.<span class="code-function">walk</span>(<span class="code-string">"data_folder"</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">level</span> = <span class="code-keyword">root</span>.<span class="code-function">replace</span>(<span class="code-string">"data_folder"</span>, <span class="code-string">""</span>).<span class="code-function">count</span>(<span class="code-keyword">os</span>.<span class="code-keyword">sep</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">indent</span> = <span class="code-string">" "</span> * <span class="code-number">4</span> * <span class="code-keyword">level</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{indent}{os.path.basename(root)}/"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">sub_indent</span> = <span class="code-string">" "</span> * <span class="code-number">4</span> * (<span class="code-keyword">level</span> + <span class="code-number">1</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">file</span> <span class="code-keyword">in</span> <span class="code-keyword">files</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{sub_indent}{file}"</span>)<br>
+        <br>
+        <span class="code-comment"># Удаление файла</span><br>
+        <span class="code-keyword">os</span>.<span class="code-function">remove</span>(<span class="code-string">"data_folder/renamed.txt"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">"\nФайл 'renamed.txt' удален."</span>)<br>
+        <br>
+        <span class="code-comment"># Использование pathlib для работы с путями (более современный подход)</span><br>
+        <span class="code-function">print</span>(<span class="code-string">"\nИспользование pathlib:"</span>)<br>
+        <span class="code-keyword">data_dir</span> = <span class="code-keyword">Path</span>(<span class="code-string">"data_folder"</span>)<br>
+        <span class="code-keyword">new_file</span> = <span class="code-keyword">data_dir</span> / <span class="code-string">"pathlib_test.txt"</span><br>
+        <br>
+        <span class="code-comment"># Запись в файл</span><br>
+        <span class="code-keyword">new_file</span>.<span class="code-function">write_text</span>(<span class="code-string">"Тест pathlib"</span>)<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Создан файл: {new_file}"</span>)<br>
+        <br>
+        <span class="code-comment"># Получение списка всех текстовых файлов</span><br>
+        <span class="code-keyword">text_files</span> = <span class="code-function">list</span>(<span class="code-keyword">data_dir</span>.<span class="code-function">glob</span>(<span class="code-string">"*.txt"</span>))<br>
+        <span class="code-function">print</span>(<span class="code-string">f"Текстовые файлы: {[file.name for file in text_files]}"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Создана директория 'data_folder'</span><br>
+        <span class="system-output">Созданы вложенные директории</span><br>
+        <span class="system-output">
+Содержимое директории 'data_folder': ['nested', 'test.txt']</span><br>
+        <span class="system-output">- nested: директория</span><br>
+        <span class="system-output">- test.txt: файл</span><br>
+        <span class="system-output">
+Файл скопирован.</span><br>
+        <span class="system-output">Файл переименован.</span><br>
+        <span class="system-output">
+Структура директории 'data_folder':</span><br>
+        <span class="system-output">data_folder/</span><br>
+        <span class="system-output">    renamed.txt</span><br>
+        <span class="system-output">    test.txt</span><br>
+        <span class="system-output">    nested/</span><br>
+        <span class="system-output">        deep/</span><br>
+        <span class="system-output">
+Файл 'renamed.txt' удален.</span><br>
+        <span class="system-output">
+Использование pathlib:</span><br>
+        <span class="system-output">Создан файл: data_folder/pathlib_test.txt</span><br>
+        <span class="system-output">Текстовые файлы: ['pathlib_test.txt', 'test.txt']</span>
+    </div>
+
+    <div class="file-tree">
+        <div class="folder">data_folder/</div>
+        <div class="indent">
+            <div class="file">test.txt</div>
+            <div class="file">pathlib_test.txt</div>
+            <div class="folder">nested/</div>
+            <div class="indent">
+                <div class="folder">deep/</div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Практические примеры</h2>
+
+    <h3>Пример 1: Анализ логов</h3>
+
+    <div class="code-block">
+        <span class="code-comment"># Создадим пример лог-файла</span><br>
+        <span class="code-keyword">log_data</span> = <span class="code-string">"""2023-07-15 08:30:45 INFO Система запущена
+2023-07-15 08:31:10 INFO Подключение к базе данных установлено
+2023-07-15 08:32:22 WARNING Низкий заряд батареи
+2023-07-15 08:35:45 ERROR Ошибка подключения к удаленному серверу
+2023-07-15 08:36:12 INFO Переключение на резервный сервер
+2023-07-15 08:40:30 ERROR Критическая ошибка: нехватка памяти
+2023-07-15 08:42:15 WARNING Температура системы выше нормы
+2023-07-15 08:45:00 INFO Система охлаждения активирована
+2023-07-15 08:50:22 INFO Нормальная работа восстановлена
+2023-07-15 08:55:45 INFO Система переведена в режим энергосбережения"""</span><br>
+        <br>
+        <span class="code-comment"># Запись лог-файла</span><br>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"system.log"</span>, <span class="code-string">"w"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-keyword">log_data</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">analyze_log</span>(<span class="code-keyword">log_file</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Анализ лог-файла: {log_file}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Счетчики для разных типов сообщений</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">info_count</span> = <span class="code-number">0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">warning_count</span> = <span class="code-number">0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">error_count</span> = <span class="code-number">0</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">errors</span> = []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-keyword">log_file</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">line</span> <span class="code-keyword">in</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-string">" INFO "</span> <span class="code-keyword">in</span> <span class="code-keyword">line</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">info_count</span> += <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-string">" WARNING "</span> <span class="code-keyword">in</span> <span class="code-keyword">line</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">warning_count</span> += <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> <span class="code-string">" ERROR "</span> <span class="code-keyword">in</span> <span class="code-keyword">line</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">error_count</span> += <span class="code-number">1</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Извлечение сообщения об ошибке</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">error_message</span> = <span class="code-keyword">line</span>.<span class="code-function">split</span>(<span class="code-string">" ERROR "</span>)[<span class="code-number">1</span>].<span class="code-function">strip</span>()<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">errors</span>.<span class="code-function">append</span>(<span class="code-keyword">error_message</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Вывод статистики</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nСтатистика сообщений:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- INFO: {info_count}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- WARNING: {warning_count}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"- ERROR: {error_count}"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">errors</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nОбнаруженные ошибки:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span class="code-keyword">error</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">errors</span>, <span class="code-number">1</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{i}. {error}"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Создание отчета</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">report_file</span> = <span class="code-string">"log_report.txt"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-keyword">report_file</span>, <span class="code-string">"w"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"Отчет по анализу лог-файла: {log_file}\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"\nСтатистика сообщений:\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"- INFO: {info_count}\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"- WARNING: {warning_count}\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"- ERROR: {error_count}\n"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">errors</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">"\nОбнаруженные ошибки:\n"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span class="code-keyword">error</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">errors</span>, <span class="code-number">1</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">file</span>.<span class="code-function">write</span>(<span class="code-string">f"{i}. {error}\n"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nОтчет сохранен в файл: {report_file}"</span>)<br>
+        <br>
+        <span class="code-comment"># Запуск анализа лог-файла</span><br>
+        <span class="code-function">analyze_log</span>(<span class="code-string">"system.log"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Анализ лог-файла: system.log</span><br>
+        <span class="system-output">
+Статистика сообщений:</span><br>
+        <span class="system-output">- INFO: 6</span><br>
+        <span class="system-output">- WARNING: 2</span><br>
+        <span class="system-output">- ERROR: 2</span><br>
+        <span class="system-output">
+Обнаруженные ошибки:</span><br>
+        <span class="system-output">1. Ошибка подключения к удаленному серверу</span><br>
+        <span class="system-output">2. Критическая ошибка: нехватка памяти</span><br>
+        <span class="system-output">
+Отчет сохранен в файл: log_report.txt</span>
+    </div>
+
+    <h3>Пример 2: Обработка данных CSV</h3>
+
+    <div class="code-block">
+        <span class="code-keyword">import</span> <span class="code-keyword">csv</span><br>
+        <span class="code-keyword">import</span> <span class="code-keyword">os</span><br>
+        <br>
+        <span class="code-comment"># Проверка наличия файла planets.csv, созданного ранее</span><br>
+        <span class="code-keyword">if</span> <span class="code-keyword">not</span> <span class="code-keyword">os</span>.<span class="code-keyword">path</span>.<span class="code-function">exists</span>(<span class="code-string">"planets.csv"</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"Файл planets.csv не найден. Создаем новый..."</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planets_data</span> = [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Название"</span>, <span class="code-string">"Диаметр (км)"</span>, <span class="code-string">"Расстояние от Солнца (млн км)"</span>, <span class="code-string">"Количество спутников"</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Меркурий"</span>, <span class="code-number">4879</span>, <span class="code-number">57.9</span>, <span class="code-number">0</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Венера"</span>, <span class="code-number">12104</span>, <span class="code-number">108.2</span>, <span class="code-number">0</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Земля"</span>, <span class="code-number">12742</span>, <span class="code-number">149.6</span>, <span class="code-number">1</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Марс"</span>, <span class="code-number">6779</span>, <span class="code-number">227.9</span>, <span class="code-number">2</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Юпитер"</span>, <span class="code-number">139820</span>, <span class="code-number">778.5</span>, <span class="code-number">79</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Сатурн"</span>, <span class="code-number">116460</span>, <span class="code-number">1434.0</span>, <span class="code-number">82</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Уран"</span>, <span class="code-number">50724</span>, <span class="code-number">2871.0</span>, <span class="code-number">27</span>],<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="code-string">"Нептун"</span>, <span class="code-number">49244</span>, <span class="code-number">4495.0</span>, <span class="code-number">14</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">"planets.csv"</span>, <span class="code-string">"w"</span>, <span class="code-function">newline</span>=<span class="code-string">''</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span> = <span class="code-keyword">csv</span>.<span class="code-function">writer</span>(<span class="code-keyword">file</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span>.<span class="code-function">writerows</span>(<span class="code-keyword">planets_data</span>)<br>
+        <br>
+        <span class="code-keyword">def</span> <span class="code-function">analyze_planets</span>(<span class="code-keyword">csv_file</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Анализ данных о планетах из файла: {csv_file}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Чтение данных из CSV файла</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planets</span> = []<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-keyword">csv_file</span>, <span class="code-string">"r"</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">reader</span> = <span class="code-keyword">csv</span>.<span class="code-function">DictReader</span>(<span class="code-keyword">file</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">row</span> <span class="code-keyword">in</span> <span class="code-keyword">reader</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Преобразование строковых значений в числовые</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">row</span>[<span class="code-string">"Диаметр (км)"</span>] = <span class="code-function">int</span>(<span class="code-keyword">row</span>[<span class="code-string">"Диаметр (км)"</span>])<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">row</span>[<span class="code-string">"Расстояние от Солнца (млн км)"</span>] = <span class="code-function">float</span>(<span class="code-keyword">row</span>[<span class="code-string">"Расстояние от Солнца (млн км)"</span>])<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">row</span>[<span class="code-string">"Количество спутников"</span>] = <span class="code-function">int</span>(<span class="code-keyword">row</span>[<span class="code-string">"Количество спутников"</span>])<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planets</span>.<span class="code-function">append</span>(<span class="code-keyword">row</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Анализ данных</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">total_planets</span> = <span class="code-function">len</span>(<span class="code-keyword">planets</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">total_moons</span> = <span class="code-function">sum</span>(<span class="code-keyword">planet</span>[<span class="code-string">"Количество спутников"</span>] <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">avg_diameter</span> = <span class="code-function">sum</span>(<span class="code-keyword">planet</span>[<span class="code-string">"Диаметр (км)"</span>] <span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>) / <span class="code-keyword">total_planets</span><br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Нахождение самой большой и самой маленькой планеты</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">largest_planet</span> = <span class="code-function">max</span>(<span class="code-keyword">planets</span>, <span class="code-function">key</span>=<span class="code-keyword">lambda</span> <span class="code-keyword">p</span>: <span class="code-keyword">p</span>[<span class="code-string">"Диаметр (км)"</span>])<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">smallest_planet</span> = <span class="code-function">min</span>(<span class="code-keyword">planets</span>, <span class="code-function">key</span>=<span class="code-keyword">lambda</span> <span class="code-keyword">p</span>: <span class="code-keyword">p</span>[<span class="code-string">"Диаметр (км)"</span>])<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Сортировка планет по расстоянию от Солнца</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">sorted_by_distance</span> = <span class="code-function">sorted</span>(<span class="code-keyword">planets</span>, <span class="code-function">key</span>=<span class="code-keyword">lambda</span> <span class="code-keyword">p</span>: <span class="code-keyword">p</span>[<span class="code-string">"Расстояние от Солнца (млн км)"</span>])<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Вывод результатов анализа</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nРезультаты анализа:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Количество планет: {total_planets}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Общее количество спутников: {total_moons}"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Средний диаметр планет: {avg_diameter:.2f} км"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Самая большая планета: {largest_planet['Название']} (диаметр: {largest_planet['Диаметр (км)']} км)"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"Самая маленькая планета: {smallest_planet['Название']} (диаметр: {smallest_planet['Диаметр (км)']} км)"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">"\nПланеты в порядке удаления от Солнца:"</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">i</span>, <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-function">enumerate</span>(<span class="code-keyword">sorted_by_distance</span>, <span class="code-number">1</span>):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"{i}. {planet['Название']} - {planet['Расстояние от Солнца (млн км)']} млн км"</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Создание нового CSV файла с дополнительными данными</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">output_file</span> = <span class="code-string">"planets_analysis.csv"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-keyword">output_file</span>, <span class="code-string">"w"</span>, <span class="code-function">newline</span>=<span class="code-string">''</span>) <span class="code-keyword">as</span> <span class="code-keyword">file</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">fieldnames</span> = [<span class="code-string">"Название"</span>, <span class="code-string">"Диаметр (км)"</span>, <span class="code-string">"Расстояние от Солнца (млн км)"</span>, <span class="code-string">"Количество спутников"</span>, <span class="code-string">"Тип"</span>, <span class="code-string">"Относительный размер"</span>]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span> = <span class="code-keyword">csv</span>.<span class="code-function">DictWriter</span>(<span class="code-keyword">file</span>, <span class="code-function">fieldnames</span>=<span class="code-keyword">fieldnames</span>)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span>.<span class="code-function">writeheader</span>()<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-keyword">planet</span> <span class="code-keyword">in</span> <span class="code-keyword">planets</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Определение типа планеты</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> <span class="code-keyword">planet</span>[<span class="code-string">"Диаметр (км)"</span>] > <span class="code-number">50000</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"Газовый гигант"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet_type</span> = <span class="code-string">"Каменистая планета"</span><br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Определение относительного размера</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">earth_diameter</span> = <span class="code-number">12742</span>  <span class="code-comment"># диаметр Земли в км</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">relative_size</span> = <span class="code-keyword">planet</span>[<span class="code-string">"Диаметр (км)"</span>] / <span class="code-keyword">earth_diameter</span><br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Добавление новых данных</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet</span>[<span class="code-string">"Тип"</span>] = <span class="code-keyword">planet_type</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">planet</span>[<span class="code-string">"Относительный размер"</span>] = <span class="code-string">f"{relative_size:.2f} x Земля"</span><br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">writer</span>.<span class="code-function">writerow</span>(<span class="code-keyword">planet</span>)<br>
+        <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">print</span>(<span class="code-string">f"\nРасширенные данные сохранены в файл: {output_file}"</span>)<br>
+        <br>
+        <span class="code-comment"># Запуск анализа данных о планетах</span><br>
+        <span class="code-function">analyze_planets</span>(<span class="code-string">"planets.csv"</span>)
+    </div>
+
+    <div class="terminal">
+        <div class="terminal-header">Терминал</div>
+        <span class="system-output">Анализ данных о планетах из файла: planets.csv</span><br>
+        <span class="system-output">
+Результаты анализа:</span><br>
+        <span class="system-output">Количество планет: 8</span><br>
+        <span class="system-output">Общее количество спутников: 205</span><br>
+        <span class="system-output">Средний диаметр планет: 49094.00 км</span><br>
+        <span class="system-output">Самая большая планета: Юпитер (диаметр: 139820 км)</span><br>
+        <span class="system-output">Самая маленькая планета: Меркурий (диаметр: 4879 км)</span><br>
+        <span class="system-output">
+Планеты в порядке удаления от Солнца:</span><br>
+        <span class="system-output">1. Меркурий - 57.9 млн км</span><br>
+        <span class="system-output">2. Венера - 108.2 млн км</span><br>
+        <span class="system-output">3. Земля - 149.6 млн км</span><br>
+        <span class="system-output">4. Марс - 227.9 млн км</span><br>
+        <span class="system-output">5. Юпитер - 778.5 млн км</span><br>
+        <span class="system-output">6. Сатурн - 1434.0 млн км</span><br>
+        <span class="system-output">7. Уран - 2871.0 млн км</span><br>
+        <span class="system-output">8. Нептун - 4495.0 млн км</span><br>
+        <span class="system-output">
+Расширенные данные сохранены в файл: planets_analysis.csv</span>
+    </div>
+
+    <div class="task-block">
+        <div class="task-title">🚀 Задание для завершения миссии</div>
+        <p>Для получения кода доступа к следующей планете, создай программу "Космический журнал путешествий", которая будет использовать файлы для хранения и обработки данных о космических путешествиях.</p>
+        <p>Программа должна:</p>
+        <ol>
+            <li>Позволять пользователю добавлять записи о космических путешествиях (дата, пункт назначения, продолжительность, заметки)</li>
+            <li>Сохранять все записи в CSV или JSON файл</li>
+            <li>Позволять просматривать все записи</li>
+            <li>Позволять искать записи по дате или пункту назначения</li>
+            <li>Создавать статистический отчет о путешествиях (общее количество, общая продолжительность, самое длительное путешествие и т.д.)</li>
+            <li>Экспортировать выбранные записи в текстовый файл</li>
+        </ol>
+        <p>Пример работы программы:</p>
+        <div class="terminal">
+            <div class="terminal-header">Терминал</div>
+            <span class="system-output">===== КОСМИЧЕСКИЙ ЖУРНАЛ ПУТЕШЕСТВИЙ =====</span><br>
+            <span class="system-output">Выберите действие:</span><br>
+            <span class="system-output">1. Добавить новую запись</span><br>
+            <span class="system-output">2. Просмотреть все записи</span><br>
+            <span class="system-output">3. Поиск записей</span><br>
+            <span class="system-output">4. Статистика путешествий</span><br>
+            <span class="system-output">5. Экспорт записей</span><br>
+            <span class="system-output">0. Выход</span><br>
+            <span class="system-output">Ваш выбор: </span><span class="user-input">1</span><br>
+            <span class="system-output">
+===== Добавление новой записи =====
+Дата (ГГГГ-ММ-ДД): </span><span class="user-input">2142-05-15</span><br>
+            <span class="system-output">Пункт назначения: </span><span class="user-input">Марс</span><br>
+            <span class="system-output">Продолжительность (дней): </span><span class="user-input">120</span><br>
+            <span class="system-output">Заметки: </span><span class="user-input">Исследование северного полюса Марса</span><br>
+            <span class="system-output">
+Запись успешно добавлена!
+
+===== КОСМИЧЕСКИЙ ЖУРНАЛ ПУТЕШЕСТВИЙ =====
+Выберите действие:
+1. Добавить новую запись
+2. Просмотреть все записи
+3. Поиск записей
+4. Статистика путешествий
+5. Экспорт записей
+0. Выход
+Ваш выбор: </span><span class="user-input">4</span><br>
+            <span class="system-output">
+===== Статистика путешествий =====
+Общее количество путешествий: 3
+Общая продолжительность: 275 дней
+Среднее время путешествия: 91.67 дней
+Самое длительное путешествие: Марс (120 дней)
+Самое короткое путешествие: Луна (35 дней)
+Самое популярное направление: Марс (2 путешествия)
+
+===== КОСМИЧЕСКИЙ ЖУРНАЛ ПУТЕШЕСТВИЙ =====
+Выберите действие:
+1. Добавить новую запись
+2. Просмотреть все записи
+3. Поиск записей
+4. Статистика путешествий
+5. Экспорт записей
+0. Выход
+Ваш выбор: </span><span class="user-input">0</span><br>
+            <span class="system-output">
+Данные сохранены. До новых космических путешествий!
+                </span>
+        </div>
+    </div>
+
+    <div class="password-reveal">
+        <div class="password-title">🔑 Код доступа к планете "Исключения"</div>
+        <p>Поздравляю! Ты успешно завершил миссию на планете "Файлия".</p>
+        <p>Вот код доступа к следующей планете:</p>
+        <div class="password-code">try_except</div>
+        <p>Используй этот код на главной странице для доступа к уроку 11.</p>
+    </div>
+
+    <div class="navigation">
+        <a href="lesson9.html" class="nav-button">← Предыдущая планета</a>
+        <a href="index.html" class="nav-button home">На главную</a>
+        <a href="lesson11.html" class="nav-button">Следующая планета →</a>
+    </div>
+</div>
+
+<div class="footer">
+    <p>Галактическая Академия Программирования © 2142</p>
+    <p>Удачи в твоей миссии, космический программист!</p>
+</div>
+
+<script>
+    // Создание звезд на фоне
+    document.addEventListener('DOMContentLoaded', function() {
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Случайный размер и позиция
+            const size = Math.random() * 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+
+            // Случайная анимация мерцания
+            star.style.animation = `starTwinkle ${3 + Math.random() * 7}s infinite`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+
+            starsContainer.appendChild(star);
+        }
+    });
+</script>
+</body>
+</html>
